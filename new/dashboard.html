@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard | WealthCircle</title>
+  <title>WealthCircle Dashboard</title>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     rel="stylesheet"
@@ -68,7 +68,7 @@
         class="h-20 flex items-center justify-center border-b border-primary/50 select-none"
       >
         <a
-          href="index.html"
+          href="#"
           class="text-3xl font-extrabold tracking-tight text-white"
           ><span class="text-accent">Wealth</span>Circle</a
         >
@@ -114,13 +114,14 @@
       const userProfile = document.getElementById("user-profile");
       const signOutBtn = document.getElementById("sign-out-btn");
 
-      // MOCK DATA
+      // MOCK DATA INCLUDING PENDING USERS
       const mockAdmin = {
         role: "admin",
         name: "Admin User",
         email: "admin@wealthcircle.com",
       };
 
+      // Pending users array with payment info and status
       const pendingUsers = [
         {
           id: 1,
@@ -171,26 +172,16 @@
         },
       };
 
-      // --- LOGIN CHECK ---
-      function checkLoginState() {
-        // Simulate API call to /api/me or similar
-        const userRole = localStorage.getItem("userRole");
-        if (!userRole) {
-          // Redirect to login if not logged in
-          window.location.href = "login.html";
-          return;
-        }
-        if (userRole === "admin") {
-          loadDashboard(mockAdmin);
-        } else if (userRole === "user") {
-          loadDashboard(mockUser);
-        } else {
-          // Unknown role, redirect to login
-          window.location.href = "login.html";
-        }
+      // For demo, toggle role here:
+      // localStorage.setItem("userRole", "admin");
+      // localStorage.setItem("userRole", "user");
+      const userRole = localStorage.getItem("userRole");
+      if (!userRole) {
+        // Redirect to login if no role found
+        window.location.href = "login.html";
+        return;
       }
 
-      // --- LOAD DASHBOARD ---
       function loadDashboard(userData) {
         userProfile.innerHTML = `
           <img src="https://placehold.co/80x80/png?text=Profile+Photo&font=roboto" alt="Profile photo of ${userData.name}" class="mx-auto rounded-full w-20 h-20 object-cover border-2 border-accent" />
@@ -207,7 +198,7 @@
         addSidebarEventListeners();
       }
 
-      // --- ADMIN DASHBOARD ---
+      // Admin Sidebar & Content (added pending-users link)
       function renderAdminDashboard() {
         sidebarNav.innerHTML = `
           <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md transition" data-content="admin-home" tabindex="0" aria-current="page">
@@ -232,7 +223,7 @@
         renderAdminContent("admin-home");
       }
 
-      // --- USER DASHBOARD ---
+      // User Sidebar & Content
       function renderUserDashboard(userData) {
         sidebarNav.innerHTML = `
           <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md transition" data-content="user-home" tabindex="0" aria-current="page">
@@ -254,10 +245,10 @@
             <i class="fas fa-book w-6"></i><span class="ml-3">Club Resources</span>
           </a>
         `;
-        renderUserContent("user-home", mockUser);
+        renderUserContent("user-home", userData);
       }
 
-      // --- ADMIN CONTENT ---
+      // Admin Content with pending users case
       function renderAdminContent(contentId) {
         let contentHtml = "";
         switch (contentId) {
@@ -314,7 +305,7 @@
           case "user-management":
             contentHtml = `
               <h1 class="text-3xl font-bold text-primary mb-6">User Management</h1>
-              <div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
+              <div class="bg-white p-6 rounded-lg shadow overflow-x-auto max-w-6xl mx-auto">
                 <p class="mb-4">Manage all club members below.</p>
                 <table class="min-w-full border border-gray-300 rounded-md">
                   <thead class="bg-accent text-white">
@@ -451,36 +442,63 @@
           case "settings":
             contentHtml = `
               <h1 class="text-3xl font-bold text-primary mb-6">Settings</h1>
-              <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
-                <form id="settings-form" class="space-y-6" aria-label="User settings form">
-                  <div class="flex items-center justify-between">
-                    <label for="email-notifications" class="font-medium">Email Notifications</label>
-                    <input type="checkbox" id="email-notifications" class="form-checkbox h-5 w-5 text-accent" ${
-                      mockUser.settings.emailNotifications ? "checked" : ""
-                    } />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <label for="newsletter-subscribe" class="font-medium">Subscribe to Newsletter</label>
-                    <input type="checkbox" id="newsletter-subscribe" class="form-checkbox h-5 w-5 text-accent" ${
-                      mockUser.settings.newsletterSubscribed ? "checked" : ""
-                    } />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <label for="dark-mode" class="font-medium">Dark Mode</label>
-                    <input type="checkbox" id="dark-mode" class="form-checkbox h-5 w-5 text-accent" ${
-                      mockUser.settings.darkMode ? "checked" : ""
-                    } />
+              <div class="bg-white p-6 rounded-lg shadow max-w-lg mx-auto">
+                <form id="admin-settings-form" class="space-y-6" aria-label="Settings form">
+                  <div>
+                    <label for="site-name" class="block font-medium mb-1">Site Name</label>
+                    <input type="text" id="site-name" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-accent" value="WealthCircle" />
                   </div>
                   <div>
-                    <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md">Save Settings</button>
+                    <label for="admin-email" class="block font-medium mb-1">Admin Email</label>
+                    <input type="email" id="admin-email" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-accent" value="admin@wealthcircle.com" />
+                  </div>
+                  <div>
+                    <label for="notification-email" class="block font-medium mb-1">Notification Email</label>
+                    <input type="email" id="notification-email" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-accent" value="notifications@wealthcircle.com" />
+                  </div>
+                  <div>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input type="checkbox" class="form-checkbox text-accent" checked />
+                      <span class="ml-2 select-none">Enable Email Notifications</span>
+                    </label>
+                  </div>
+                  <div>
+                    <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">Save Settings</button>
                   </div>
                 </form>
-                <div id="settings-message" class="mt-4 text-green-600 font-semibold hidden"></div>
               </div>
             `;
             break;
           default:
-            contentHtml = `<h1 class="text-3xl font-bold text-primary">Content not found</h1>`;
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Admin Dashboard</h1>
+              <div class="bg-white p-6 rounded-lg shadow max-w-6xl mx-auto space-y-6">
+                <p>Welcome, Admin! This is your control panel.</p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  <div class="p-6 border rounded-lg bg-light shadow-sm flex flex-col items-center">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Total Users</h2>
+                    <p class="text-4xl font-extrabold text-primary">1,245</p>
+                    <i class="fas fa-users text-4xl text-accent mt-3"></i>
+                  </div>
+                  <div class="p-6 border rounded-lg bg-light shadow-sm flex flex-col items-center">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Active Members</h2>
+                    <p class="text-4xl font-extrabold text-primary">1,100</p>
+                    <i class="fas fa-user-check text-4xl text-accent mt-3"></i>
+                  </div>
+                  <div class="p-6 border rounded-lg bg-light shadow-sm flex flex-col items-center">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Pending Requests</h2>
+                    <p class="text-4xl font-extrabold text-primary">${pendingUsers.length}</p>
+                    <i class="fas fa-clock text-4xl text-accent mt-3"></i>
+                  </div>
+                  <div class="p-6 border rounded-lg bg-light shadow-sm flex flex-col items-center">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Revenue</h2>
+                    <p class="text-4xl font-extrabold text-primary">$1.25M</p>
+                    <i class="fas fa-dollar-sign text-4xl text-accent mt-3"></i>
+                  </div>
+                </div>
+                <canvas id="adminOverviewChart" class="rounded-lg shadow" aria-label="Admin overview chart showing key metrics" role="img"></canvas>
+              </div>
+            `;
         }
         mainContent.innerHTML = contentHtml;
 
@@ -493,6 +511,299 @@
         if (contentId === "admin-home") {
           renderAdminOverviewChart();
         }
+        if (contentId === "settings") {
+          addAdminSettingsListener();
+        }
+      }
+
+      // User Content
+      function renderUserContent(contentId, userData) {
+        let contentHtml = "";
+        switch (contentId) {
+          case "user-home":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">My Profile</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto space-y-6">
+                <h2 class="text-xl font-bold text-primary">Personal Information</h2>
+                <form id="profile-form" class="space-y-4" aria-label="User profile form">
+                  <div>
+                    <label for="name" class="font-medium block mb-1">Full Name</label>
+                    <input type="text" id="name" value="${userData.name}" class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-accent" />
+                  </div>
+                  <div>
+                    <label for="email" class="font-medium block mb-1">Email Address</label>
+                    <input type="email" id="email" value="${userData.email}" class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-accent" />
+                  </div>
+                  <div>
+                    <label for="phone" class="font-medium block mb-1">Phone Number</label>
+                    <input type="tel" id="phone" value="${userData.phone}" class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-accent" />
+                  </div>
+                  <div>
+                    <label for="address" class="font-medium block mb-1">Mailing Address</label>
+                    <textarea id="address" rows="3" class="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-accent">${userData.address}</textarea>
+                  </div>
+                  <div class="pt-4">
+                    <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">Save Changes</button>
+                  </div>
+                </form>
+                <div class="mt-6 space-y-2 text-gray-700">
+                  <p><strong>Your Membership Status:</strong> <span class="text-secondary">${userData.membershipStatus}</span></p>
+                  <p><strong>Membership Expiry Date:</strong> <span class="text-primary">${userData.membershipExpiry}</span></p>
+                  <p><strong>Member Since:</strong> <span class="text-primary">${userData.membershipSince}</span></p>
+                </div>
+              </div>
+            `;
+            break;
+          case "membership-billing":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Membership & Billing</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xl font-bold text-primary">Your Membership Status: <span class="text-secondary">${userData.membershipStatus}</span></h2>
+                <p>Membership Expiry Date: <strong class="text-primary">${userData.membershipExpiry}</strong></p>
+                <p>Next payment of <strong>$250.00</strong> is due on: <strong class="text-primary">${userData.nextPaymentDue}</strong></p>
+                <h3 class="text-lg font-bold text-primary mt-8 mb-4">Make a Payment</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="flex items-center cursor-pointer">
+                      <input type="radio" name="payment-method" value="stripe" class="h-4 w-4 text-accent focus:ring-accent border-gray-300" />
+                      <span class="ml-3 font-medium">Pay with Credit Card (Stripe)</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="flex items-center cursor-pointer">
+                      <input type="radio" name="payment-method" value="paypal" class="h-4 w-4 text-accent focus:ring-accent border-gray-300" />
+                      <span class="ml-3 font-medium">Pay with PayPal</span>
+                    </label>
+                  </div>
+                </div>
+                <div id="stripe-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50">
+                  <h4 class="font-bold text-primary mb-4">Credit Card Information</h4>
+                  <div class="space-y-4">
+                    <div>
+                      <label for="card-name" class="block mb-1 font-medium">Name on Card</label>
+                      <input type="text" id="card-name" class="w-full mt-1 p-2 border rounded-md" />
+                    </div>
+                    <div>
+                      <label for="card-number" class="block mb-1 font-medium">Card Number</label>
+                      <input type="text" id="card-number" class="w-full mt-1 p-2 border rounded-md" />
+                    </div>
+                    <div class="flex space-x-4">
+                      <div class="w-1/2">
+                        <label for="card-expiry" class="block mb-1 font-medium">Expiry (MM/YY)</label>
+                        <input type="text" id="card-expiry" class="w-full mt-1 p-2 border rounded-md" />
+                      </div>
+                      <div class="w-1/2">
+                        <label for="card-cvc" class="block mb-1 font-medium">CVC</label>
+                        <input type="text" id="card-cvc" class="w-full mt-1 p-2 border rounded-md" />
+                      </div>
+                    </div>
+                    <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md mt-4">Pay $250.00</button>
+                  </div>
+                </div>
+                <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 text-center">
+                  <h4 class="font-bold text-primary mb-4">Complete your payment with PayPal</h4>
+                  <p class="text-gray-600 mb-4">You will be redirected to the PayPal website to complete your payment securely.</p>
+                  <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md">Pay with PayPal</button>
+                </div>
+              </div>
+            `;
+            break;
+          case "membership-renew":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Renew Membership</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
+                <p class="mb-6">Your current membership expires on: <strong class="text-secondary">${userData.membershipExpiry}</strong></p>
+                <form id="renew-form" class="space-y-6" aria-label="Membership renewal form">
+                  <div>
+                    <label for="renewal-period" class="block font-medium mb-1">Select Renewal Period</label>
+                    <select id="renewal-period" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-accent" required>
+                      <option value="" disabled selected>Select period</option>
+                      <option value="1">1 Year - $250.00</option>
+                      <option value="2">2 Years - $480.00</option>
+                      <option value="3">3 Years - $700.00</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-medium mb-1">Payment Method</label>
+                    <div class="space-y-3">
+                      <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="payment-method" value="stripe" class="h-4 w-4 text-accent focus:ring-accent border-gray-300" required />
+                        <span class="ml-3 font-medium">Credit Card (Stripe)</span>
+                      </label>
+                      <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="payment-method" value="paypal" class="h-4 w-4 text-accent focus:ring-accent border-gray-300" />
+                        <span class="ml-3 font-medium">PayPal</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div id="stripe-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50">
+                    <h4 class="font-bold text-primary mb-4">Credit Card Information</h4>
+                    <div class="space-y-4">
+                      <div>
+                        <label for="card-name" class="block mb-1 font-medium">Name on Card</label>
+                        <input type="text" id="card-name" class="w-full mt-1 p-2 border rounded-md" />
+                      </div>
+                      <div>
+                        <label for="card-number" class="block mb-1 font-medium">Card Number</label>
+                        <input type="text" id="card-number" class="w-full mt-1 p-2 border rounded-md" />
+                      </div>
+                      <div class="flex space-x-4">
+                        <div class="w-1/2">
+                          <label for="card-expiry" class="block mb-1 font-medium">Expiry (MM/YY)</label>
+                          <input type="text" id="card-expiry" class="w-full mt-1 p-2 border rounded-md" />
+                        </div>
+                        <div class="w-1/2">
+                          <label for="card-cvc" class="block mb-1 font-medium">CVC</label>
+                          <input type="text" id="card-cvc" class="w-full mt-1 p-2 border rounded-md" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 text-center">
+                    <h4 class="font-bold text-primary mb-4">Complete your payment with PayPal</h4>
+                    <p class="text-gray-600 mb-4">You will be redirected to the PayPal website to complete your payment securely.</p>
+                    <button type="button" id="paypal-pay-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md">Pay with PayPal</button>
+                  </div>
+                  <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md mt-6">Renew Membership</button>
+                </form>
+                <div id="renew-message" class="mt-6 text-center text-green-600 font-semibold hidden"></div>
+              </div>
+            `;
+            break;
+          case "settings":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Settings</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
+                <form id="settings-form" class="space-y-6" aria-label="User settings form">
+                  <div class="flex items-center justify-between">
+                    <label for="email-notifications" class="font-medium">Email Notifications</label>
+                    <input type="checkbox" id="email-notifications" class="form-checkbox h-5 w-5 text-accent" ${
+                      userData.settings.emailNotifications ? "checked" : ""
+                    } />
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <label for="newsletter-subscribe" class="font-medium">Subscribe to Newsletter</label>
+                    <input type="checkbox" id="newsletter-subscribe" class="form-checkbox h-5 w-5 text-accent" ${
+                      userData.settings.newsletterSubscribed ? "checked" : ""
+                    } />
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <label for="dark-mode" class="font-medium">Dark Mode</label>
+                    <input type="checkbox" id="dark-mode" class="form-checkbox h-5 w-5 text-accent" ${
+                      userData.settings.darkMode ? "checked" : ""
+                    } />
+                  </div>
+                  <div>
+                    <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md">Save Settings</button>
+                  </div>
+                </form>
+                <div id="settings-message" class="mt-4 text-green-600 font-semibold hidden"></div>
+              </div>
+            `;
+            break;
+          case "investment-portfolio":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">My Portfolio</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-4xl mx-auto space-y-6">
+                <p>Overview of your investment portfolio and performance.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div class="p-4 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Total Investment</h2>
+                    <p class="text-3xl font-bold text-primary">$75,000</p>
+                  </div>
+                  <div class="p-4 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Current Value</h2>
+                    <p class="text-3xl font-bold text-primary">$82,500</p>
+                  </div>
+                  <div class="p-4 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Profit/Loss</h2>
+                    <p class="text-3xl font-bold text-primary">+$7,500</p>
+                  </div>
+                </div>
+                <canvas id="portfolioChart" class="rounded-lg shadow" aria-label="Line chart showing investment portfolio growth over time" role="img"></canvas>
+                <div>
+                  <h3 class="text-xl font-bold text-primary mb-4">Holdings</h3>
+                  <table class="min-w-full border border-gray-300 rounded-md">
+                    <thead class="bg-accent text-white">
+                      <tr>
+                        <th class="px-4 py-2 text-left">Asset</th>
+                        <th class="px-4 py-2 text-left">Quantity</th>
+                        <th class="px-4 py-2 text-left">Current Price</th>
+                        <th class="px-4 py-2 text-left">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-t border-gray-200 hover:bg-gray-50">
+                        <td class="px-4 py-2">Stock A</td>
+                        <td class="px-4 py-2">100</td>
+                        <td class="px-4 py-2">$50.00</td>
+                        <td class="px-4 py-2">$5,000</td>
+                      </tr>
+                      <tr class="border-t border-gray-200 hover:bg-gray-50">
+                        <td class="px-4 py-2">Bond B</td>
+                        <td class="px-4 py-2">200</td>
+                        <td class="px-4 py-2">$100.00</td>
+                        <td class="px-4 py-2">$20,000</td>
+                      </tr>
+                      <tr class="border-t border-gray-200 hover:bg-gray-50">
+                        <td class="px-4 py-2">Fund C</td>
+                        <td class="px-4 py-2">150</td>
+                        <td class="px-4 py-2">$150.00</td>
+                        <td class="px-4 py-2">$22,500</td>
+                      </tr>
+                      <tr class="border-t border-gray-200 hover:bg-gray-50">
+                        <td class="px-4 py-2">ETF D</td>
+                        <td class="px-4 py-2">100</td>
+                        <td class="px-4 py-2">$350.00</td>
+                        <td class="px-4 py-2">$35,000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `;
+            break;
+          case "club-resources":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Club Resources</h1>
+              <div class="bg-white p-6 rounded-lg shadow max-w-4xl mx-auto space-y-6">
+                <p>Access exclusive resources, guides, and documents.</p>
+                <ul class="list-disc list-inside space-y-3">
+                  <li>
+                    <a href="#" class="text-accent hover:underline flex items-center" tabindex="0">
+                      <i class="fas fa-file-pdf mr-2"></i> Investment Guide 2024 (PDF)
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-accent hover:underline flex items-center" tabindex="0">
+                      <i class="fas fa-video mr-2"></i> Webinar Recording: Market Trends Q1 2024
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-accent hover:underline flex items-center" tabindex="0">
+                      <i class="fas fa-file-alt mr-2"></i> Club Meeting Minutes - March 2024
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-accent hover:underline flex items-center" tabindex="0">
+                      <i class="fas fa-book mr-2"></i> Financial Planning eBook
+                    </a>
+                  </li>
+                </ul>
+                <div class="mt-6">
+                  <img src="https://placehold.co/800x300/png?text=Club+Resources+Image" alt="Image showing club members accessing resources on laptops and tablets" class="w-full rounded-lg shadow" />
+                </div>
+              </div>
+            `;
+            break;
+          default:
+            contentHtml = `<h1 class="text-3xl font-bold text-primary">Content not found</h1>`;
+        }
+        mainContent.innerHTML = contentHtml;
+        addPaymentGatewayListeners();
+        if (contentId === "investment-portfolio") {
+          renderPortfolioChart();
+        }
         if (contentId === "membership-renew") {
           addRenewListeners();
         }
@@ -502,12 +813,9 @@
         if (contentId === "user-home") {
           addProfileFormListener();
         }
-        if (contentId === "investment-portfolio") {
-          renderPortfolioChart();
-        }
       }
 
-      // --- EVENT LISTENERS ---
+      // Sidebar link event listeners
       function addSidebarEventListeners() {
         const links = document.querySelectorAll(".sidebar-link");
         links.forEach((link) => {
@@ -516,12 +824,13 @@
             links.forEach((l) => l.classList.remove("active"));
             link.classList.add("active");
             const contentId = link.getAttribute("data-content");
-            if (localStorage.getItem("userRole") === "admin") {
+            if (userRole === "admin") {
               renderAdminContent(contentId);
             } else {
               renderUserContent(contentId, mockUser);
             }
           });
+          // Keyboard accessibility: Enter key triggers click
           link.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -531,37 +840,7 @@
         });
       }
 
-      function addPendingUserListeners() {
-        const approveButtons = document.querySelectorAll(".approve-btn");
-        const rejectButtons = document.querySelectorAll(".reject-btn");
-
-        approveButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const userId = parseInt(btn.getAttribute("data-id"));
-            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
-            if (userIndex !== -1) {
-              const approvedUser = pendingUsers.splice(userIndex, 1)[0];
-              approvedUser.approved = true;
-              approvedUser.membershipStatus = "Active";
-              alert(`User "${approvedUser.name}" approved and can now login.`);
-              renderAdminContent("pending-users");
-            }
-          });
-        });
-
-        rejectButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const userId = parseInt(btn.getAttribute("data-id"));
-            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
-            if (userIndex !== -1) {
-              const rejectedUser = pendingUsers.splice(userIndex, 1)[0];
-              alert(`User "${rejectedUser.name}" rejected and removed from pending list.`);
-              renderAdminContent("pending-users");
-            }
-          });
-        });
-      }
-
+      // Payment form toggle
       function addPaymentGatewayListeners() {
         const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
         const stripeForm = document.getElementById("stripe-form");
@@ -580,10 +859,177 @@
         });
       }
 
+      // Chart.js financial reports chart
+      function renderFinancialChart() {
+        const ctx = document.getElementById("financialChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+            datasets: [
+              {
+                label: "Revenue",
+                data: [120000, 130000, 125000, 140000, 150000, 160000, 170000, 180000],
+                backgroundColor: "#FCA311",
+              },
+              {
+                label: "Expenses",
+                data: [50000, 55000, 52000, 60000, 65000, 70000, 72000, 75000],
+                backgroundColor: "#2F5233",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Monthly Financial Overview" },
+            },
+            scales: {
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
+
+      // Chart.js admin overview chart (line)
+      function renderAdminOverviewChart() {
+        const ctx = document.getElementById("adminOverviewChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+            datasets: [
+              {
+                label: "New Users",
+                data: [50, 75, 60, 80, 90, 100, 110, 120],
+                borderColor: "#FCA311",
+                backgroundColor: "#FCA311aa",
+                fill: true,
+                tension: 0.3,
+              },
+              {
+                label: "Active Members",
+                data: [900, 920, 940, 960, 980, 1000, 1020, 1050],
+                borderColor: "#2F5233",
+                backgroundColor: "#2F5233aa",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "User Growth & Activity" },
+            },
+            scales: {
+              y: { beginAtZero: false },
+            },
+          },
+        });
+      }
+
+      // Chart.js portfolio chart (line)
+      function renderPortfolioChart() {
+        const ctx = document.getElementById("portfolioChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ],
+            datasets: [
+              {
+                label: "Portfolio Value",
+                data: [
+                  60000, 62000, 64000, 66000, 68000, 70000, 72000, 74000, 76000,
+                  78000, 80000, 82500,
+                ],
+                borderColor: "#FCA311",
+                backgroundColor: "#FCA311aa",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Portfolio Growth Over Time" },
+            },
+            scales: {
+              y: { beginAtZero: false },
+            },
+          },
+        });
+      }
+
+      // Approve and Reject buttons for pending users
+      function addPendingUserListeners() {
+        const approveButtons = document.querySelectorAll(".approve-btn");
+        const rejectButtons = document.querySelectorAll(".reject-btn");
+
+        approveButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const userId = parseInt(btn.getAttribute("data-id"));
+            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
+            if (userIndex !== -1) {
+              // Approve user: remove from pending, add to active users (mock)
+              const approvedUser = pendingUsers.splice(userIndex, 1)[0];
+              approvedUser.approved = true;
+              approvedUser.membershipStatus = "Active";
+              // In real app, update backend here
+              alert(`User "${approvedUser.name}" approved and can now login.`);
+              renderAdminContent("pending-users");
+            }
+          });
+        });
+
+        rejectButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const userId = parseInt(btn.getAttribute("data-id"));
+            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
+            if (userIndex !== -1) {
+              const rejectedUser = pendingUsers.splice(userIndex, 1)[0];
+              // In real app, update backend here
+              alert(`User "${rejectedUser.name}" rejected and removed from pending list.`);
+              renderAdminContent("pending-users");
+            }
+          });
+        });
+      }
+
+      // Admin settings form listener
+      function addAdminSettingsListener() {
+        const adminSettingsForm = document.getElementById("admin-settings-form");
+        if (!adminSettingsForm) return;
+        adminSettingsForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert("Admin settings saved successfully!");
+        });
+      }
+
+      // User renew membership listeners
       function addRenewListeners() {
         const renewForm = document.getElementById("renew-form");
         const renewMessage = document.getElementById("renew-message");
         const paypalPayBtn = document.getElementById("paypal-pay-btn");
+
+        if (!renewForm) return;
 
         renewForm.addEventListener("submit", (e) => {
           e.preventDefault();
@@ -629,9 +1075,11 @@
         }
       }
 
+      // User settings form listener
       function addSettingsListeners() {
         const settingsForm = document.getElementById("settings-form");
         const settingsMessage = document.getElementById("settings-message");
+        if (!settingsForm) return;
 
         settingsForm.addEventListener("submit", (e) => {
           e.preventDefault();
@@ -654,6 +1102,7 @@
         });
       }
 
+      // User profile form listener
       function addProfileFormListener() {
         const profileForm = document.getElementById("profile-form");
         if (!profileForm) return;
@@ -668,125 +1117,6 @@
         });
       }
 
-      function renderFinancialChart() {
-        const ctx = document.getElementById("financialChart")?.getContext("2d");
-        if (!ctx) return;
-        new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-            datasets: [
-              {
-                label: "Revenue",
-                data: [120000, 130000, 125000, 140000, 150000, 160000, 170000, 180000],
-                backgroundColor: "#FCA311",
-              },
-              {
-                label: "Expenses",
-                data: [50000, 55000, 52000, 60000, 65000, 70000, 72000, 75000],
-                backgroundColor: "#2F5233",
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { position: "top" },
-              title: { display: true, text: "Monthly Financial Overview" },
-            },
-            scales: {
-              y: { beginAtZero: true },
-            },
-          },
-        });
-      }
-
-      function renderAdminOverviewChart() {
-        const ctx = document.getElementById("adminOverviewChart")?.getContext("2d");
-        if (!ctx) return;
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
-            datasets: [
-              {
-                label: "New Users",
-                data: [50, 75, 60, 80, 90, 100, 110, 120],
-                borderColor: "#FCA311",
-                backgroundColor: "#FCA311aa",
-                fill: true,
-                tension: 0.3,
-              },
-              {
-                label: "Active Members",
-                data: [900, 920, 940, 960, 980, 1000, 1020, 1050],
-                borderColor: "#2F5233",
-                backgroundColor: "#2F5233aa",
-                fill: true,
-                tension: 0.3,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { position: "top" },
-              title: { display: true, text: "User Growth & Activity" },
-            },
-            scales: {
-              y: { beginAtZero: false },
-            },
-          },
-        });
-      }
-
-      function renderPortfolioChart() {
-        const ctx = document.getElementById("portfolioChart")?.getContext("2d");
-        if (!ctx) return;
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-            datasets: [
-              {
-                label: "Portfolio Value",
-                data: [
-                  60000, 62000, 64000, 66000, 68000, 70000, 72000, 74000, 76000,
-                  78000, 80000, 82500,
-                ],
-                borderColor: "#FCA311",
-                backgroundColor: "#FCA311aa",
-                fill: true,
-                tension: 0.3,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { position: "top" },
-              title: { display: true, text: "Portfolio Growth Over Time" },
-            },
-            scales: {
-              y: { beginAtZero: false },
-            },
-          },
-        });
-      }
-
       signOutBtn.addEventListener("click", (e) => {
         e.preventDefault();
         localStorage.removeItem("userRole");
@@ -794,7 +1124,7 @@
         window.location.href = "login.html";
       });
 
-      checkLoginState();
+      loadDashboard(userRole === "admin" ? mockAdmin : mockUser);
     });
   </script>
 </body>
