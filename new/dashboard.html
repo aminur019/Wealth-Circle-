@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard | WealthCircle</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,46 +29,56 @@
             background-color: #FCA311; /* accent color */
             color: white;
         }
+        /* Scrollbar for sidebar */
+        #sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        #sidebar-nav::-webkit-scrollbar-thumb {
+            background-color: rgba(252, 163, 17, 0.6);
+            border-radius: 3px;
+        }
+        #sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
     </style>
 </head>
-<body class="font-sans bg-gray-100">
+<body class="font-sans bg-gradient-to-br from-primary via-secondary to-primary min-h-screen text-gray-900">
 
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex flex-col md:flex-row h-screen">
         <!-- Left Sidebar -->
-        <aside id="sidebar" class="w-64 bg-primary text-white flex-shrink-0 flex flex-col">
+        <aside id="sidebar" class="w-full md:w-72 bg-primary text-white flex-shrink-0 flex flex-col shadow-lg relative z-20">
             <!-- Logo and User Info -->
-            <div class="h-20 flex items-center justify-center border-b border-gray-700">
-                 <a class="text-2xl font-bold text-white" href="index.html">
+            <div class="h-20 flex items-center justify-center border-b border-gray-700 px-6">
+                <a class="text-3xl font-serif font-extrabold tracking-wide text-white flex items-center" href="index.html" aria-label="WealthCircle Home">
                     <span class="text-accent">Wealth</span>Circle
+                    <i class="fas fa-coins ml-3 text-accent"></i>
                 </a>
             </div>
-            <div id="user-profile" class="p-4 border-b border-gray-700 text-center">
-                <!-- User Profile will be injected here by JS -->
+            <div id="user-profile" class="p-6 border-b border-gray-700 text-center space-y-1">
+                <!-- User Profile injected by JS -->
             </div>
             
             <!-- Navigation Links -->
-            <nav id="sidebar-nav" class="flex-1 px-2 py-4 space-y-2">
-                <!-- Links will be injected here by JS -->
+            <nav id="sidebar-nav" class="flex-1 px-4 py-6 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
+                <!-- Links injected by JS -->
             </nav>
 
             <!-- Sign Out -->
-            <div class="px-2 py-4 border-t border-gray-700">
-                <a href="#" id="sign-out-btn" class="flex items-center w-full px-4 py-2 rounded-md text-gray-300 hover:bg-accent hover:text-white">
-                    <i class="fas fa-sign-out-alt w-6"></i>
-                    <span class="ml-3">Sign Out</span>
+            <div class="px-6 py-4 border-t border-gray-700">
+                <a href="#" id="sign-out-btn" class="flex items-center w-full px-4 py-3 rounded-md text-gray-300 hover:bg-accent hover:text-white transition">
+                    <i class="fas fa-sign-out-alt w-6 text-lg"></i>
+                    <span class="ml-3 font-semibold">Sign Out</span>
                 </a>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main id="main-content" class="flex-1 p-6 md:p-10 overflow-y-auto">
-            <!-- Content will be injected here by JS -->
+        <main id="main-content" class="flex-1 p-6 md:p-10 overflow-y-auto bg-gray-50">
             <h1 class="text-3xl font-bold text-primary">Loading...</h1>
         </main>
     </div>
 
     <script>
-
 document.addEventListener('DOMContentLoaded', () => {
     // ---ELEMENT SELECTORS---
     const sidebarNav = document.getElementById('sidebar-nav');
@@ -82,7 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
         role: 'admin',
         name: 'Admin User',
         email: 'admin@wealthcircle.com',
-        // other admin data...
+        stats: {
+            totalUsers: 1245,
+            activeSubscriptions: 1023,
+            monthlyRevenue: 45230,
+            pendingApprovals: 7,
+        },
+        recentUsers: [
+            {name: "John Doe", email: "john@example.com", joined: "2024-05-01", status: "Active"},
+            {name: "Jane Smith", email: "jane@example.com", joined: "2024-04-28", status: "Pending"},
+            {name: "Michael Lee", email: "michael@example.com", joined: "2024-04-25", status: "Active"},
+            {name: "Emily Davis", email: "emily@example.com", joined: "2024-04-20", status: "Suspended"},
+            {name: "David Kim", email: "david@example.com", joined: "2024-04-18", status: "Active"},
+        ],
     };
 
     const mockUser = {
@@ -93,23 +114,31 @@ document.addEventListener('DOMContentLoaded', () => {
         address: '123 Investment Street, Financial District, NY 10005',
         membershipStatus: 'Active',
         nextPaymentDue: '2023-12-01',
-        // other user data...
+        portfolio: {
+            totalValue: 125000,
+            monthlyGrowth: 3.5,
+            assets: [
+                {name: "Stock A", value: 50000, growth: 2.1},
+                {name: "Bond B", value: 30000, growth: 1.2},
+                {name: "Real Estate Fund", value: 45000, growth: 5.0},
+            ],
+        },
+        recentTransactions: [
+            {date: "2024-05-10", type: "Buy", asset: "Stock A", amount: "$5,000"},
+            {date: "2024-04-28", type: "Dividend", asset: "Real Estate Fund", amount: "$350"},
+            {date: "2024-04-15", type: "Sell", asset: "Bond B", amount: "$3,000"},
+            {date: "2024-04-01", type: "Buy", asset: "Stock A", amount: "$10,000"},
+            {date: "2024-03-20", type: "Buy", asset: "Real Estate Fund", amount: "$15,000"},
+        ],
     };
     
     // --- CORE LOGIC ---
     function checkLoginState() {
-        // --> BACK-END INTEGRATION NEEDED <--
-        // In a real app, you would make an API call to a `/api/me` endpoint
-        // to get the current logged-in user's data.
         const userRole = localStorage.getItem('userRole');
-        
         if (!userRole) {
-            // If not logged in, redirect to login page
             window.location.href = 'login.html';
             return;
         }
-        
-        // Based on the role, load the correct dashboard
         if (userRole === 'admin') {
             loadDashboard(mockAdmin);
         } else {
@@ -118,43 +147,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadDashboard(userData) {
-        // Render user profile in sidebar
         userProfile.innerHTML = `
-            <h3 class="font-bold">${userData.name}</h3>
-            <p class="text-sm text-gray-400">${userData.email}</p>
-            <span class="text-xs font-semibold uppercase bg-accent text-white py-1 px-2 rounded-full mt-2 inline-block">${userData.role}</span>
+            <img src="https://placehold.co/80x80/14213D/FFFFFF/png?text=${encodeURIComponent(userData.name.split(' ').map(n=>n[0]).join(''))}" alt="Profile picture of ${userData.name}" class="mx-auto rounded-full w-20 h-20 object-cover border-4 border-accent shadow-md" />
+            <h3 class="font-bold text-lg mt-3">${userData.name}</h3>
+            <p class="text-sm text-gray-300 truncate">${userData.email}</p>
+            <span class="text-xs font-semibold uppercase bg-accent text-primary py-1 px-3 rounded-full mt-2 inline-block">${userData.role}</span>
         `;
-        
-        // Render navigation and content based on role
         if (userData.role === 'admin') {
             renderAdminDashboard();
         } else {
             renderUserDashboard(userData);
         }
-
-        // Add event listeners to sidebar links
         addSidebarEventListeners();
     }
     
     // --- ADMIN DASHBOARD ---
     function renderAdminDashboard() {
         sidebarNav.innerHTML = `
-            <a href="#" class="sidebar-link active" data-content="admin-home"><i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Dashboard</span></a>
-            <a href="#" class="sidebar-link" data-content="user-management"><i class="fas fa-users-cog w-6"></i><span class="ml-3">User Management</span></a>
-            <a href="#" class="sidebar-link" data-content="financial-reports"><i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3">Financial Reports</span></a>
-            <a href="#" class="sidebar-link" data-content="content-management"><i class="fas fa-edit w-6"></i><span class="ml-3">Manage Content</span></a>
-            <a href="#" class="sidebar-link" data-content="settings"><i class="fas fa-cogs w-6"></i><span class="ml-3">Settings</span></a>
+            <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="admin-home"><i class="fas fa-tachometer-alt w-6"></i><span class="ml-3 font-semibold">Dashboard</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="user-management"><i class="fas fa-users-cog w-6"></i><span class="ml-3 font-semibold">User Management</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="financial-reports"><i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3 font-semibold">Financial Reports</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="content-management"><i class="fas fa-edit w-6"></i><span class="ml-3 font-semibold">Manage Content</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="settings"><i class="fas fa-cogs w-6"></i><span class="ml-3 font-semibold">Settings</span></a>
         `;
         renderAdminContent('admin-home');
     }
 
     // --- USER DASHBOARD ---
     function renderUserDashboard(userData) {
-         sidebarNav.innerHTML = `
-            <a href="#" class="sidebar-link active" data-content="user-home"><i class="fas fa-user-circle w-6"></i><span class="ml-3">My Profile</span></a>
-            <a href="#" class="sidebar-link" data-content="membership-billing"><i class="fas fa-credit-card w-6"></i><span class="ml-3">Membership & Billing</span></a>
-            <a href="#" class="sidebar-link" data-content="investment-portfolio"><i class="fas fa-chart-line w-6"></i><span class="ml-3">My Portfolio</span></a>
-            <a href="#" class="sidebar-link" data-content="club-resources"><i class="fas fa-book w-6"></i><span class="ml-3">Club Resources</span></a>
+        sidebarNav.innerHTML = `
+            <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="user-home"><i class="fas fa-user-circle w-6"></i><span class="ml-3 font-semibold">My Profile</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="membership-billing"><i class="fas fa-credit-card w-6"></i><span class="ml-3 font-semibold">Membership & Billing</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="investment-portfolio"><i class="fas fa-chart-line w-6"></i><span class="ml-3 font-semibold">My Portfolio</span></a>
+            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="club-resources"><i class="fas fa-book w-6"></i><span class="ml-3 font-semibold">Club Resources</span></a>
         `;
         renderUserContent('user-home', userData);
     }
@@ -166,18 +191,196 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'user-management':
                 contentHtml = `
                     <h1 class="text-3xl font-bold text-primary mb-6">User Management</h1>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <p>Here you can view, edit, and manage all club members. This table would be populated with data from your database.</p>
-                        <!-- Table of users would go here -->
-                    </div>`;
+                    <div class="bg-white rounded-lg shadow p-6 overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Name</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Email</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Joined</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Status</th>
+                                    <th class="px-6 py-3 text-center text-sm font-semibold uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                ${mockAdmin.recentUsers.map(user => `
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">${user.name}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">${user.email}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">${new Date(user.joined).toLocaleDateString()}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                                                user.status === 'Active' ? 'bg-green-100 text-green-800' :
+                                                user.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                                user.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                                            }">${user.status}</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center space-x-2">
+                                            <button class="text-blue-600 hover:text-blue-800" title="Edit User"><i class="fas fa-edit"></i></button>
+                                            <button class="text-red-600 hover:text-red-800" title="Delete User"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
                 break;
-            // Add cases for other admin sections...
+            case 'financial-reports':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Financial Reports</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+                            <i class="fas fa-users text-4xl text-accent mb-3"></i>
+                            <p class="text-gray-600">Total Users</p>
+                            <p class="text-3xl font-bold text-primary">${mockAdmin.stats.totalUsers.toLocaleString()}</p>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+                            <i class="fas fa-file-invoice-dollar text-4xl text-accent mb-3"></i>
+                            <p class="text-gray-600">Monthly Revenue</p>
+                            <p class="text-3xl font-bold text-primary">$${mockAdmin.stats.monthlyRevenue.toLocaleString()}</p>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+                            <i class="fas fa-user-check text-4xl text-accent mb-3"></i>
+                            <p class="text-gray-600">Active Subscriptions</p>
+                            <p class="text-3xl font-bold text-primary">${mockAdmin.stats.activeSubscriptions.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h2 class="text-xl font-semibold text-primary mb-4">Pending Approvals</h2>
+                        <p class="text-gray-700">You have <span class="font-bold text-accent">${mockAdmin.stats.pendingApprovals}</span> pending user approvals to review.</p>
+                        <button class="mt-4 bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition">Review Now</button>
+                    </div>
+                `;
+                break;
+            case 'content-management':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Manage Content</h1>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <p class="text-gray-700 mb-4">Create, edit, and manage club content such as announcements, articles, and resources.</p>
+                        <button class="bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition mb-6">Add New Content</button>
+                        <ul class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                            <li class="py-3 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold text-primary">Monthly Investment Tips - May 2024</h3>
+                                    <p class="text-sm text-gray-600">Published on 2024-05-01</p>
+                                </div>
+                                <div class="space-x-3">
+                                    <button class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="text-red-600 hover:text-red-800" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </li>
+                            <li class="py-3 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold text-primary">New Club Rules and Guidelines</h3>
+                                    <p class="text-sm text-gray-600">Published on 2024-04-15</p>
+                                </div>
+                                <div class="space-x-3">
+                                    <button class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="text-red-600 hover:text-red-800" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                `;
+                break;
+            case 'settings':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Settings</h1>
+                    <div class="bg-white rounded-lg shadow p-6 max-w-lg">
+                        <form id="settings-form" class="space-y-6">
+                            <div>
+                                <label for="site-title" class="block font-semibold text-gray-700 mb-2">Site Title</label>
+                                <input type="text" id="site-title" class="w-full border border-gray-300 rounded-md p-2" value="WealthCircle" />
+                            </div>
+                            <div>
+                                <label for="admin-email" class="block font-semibold text-gray-700 mb-2">Admin Email</label>
+                                <input type="email" id="admin-email" class="w-full border border-gray-300 rounded-md p-2" value="admin@wealthcircle.com" />
+                            </div>
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="email-notifications" class="form-checkbox text-accent" checked />
+                                    <span class="ml-2 text-gray-700 font-medium">Enable Email Notifications</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition">Save Settings</button>
+                        </form>
+                    </div>
+                `;
+                break;
             default: // admin-home
                 contentHtml = `
                     <h1 class="text-3xl font-bold text-primary mb-6">Admin Dashboard</h1>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <p>Welcome, Admin! This is the central control panel. You have access to all administrative functions.</p>
-                    </div>`;
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
+                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.totalUsers.toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
+                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Monthly Revenue</p>
+                                <p class="text-2xl font-bold text-primary">$${mockAdmin.stats.monthlyRevenue.toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
+                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Active Subscriptions</p>
+                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.activeSubscriptions.toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
+                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Pending Approvals</p>
+                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.pendingApprovals}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <section>
+                        <h2 class="text-2xl font-semibold text-primary mb-4">Recent Users</h2>
+                        <div class="bg-white rounded-lg shadow p-6 overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Name</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Email</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Joined</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    ${mockAdmin.recentUsers.map(user => `
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap font-medium">${user.name}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-gray-600">${user.email}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">${new Date(user.joined).toLocaleDateString()}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                                                    user.status === 'Active' ? 'bg-green-100 text-green-800' :
+                                                    user.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                                    user.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                                                }">${user.status}</span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                `;
         }
         mainContent.innerHTML = contentHtml;
     }
@@ -188,66 +391,175 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'membership-billing':
                 contentHtml = `
                     <h1 class="text-3xl font-bold text-primary mb-6">Membership & Billing</h1>
-                    <div class="bg-white p-8 rounded-lg shadow">
+                    <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto">
                         <h2 class="text-xl font-bold text-primary mb-4">Your Membership Status: <span class="text-secondary">${userData.membershipStatus}</span></h2>
-                        <p class="text-gray-600 mb-6">Next payment of $250.00 is due on: <strong class="text-primary">${userData.nextPaymentDue}</strong></p>
+                        <p class="text-gray-600 mb-6">Next payment of <strong class="text-primary">$250.00</strong> is due on: <strong class="text-primary">${userData.nextPaymentDue}</strong></p>
                         
                         <h3 class="text-lg font-bold text-primary mt-8 mb-4">Make a Payment</h3>
                         <div class="space-y-4">
                            <div>
-                                <label class="flex items-center">
-                                    <input type="radio" name="payment-method" value="stripe" class="h-4 w-4 text-accent focus:ring-accent border-gray-300">
-                                    <span class="ml-3 font-medium">Pay with Credit Card (Stripe)</span>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="payment-method" value="stripe" class="h-5 w-5 text-accent focus:ring-accent border-gray-300" checked>
+                                    <span class="ml-3 font-medium select-none">Pay with Credit Card (Stripe)</span>
                                 </label>
                             </div>
                             <div>
-                                <label class="flex items-center">
-                                    <input type="radio" name="payment-method" value="paypal" class="h-4 w-4 text-accent focus:ring-accent border-gray-300">
-                                    <span class="ml-3 font-medium">Pay with PayPal</span>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="payment-method" value="paypal" class="h-5 w-5 text-accent focus:ring-accent border-gray-300">
+                                    <span class="ml-3 font-medium select-none">Pay with PayPal</span>
                                 </label>
                             </div>
                         </div>
 
-                        <!-- Stripe Payment Form (hidden by default) -->
-                        <div id="stripe-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50">
+                        <!-- Stripe Payment Form -->
+                        <div id="stripe-form" class="mt-6 p-6 border rounded-lg bg-gray-50 shadow-inner">
                             <h4 class="font-bold text-primary mb-4">Credit Card Information</h4>
-                            <div class="space-y-4">
-                                <div><label for="card-name">Name on Card</label><input type="text" id="card-name" class="w-full mt-1 p-2 border rounded-md"></div>
-                                <div><label for="card-number">Card Number</label><input type="text" id="card-number" class="w-full mt-1 p-2 border rounded-md"></div>
-                                <div class="flex space-x-4">
-                                    <div class="w-1/2"><label for="card-expiry">Expiry (MM/YY)</label><input type="text" id="card-expiry" class="w-full mt-1 p-2 border rounded-md"></div>
-                                    <div class="w-1/2"><label for="card-cvc">CVC</label><input type="text" id="card-cvc" class="w-full mt-1 p-2 border rounded-md"></div>
+                            <form id="stripe-payment-form" class="space-y-4">
+                                <div>
+                                    <label for="card-name" class="block font-medium mb-1">Name on Card</label>
+                                    <input type="text" id="card-name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="Sarah Johnson" required />
                                 </div>
-                                <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md mt-4">Pay $250.00</button>
-                            </div>
+                                <div>
+                                    <label for="card-number" class="block font-medium mb-1">Card Number</label>
+                                    <input type="text" id="card-number" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="1234 5678 9012 3456" required />
+                                </div>
+                                <div class="flex space-x-4">
+                                    <div class="flex-1">
+                                        <label for="card-expiry" class="block font-medium mb-1">Expiry (MM/YY)</label>
+                                        <input type="text" id="card-expiry" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="12/25" required />
+                                    </div>
+                                    <div class="flex-1">
+                                        <label for="card-cvc" class="block font-medium mb-1">CVC</label>
+                                        <input type="text" id="card-cvc" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="123" required />
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 rounded-md shadow transition">Pay $250.00</button>
+                            </form>
                         </div>
 
-                        <!-- PayPal Button (hidden by default) -->
-                        <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 text-center">
+                        <!-- PayPal Button -->
+                        <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 shadow-inner text-center">
                             <h4 class="font-bold text-primary mb-4">Complete your payment with PayPal</h4>
                             <p class="text-gray-600 mb-4">You will be redirected to the PayPal website to complete your payment securely.</p>
-                             <!-- PayPal button would be rendered here by their script -->
-                             <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md">Pay with PayPal</button>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md shadow transition">Pay with PayPal</button>
                         </div>
-                    </div>`;
+                    </div>
+                `;
                 break;
-            // Add cases for other user sections...
+            case 'investment-portfolio':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">My Portfolio</h1>
+                    <div class="bg-white rounded-lg shadow p-8 max-w-4xl mx-auto">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
+                            <div>
+                                <p class="text-gray-600">Total Portfolio Value</p>
+                                <p class="text-4xl font-extrabold text-secondary">$${userData.portfolio.totalValue.toLocaleString()}</p>
+                            </div>
+                            <div class="mt-4 md:mt-0 flex items-center space-x-2 text-green-600 font-semibold">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>${userData.portfolio.monthlyGrowth}% this month</span>
+                            </div>
+                        </div>
+                        <h2 class="text-xl font-semibold text-primary mb-4">Assets Breakdown</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            ${userData.portfolio.assets.map(asset => `
+                                <div class="bg-gray-50 rounded-lg p-6 shadow flex flex-col items-center">
+                                    <i class="fas fa-chart-pie text-4xl text-accent mb-3"></i>
+                                    <h3 class="font-semibold text-primary mb-1">${asset.name}</h3>
+                                    <p class="text-gray-700 text-lg font-bold">$${asset.value.toLocaleString()}</p>
+                                    <p class="mt-1 text-green-600 font-semibold">${asset.growth}% growth</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <h2 class="text-xl font-semibold text-primary mb-4">Recent Transactions</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Date</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Type</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Asset</th>
+                                        <th class="px-6 py-3 text-right text-sm font-semibold uppercase">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    ${userData.recentTransactions.map(tx => `
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">${new Date(tx.date).toLocaleDateString()}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap font-semibold">${tx.type}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">${tx.asset}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right font-bold">${tx.amount}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'club-resources':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Club Resources</h1>
+                    <div class="bg-white rounded-lg shadow p-6 max-w-4xl mx-auto space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/80x80/png?text=Investment+Guide" alt="Cover image of Investment Guide booklet with financial charts and graphs" class="w-20 h-20 rounded-md object-cover shadow" />
+                            <div>
+                                <h2 class="text-xl font-semibold text-primary">Investment Guide 2024</h2>
+                                <p class="text-gray-700">A comprehensive guide to smart investing strategies for 2024.</p>
+                                <a href="#" class="text-accent font-semibold hover:underline">Download PDF</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/80x80/png?text=Webinar" alt="Webinar promotional image showing a presenter and financial charts on screen" class="w-20 h-20 rounded-md object-cover shadow" />
+                            <div>
+                                <h2 class="text-xl font-semibold text-primary">Monthly Webinar Recordings</h2>
+                                <p class="text-gray-700">Access recordings of our expert-led webinars on market trends and investment tips.</p>
+                                <a href="#" class="text-accent font-semibold hover:underline">Watch Now</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/80x80/png?text=Newsletter" alt="Newsletter cover image with financial charts and newsletter title" class="w-20 h-20 rounded-md object-cover shadow" />
+                            <div>
+                                <h2 class="text-xl font-semibold text-primary">Monthly Newsletter</h2>
+                                <p class="text-gray-700">Stay updated with the latest news, tips, and club announcements.</p>
+                                <a href="#" class="text-accent font-semibold hover:underline">Read Latest</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
             default: // user-home
                 contentHtml = `
                     <h1 class="text-3xl font-bold text-primary mb-6">My Profile</h1>
-                    <div class="bg-white p-8 rounded-lg shadow">
+                    <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto">
                         <h2 class="text-xl font-bold text-primary mb-6">Personal Information</h2>
-                        <form id="profile-form" class="space-y-4">
-                             <div><label for="name" class="font-medium">Full Name</label><input type="text" id="name" value="${userData.name}" class="w-full mt-1 p-2 border rounded-md"></div>
-                             <div><label for="email" class="font-medium">Email Address</label><input type="email" id="email" value="${userData.email}" class="w-full mt-1 p-2 border rounded-md"></div>
-                             <div><label for="phone" class="font-medium">Phone Number</label><input type="tel" id="phone" value="${userData.phone}" class="w-full mt-1 p-2 border rounded-md"></div>
-                             <div><label for="address" class="font-medium">Mailing Address</label><textarea id="address" rows="3" class="w-full mt-1 p-2 border rounded-md">${userData.address}</textarea></div>
-                             <div class="pt-4"><button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-md">Save Changes</button></div>
+                        <form id="profile-form" class="space-y-6">
+                             <div>
+                                <label for="name" class="block font-semibold text-gray-700 mb-2">Full Name</label>
+                                <input type="text" id="name" value="${userData.name}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
+                             </div>
+                             <div>
+                                <label for="email" class="block font-semibold text-gray-700 mb-2">Email Address</label>
+                                <input type="email" id="email" value="${userData.email}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
+                             </div>
+                             <div>
+                                <label for="phone" class="block font-semibold text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" value="${userData.phone}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
+                             </div>
+                             <div>
+                                <label for="address" class="block font-semibold text-gray-700 mb-2">Mailing Address</label>
+                                <textarea id="address" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none">${userData.address}</textarea>
+                             </div>
+                             <div class="pt-4">
+                                <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-md shadow transition">Save Changes</button>
+                             </div>
                         </form>
-                    </div>`;
+                    </div>
+                `;
         }
         mainContent.innerHTML = contentHtml;
-        addPaymentGatewayListeners(); // Re-add listeners for payment section if it exists
+        addPaymentGatewayListeners();
+        addProfileFormListener();
     }
     
     // --- EVENT LISTENERS ---
@@ -256,12 +568,8 @@ document.addEventListener('DOMContentLoaded', () => {
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                
-                // Update active state
                 links.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
-                
-                // Render content
                 const contentId = link.getAttribute('data-content');
                 const userRole = localStorage.getItem('userRole');
                 if (userRole === 'admin') {
@@ -277,6 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
         const stripeForm = document.getElementById('stripe-form');
         const paypalForm = document.getElementById('paypal-form');
+        if (!paymentRadios.length) return;
 
         paymentRadios.forEach(radio => {
             radio.addEventListener('change', () => {
@@ -289,12 +598,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        // Stripe payment form submit simulation
+        const stripePaymentForm = document.getElementById('stripe-payment-form');
+        if (stripePaymentForm) {
+            stripePaymentForm.addEventListener('submit', e => {
+                e.preventDefault();
+                alert('Payment processed successfully (simulation).');
+            });
+        }
+    }
+
+    function addProfileFormListener() {
+        const profileForm = document.getElementById('profile-form');
+        if (!profileForm) return;
+        profileForm.addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Profile changes saved (simulation).');
+        });
     }
 
     signOutBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // --> BACK-END INTEGRATION NEEDED <--
-        // A real app would also call an API endpoint like `/api/logout` to invalidate the session on the server.
         localStorage.removeItem('userRole');
         localStorage.removeItem('userName');
         window.location.href = 'login.html';
@@ -303,8 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INITIALIZE THE DASHBOARD ---
     checkLoginState();
 });
+    </script>
 
-
-</script>
 </body>
 </html>
