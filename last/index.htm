@@ -1,0 +1,3189 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   WealthCircle | Invest Smarter Together
+  </title>
+  <meta content="Join our investment club to learn, collaborate, and grow your wealth with like-minded individuals." name="description"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+   .hero-gradient {
+      background: linear-gradient(135deg, rgba(20, 33, 61, 0.9) 0%, rgba(47, 82, 51, 0.9) 100%);
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #fca311;
+      transition: width 0.3s;
+    }
+    /* Typing animation */
+    .typing-dots {
+      display: flex;
+      align-items: center;
+      height: 17px;
+    }
+    .typing-dots span {
+      width: 7px;
+      height: 7px;
+      margin: 0 2px;
+      background-color: #6b7280;
+      border-radius: 50%;
+      display: inline-block;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes typing {
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-5px);
+      }
+    }
+    /* Custom scrollbar for chat */
+    #chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    #chatbot-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    #chatbot-messages::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+    #chatbot-messages::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+    /* Blob animation keyframes */
+    @keyframes blob {
+      0%,
+      100% {
+        transform: translate(0px, 0px) scale(1);
+      }
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+    }
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+     .file-upload {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .file-upload-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background-color: #f3f4f6;
+      border: 1px dashed #d1d5db;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .file-upload-label:hover {
+      background-color: #e5e7eb;
+    }
+    .file-upload-icon {
+      margin-right: 0.5rem;
+    }
+    .file-name {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      word-break: break-word;
+    }
+    .photo-preview-container {
+      margin-top: 0.75rem;
+      max-width: 150px;
+      max-height: 150px;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .photo-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .membership-card {
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .membership-card:hover {
+      border-color: #FCA311;
+      transform: translateY(-5px);
+    }
+    .membership-card.selected {
+      border-color: #2F5233;
+      background-color: #f8faf7;
+    }
+    .membership-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .membership-card .price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2F5233;
+      margin-bottom: 1rem;
+    }
+    .membership-card .features {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 1.5rem;
+    }
+    .membership-card .features li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .membership-card .features li i {
+      margin-right: 0.5rem;
+      color: #2F5233;
+    }
+    .payment-method-card {
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .payment-method-card:hover {
+      border-color: #FCA311;
+    }
+    .payment-method-card.selected {
+      border-color: #2F5233;
+      background-color: #f8faf7;
+    }
+    .payment-method-card i {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: #4b5563;
+    }
+    .payment-method-card.selected i {
+      color: #2F5233;
+    }
+    .review-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .review-section h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2F5233;
+    }
+    .review-cv {
+      max-width: 700px;
+      margin: 0 auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      page-break-after: always;
+    }
+    .cv-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cv-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #2F5233;
+      flex-shrink: 0;
+    }
+    .cv-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #14213D;
+      flex-grow: 1;
+      min-width: 200px;
+    }
+    .cv-invoice {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    .cv-section {
+      margin-bottom: 1.5rem;
+    }
+    .cv-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2F5233;
+      border-bottom: 2px solid #FCA311;
+      padding-bottom: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .cv-item {
+      margin-bottom: 0.5rem;
+    }
+    .cv-label {
+      font-weight: 600;
+      color: #4b5563;
+      display: inline-block;
+      width: 140px;
+      vertical-align: top;
+    }
+    .cv-value {
+      display: inline-block;
+      max-width: calc(100% - 150px);
+      word-wrap: break-word;
+      color: #333333;
+    }
+    .cv-photo-id {
+      max-width: 100%;
+      max-height: 150px;
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+      margin-top: 0.5rem;
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .step {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin: 0 0.5rem;
+      position: relative;
+    }
+    .step.active {
+      background-color: #FCA311;
+      color: white;
+    }
+    .step.completed {
+      background-color: #2F5233;
+      color: white;
+    }
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background-color: #e5e7eb;
+      margin: 0 -0.5rem;
+      position: relative;
+      top: 1.25rem;
+    }
+    .step-line.completed {
+      background-color: #2F5233;
+    }
+    @media (max-width: 768px) {
+      .step-indicator {
+        margin-bottom: 1.5rem;
+      }
+      .step {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+      }
+      .step-line {
+        top: 1rem;
+      }
+      .membership-card {
+        margin-bottom: 1rem;
+      }
+      .review-item {
+        flex-direction: column;
+      }
+      .review-item .label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+      }
+      .cv-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .cv-name {
+        min-width: auto;
+      }
+      .cv-label {
+        width: 100%;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      .cv-value {
+        max-width: 100%;
+      }
+    }
+    /* Validation error styles */
+    .input-error {
+      border-color: #dc2626 !important;
+    }
+    .error-message {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+  <script>
+   tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#14213D',
+            secondary: '#2F5233',
+            accent: '#FCA311',
+            light: '#DFF6F0',
+            dark: '#333333',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+     <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    }, false);
+
+    // Disable keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl+S
+      if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        alert('Save is disabled on this page.');
+      }
+      // Ctrl+U
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        alert('View source is disabled on this page.');
+      }
+      // F12 (Dev Tools)
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        alert('Developer tools are disabled.');
+      }
+    });
+  </script>
+ </head>
+ <body class="font-sans text-dark bg-gray-50">
+  <!-- Navigation -->
+  <header class="fixed w-full bg-white shadow-sm z-50">
+   <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+     <!-- Logo -->
+     <div class="flex items-center space-x-4">
+      <a class="text-2xl font-bold text-primary" href="#">
+       <span class="text-accent">
+        Wealth
+       </span>
+       Circle
+      </a>
+     </div>
+     <!-- Desktop Navigation -->
+     <nav class="hidden md:flex space-x-8 items-center">
+      <a class="nav-link text-primary font-medium" href="#">
+       Home
+      </a>
+      <a class="nav-link text-primary font-medium" href="#about">
+       About
+      </a>
+      <a class="nav-link text-primary font-medium" href="#benefits">
+       Benefits
+      </a>
+      <a class="nav-link text-primary font-medium" href="#insights">
+       Insights
+      </a>
+      <a class="hidden nav-link text-primary font-medium" href="#join">
+       Join
+      </a>
+      <a class="nav-link text-primary font-medium" href="#contact">
+       Contact
+      </a>
+     </nav>
+     <!-- Right side buttons -->
+     <div class=" items-center space-x-4">
+       <a class="bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300" href="#join">
+         Join Now
+       </a>
+     </div>
+     <!-- Mobile Menu Button -->
+     <div class="md:hidden flex items-center space-x-4">
+       <button aria-label="Toggle menu" class="text-primary focus:outline-none" id="menu-toggle">
+         <i class="fas fa-bars text-2xl"></i>
+       </button>
+     </div>
+   </div>
+   <!-- Mobile Menu -->
+   <nav class="hidden md:hidden bg-white shadow-lg border-t border-gray-200" id="mobile-menu">
+     <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+       <a class="text-primary font-medium text-lg" href="#">
+         Home
+       </a>
+       <a class="text-primary font-medium text-lg" href="#about">
+         About
+       </a>
+       <a class="text-primary font-medium text-lg" href="#benefits">
+         Benefits
+       </a>
+       <a class="text-primary font-medium text-lg" href="#insights">
+         Insights
+       </a>
+       <a class="hidden text-primary font-medium text-lg" href="#join">
+         Join
+       </a>
+       <a class="text-primary font-medium text-lg" href="#contact">
+         Contact
+       </a>
+       <a class="hidden bg-accent text-white font-medium px-6 py-3 rounded-md text-center" href="#join">
+         Join Now
+       </a>
+     </div>
+   </nav>
+  </header>
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white pt-32 pb-20 md:pt-40 md:pb-28">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center">
+     <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-right">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-serif">
+       Invest Smarter.
+       <span class="text-accent">
+        Together.
+       </span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-200 mb-8">
+       Join our community of investors to learn, collaborate, and grow your wealth with collective intelligence.
+      </p>
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+       <a class="bg-accent hover:bg-opacity-90 text-white font-bold px-8 py-3 rounded-md text-center transition duration-300" href="#join">
+        Join the Club
+       </a>
+       <a class="bg-white hover:bg-gray-100 text-primary font-bold px-8 py-3 rounded-md text-center transition duration-300" href="#benefits">
+        Explore Benefits
+       </a>
+      </div>
+     </div>
+     <div class="md:w-1/2" data-aos="fade-left">
+      <img alt="Investment club members discussing around a table in a modern office with laptops and charts" class="rounded-lg  w-full h-auto" height="400" src="https://i.imgur.com/ZwWjEZ0.png" width="600"/>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Stats Section -->
+  <section class="py-16 bg-white">
+   <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+     <div class="p-6" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="12">
+        0
+       </span>
+       +
+      </div>
+      <div class="text-gray-600">
+       Years Operating
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-4xl font-bold text-primary mb-2">
+       $
+       <span class="counter" data-target="25">
+        0
+       </span>
+       M+
+      </div>
+      <div class="text-gray-600">
+       Capital Invested
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="14">
+        0
+       </span>
+       %
+      </div>
+      <div class="text-gray-600">
+       Avg. Annual Return
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="400">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="500">
+        0
+       </span>
+       +
+      </div>
+      <div class="text-gray-600">
+       Active Members
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- About Section -->
+  <section class="py-20 bg-gray-50" id="about">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center">
+     <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-right">
+      <img alt="Investment club members collaborating in a bright office space with charts and laptops" class="rounded-lg shadow-xl w-full h-auto" height="400" src="https://storage.googleapis.com/a1aa/image/d96909ff-c1d2-4905-571e-026b7cdf66cf.jpg" width="600"/>
+     </div>
+     <div class="md:w-1/2 md:pl-12" data-aos="fade-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       About
+       <span class="text-accent">
+        WealthCircle
+       </span>
+      </h2>
+      <p class="text-lg text-gray-700 mb-6">
+       Founded in 2011, WealthCircle is a member-driven investment club that combines collective intelligence with disciplined investing strategies to generate superior returns.
+      </p>
+      <p class="text-lg text-gray-700 mb-8">
+       We believe that by bringing together diverse perspectives and sharing knowledge, our members can make better investment decisions than they could alone.
+      </p>
+      <a class="inline-flex items-center text-accent font-bold hover:text-primary transition duration-300" href="#">
+       Read Our Full Story
+       <i class="fas fa-arrow-right ml-2">
+       </i>
+      </a>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Benefits Section -->
+  <section class="py-20 bg-white" id="benefits">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Membership
+      <span class="text-accent">
+       Benefits
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Join a community that empowers you to take control of your financial future
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-graduation-cap">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Financial Education
+      </h3>
+      <p class="text-gray-700">
+       Access our library of courses, workshops, and resources to build your investing knowledge.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-chart-line">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Market Research
+      </h3>
+      <p class="text-gray-700">
+       Get access to our team's proprietary research and analysis on investment opportunities.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-users">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Group Decision-Making
+      </h3>
+      <p class="text-gray-700">
+       Participate in our collaborative investment process and learn from experienced members.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-hand-holding-usd">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Real-World Experience
+      </h3>
+      <p class="text-gray-700">
+       Gain practical investing experience without risking your own capital first.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-shield-alt">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Accountability
+      </h3>
+      <p class="text-gray-700">
+       Stay on track with your financial goals through our supportive community.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-network-wired">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Valuable Connections
+      </h3>
+      <p class="text-gray-700">
+       Network with like-minded investors and finance professionals.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-primary text-white">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">
+      What Our
+      <span class="text-accent">
+       Members Say
+      </span>
+     </h2>
+     <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+      Don't just take our word for it - hear from our community
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Sarah Johnson, a smiling woman with dark hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/edec56ab-fd2a-476c-fe42-131671ea2fea.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Sarah Johnson
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2018
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "Joining WealthCircle transformed my approach to investing. The collective knowledge and support helped me grow my portfolio by 35% in my first year."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="200">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Michael Chen, a man with short black hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/8c233a23-a67d-4936-497f-9ed50c2586cd.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Michael Chen
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2015
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "The educational resources alone are worth the membership. I went from knowing nothing about investing to confidently managing my own portfolio."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="300">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Priya Patel
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2020
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "The collaborative investment process has helped me see opportunities I would have missed on my own. My returns have consistently beaten the market."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star-half-alt">
+       </i>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Insights Section -->
+  <section class="py-20 bg-gray-50" id="insights">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Latest
+      <span class="text-accent">
+       Insights
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Stay informed with our research and market analysis
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <img alt="Market trends graph with upward arrows and charts" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/5126bb73-be9e-427e-fc3c-6472fd6c5ec9.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Market Trends
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         5 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        Emerging Markets Outlook for Q3 2023
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Analyzing the opportunities and risks in developing economies as global conditions shift.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <img alt="Tech stocks displayed on a digital screen with charts" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/883b5ace-586f-4ebc-cb50-fa3ee88333a4.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Sector Analysis
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         8 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        The Future of Tech Stocks in a Higher Rate Environment
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Evaluating which technology companies are best positioned to weather economic headwinds.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <img alt="Investment strategy planning with charts and notes on a desk" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/c2977db1-6344-4337-974c-d83faeca949d.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Strategy
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         10 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        Building a Resilient Portfolio for Volatile Markets
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Time-tested strategies to protect your investments during periods of market turbulence.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+    </div>
+    <div class="text-center mt-12" data-aos="fade-up">
+     <a class="inline-block bg-accent hover:bg-opacity-90 text-white font-bold px-8 py-3 rounded-md transition duration-300" href="#">
+      View All Insights
+     </a>
+    </div>
+   </div>
+  </section>
+  <!-- Join Section -->
+  <section class="py-20 bg-white" id="join">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       Ready to Join
+       <span class="text-accent">
+        WealthCircle
+       </span>
+       ?
+      </h2>
+      <p class="text-lg text-gray-700 mb-8">
+       Take the first step toward smarter investing with a community that supports your financial growth.
+      </p>
+      <div class="bg-gray-50 p-6 rounded-lg mb-8">
+       <h3 class="text-xl font-bold text-primary mb-4">
+        How It Works
+       </h3>
+       <div class="space-y-4">
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          1
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Submit Your Application
+          </h4>
+          <p class="text-gray-700">
+           Complete our simple online form (takes 5 minutes)
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          2
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Meet a Member
+          </h4>
+          <p class="text-gray-700">
+           Schedule a 30-minute video call to learn more
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          3
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Attend Orientation
+          </h4>
+          <p class="text-gray-700">
+           Join our next onboarding session
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          4
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Start Participating
+          </h4>
+          <p class="text-gray-700">
+           Access all member benefits and join discussions
+          </p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <div class="bg-gray-50 p-8 rounded-lg shadow-md">
+       <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-md" id="membership-application-form">
+    <h3 class="text-2xl font-bold text-primary mb-6 text-center font-serif">Membership Application</h3>
+    
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step-1">1</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-2">2</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-3">3</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-4">4</div>
+    </div>
+    
+    <!-- Step 1: Personal Information + Username/Password -->
+    <form class="space-y-6 registration-step active" id="step1-form" novalidate>
+           <div class="flex flex-col md:flex-row justify-between gap-6">
+      <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="username">Username <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="username"
+          type="text"
+          required
+          minlength="4"
+          maxlength="20"
+          placeholder="Choose a username"
+          autocomplete="username"
+          aria-describedby="username-error"
+        />
+        <p class="error-message hidden" id="username-error"></p>
+      </div>
+       <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="password">Password <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="password"
+          type="password"
+          required
+          minlength="6"
+          placeholder="Enter a password"
+          autocomplete="new-password"
+          aria-describedby="password-error"
+        />
+        <p class="error-message hidden" id="password-error"></p>
+      </div>
+      </div>
+      <div class="flex flex-col md:flex-row justify-between gap-6">
+      <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="first-name">First Name <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="first-name"
+          type="text"
+          required
+          autocomplete="given-name"
+          aria-describedby="first-name-error"
+        />
+        <p class="error-message hidden" id="first-name-error"></p>
+      </div>
+      <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="last-name">Last Name <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="last-name"
+          type="text"
+          required
+          autocomplete="family-name"
+          aria-describedby="last-name-error"
+        />
+        <p class="error-message hidden" id="last-name-error"></p>
+      </div>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2" for="email">Email Address <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="email"
+          type="email"
+          required
+          autocomplete="email"
+          aria-describedby="email-error"
+        />
+        <p class="error-message hidden" id="email-error"></p>
+      </div>
+      <div class="flex flex-col md:flex-row justify-between gap-6">
+      <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="phone">Phone Number <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="phone"
+          type="tel"
+          required
+          autocomplete="tel"
+          aria-describedby="phone-error"
+          placeholder="+1 555 123 4567"
+        />
+        <p class="error-message hidden" id="phone-error"></p>
+      </div>
+ <div class="w-full md:w-1/2">
+        <label class="block text-gray-700 font-medium mb-2" for="dob">Date of Birth <span class="text-red-500">*</span></label>
+        <input
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="dob"
+          type="date"
+          required
+          aria-describedby="dob-error"
+          max=""
+        />
+        <p class="error-message hidden" id="dob-error"></p>
+      </div>
+    </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2" for="address">Address <span class="text-red-500">*</span></label>
+        <textarea
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          id="address"
+          rows="2"
+          required
+          aria-describedby="address-error"
+        ></textarea>
+        <p class="error-message hidden" id="address-error"></p>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-2" for="photo">Upload Your Photo <span class="text-red-500">*</span></label>
+        <div class="file-upload">
+          <input type="file" id="photo" class="file-upload-input" accept="image/*" required aria-describedby="photo-error">
+          <label for="photo" class="file-upload-label">
+            <i class="fas fa-camera file-upload-icon"></i>
+            <span>Choose File</span>
+          </label>
+          <div class="file-name" id="photo-name">No file chosen</div>
+          <div class="photo-preview-container hidden w-[100px] h-[100px] rounded-full" id="photo-preview-container">
+            <img id="photo-preview" class="photo-preview" src="" alt="Preview of uploaded user photo" />
+          </div>
+          <p class="error-message hidden" id="photo-error"></p>
+        </div>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step1-next-btn"
+        >
+          Next <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </form>
+    
+    <!-- Step 2: Membership Selection -->
+    <form class="space-y-6 registration-step hidden" id="step2-form" novalidate>
+      <h4 class="text-xl font-bold text-primary mb-4">Select Your Membership Plan</h4>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Basic Membership -->
+        <div class="membership-card selected" id="basic-membership">
+          <input type="radio" name="membership" id="membership-basic" value="basic" class="hidden" checked>
+          <h3>Basic Membership</h3>
+          <div class="price">$500/year</div>
+          <ul class="features">
+            <li><i class="fas fa-check"></i> Access to educational resources</li>
+            <li><i class="fas fa-check"></i> Monthly investment newsletter</li>
+            <li><i class="fas fa-check"></i> Quarterly member meetings</li>
+            <li><i class="fas fa-check"></i> Basic investment research</li>
+            <li><i class="fas fa-times text-gray-400"></i> No voting rights</li>
+          </ul>
+          <div class="text-center">
+            <button type="button" class="select-membership-btn bg-accent text-white px-4 py-2 rounded-md">Select</button>
+          </div>
+        </div>
+        
+        <!-- Premium Membership -->
+        <div class="membership-card" id="premium-membership">
+          <input type="radio" name="membership" id="membership-premium" value="premium" class="hidden">
+          <h3>Premium Membership</h3>
+          <div class="price">$1,000/year</div>
+          <ul class="features">
+            <li><i class="fas fa-check"></i> All Basic benefits</li>
+            <li><i class="fas fa-check"></i> Weekly investment insights</li>
+            <li><i class="fas fa-check"></i> Monthly member meetings</li>
+            <li><i class="fas fa-check"></i> Advanced research reports</li>
+            <li><i class="fas fa-check"></i> Voting rights on investments</li>
+          </ul>
+          <div class="text-center">
+            <button type="button" class="select-membership-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Select</button>
+          </div>
+        </div>
+      </div>
+      <p class="error-message hidden" id="membership-error"></p>
+      <div class="flex justify-between pt-6">
+        <button
+          type="button"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step2-back-btn"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </button>
+        <button
+          type="button"
+          class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step2-next-btn"
+        >
+          Next <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </form>
+    
+    <!-- Step 3: Payment Method -->
+    <form class="space-y-6 registration-step hidden" id="step3-form" novalidate>
+      <h4 class="text-xl font-bold text-primary mb-4">Select Payment Method</h4>
+      
+      <div class="space-y-4">
+        <!-- Credit Card -->
+        <div class="payment-method-card selected" id="credit-card-method">
+          <input type="radio" name="payment-method" id="payment-credit-card" value="credit-card" class="hidden" checked>
+          <i class="fas fa-credit-card"></i>
+          <div>
+            <h5 class="font-bold">Credit/Debit Card</h5>
+            <p class="text-sm text-gray-600">Pay securely with your Visa, Mastercard, or American Express</p>
+          </div>
+        </div>
+        
+        <!-- PayPal -->
+        <div class="payment-method-card" id="paypal-method">
+          <input type="radio" name="payment-method" id="payment-paypal" value="paypal" class="hidden">
+          <i class="fab fa-paypal"></i>
+          <div>
+            <h5 class="font-bold">PayPal</h5>
+            <p class="text-sm text-gray-600">Pay with your PayPal account</p>
+          </div>
+        </div>
+        
+        <!-- Bank Transfer -->
+        <div class="payment-method-card" id="bank-transfer-method">
+          <input type="radio" name="payment-method" id="payment-bank-transfer" value="bank-transfer" class="hidden">
+          <i class="fas fa-university"></i>
+          <div>
+            <h5 class="font-bold">Bank Transfer</h5>
+            <p class="text-sm text-gray-600">Direct transfer from your bank account</p>
+          </div>
+        </div>
+        
+        <!-- Cryptocurrency -->
+        <div class="payment-method-card" id="crypto-method">
+          <input type="radio" name="payment-method" id="payment-crypto" value="crypto" class="hidden">
+          <i class="fab fa-bitcoin"></i>
+          <div>
+            <h5 class="font-bold">Cryptocurrency</h5>
+            <p class="text-sm text-gray-600">Pay with Bitcoin, Ethereum or other cryptocurrencies</p>
+          </div>
+        </div>
+      </div>
+      <p class="error-message hidden" id="payment-error"></p>
+      <!-- Credit Card Fields (shown by default) -->
+      <div class="space-y-4" id="credit-card-fields">
+        <div>
+          <label class="block text-gray-700 font-medium mb-2" for="card-number">Card Number <span class="text-red-500">*</span></label>
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            id="card-number"
+            type="text"
+            placeholder="1234 5678 9012 3456"
+            required
+            autocomplete="cc-number"
+            aria-describedby="card-number-error"
+          />
+          <p class="error-message hidden" id="card-number-error"></p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2" for="card-expiry">Expiry Date <span class="text-red-500">*</span></label>
+            <input
+              class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              id="card-expiry"
+              type="text"
+              placeholder="MM/YY"
+              required
+              autocomplete="cc-exp"
+              aria-describedby="card-expiry-error"
+            />
+            <p class="error-message hidden" id="card-expiry-error"></p>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2" for="card-cvv">CVV <span class="text-red-500">*</span></label>
+            <input
+              class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              id="card-cvv"
+              type="text"
+              placeholder="123"
+              required
+              autocomplete="cc-csc"
+              aria-describedby="card-cvv-error"
+            />
+            <p class="error-message hidden" id="card-cvv-error"></p>
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-2" for="card-name">Name on Card <span class="text-red-500">*</span></label>
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            id="card-name"
+            type="text"
+            required
+            autocomplete="cc-name"
+            aria-describedby="card-name-error"
+          />
+          <p class="error-message hidden" id="card-name-error"></p>
+        </div>
+      </div>
+      
+      <!-- PayPal Fields -->
+      <div class="space-y-4 hidden" id="paypal-fields">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fas fa-info-circle text-yellow-500"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-yellow-700">
+                You will be redirected to PayPal to complete your payment after submitting the form.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-2" for="paypal-email">PayPal Email Address <span class="text-red-500">*</span></label>
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            id="paypal-email"
+            type="email"
+            placeholder="your-paypal-email@example.com"
+            required
+            aria-describedby="paypal-email-error"
+          />
+          <p class="error-message hidden" id="paypal-email-error"></p>
+        </div>
+      </div>
+      
+      <!-- Bank Transfer Fields (No input, show demo address) -->
+      <div class="space-y-4 hidden" id="bank-transfer-fields">
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fas fa-info-circle text-blue-500"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-blue-700">
+                Please transfer the membership fee to the following bank account:
+              </p>
+              <pre class="mt-2 p-4 bg-white border border-gray-300 rounded text-sm whitespace-pre-wrap font-mono">
+WealthCircle Bank Ltd.
+123 Finance Street,
+Business District,
+New York, NY 10001,
+USA
+
+Account Number: 123456789
+Routing Number / SWIFT: ABCDUS33
+IBAN: US00ABCD1234567890
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Crypto Fields (No input, show demo wallet address) -->
+      <div class="space-y-4 hidden" id="crypto-fields">
+        <div class="bg-purple-50 border-l-4 border-purple-400 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fas fa-info-circle text-purple-500"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-purple-700">
+                Please send the membership fee to one of the following wallet addresses:
+              </p>
+              <ul class="list-disc list-inside mt-2 text-sm font-mono">
+                <li><strong>Bitcoin (BTC):</strong> 1WealthCircleBitcoinWalletAddressExample1234567890</li>
+                <li><strong>Ethereum (ETH):</strong> 0xWealthCircleEthereumWalletAddressExample1234567890</li>
+                <li><strong>Tether (USDT):</strong> TWealthCircleTetherWalletAddressExample1234567890</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-2" for="crypto-type">Preferred Cryptocurrency</label>
+          <select
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            id="crypto-type"
+          >
+            <option value="bitcoin">Bitcoin (BTC)</option>
+            <option value="ethereum">Ethereum (ETH)</option>
+            <option value="usdt">Tether (USDT)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-medium mb-2" for="crypto-address">Your Wallet Address <span class="text-red-500">*</span></label>
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+            id="crypto-address"
+            type="text"
+            placeholder="Enter your cryptocurrency wallet address"
+            required
+            aria-describedby="crypto-address-error"
+          />
+          <p class="error-message hidden" id="crypto-address-error"></p>
+        </div>
+      </div>
+      
+      <div class="flex justify-between pt-6">
+        <button
+          type="button"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step3-back-btn"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </button>
+        <button
+          type="button"
+          class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step3-next-btn"
+        >
+          Next <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </form>
+    
+    <!-- Step 4: Review and Submit -->
+    <form class="space-y-6 registration-step hidden" id="step4-form" novalidate>
+      <h4 class="text-xl font-bold text-primary mb-4">Review Your Information</h4>
+      
+      <div class="review-cv" id="review-cv">
+        <div class="cv-invoice sm:pb-4 sm:items-center" id="review-invoice-number"></div>
+        <div class="cv-header pt-8 rounded-full">
+          <img id="review-photo-preview" class="cv-photo" src="" alt="User uploaded photo for membership application" />
+          <div class="cv-name" id="review-fullname"></div>
+        </div>
+        <div class="cv-section">
+          <h4>Account Credentials</h4>
+          <div class="cv-item">
+            <span class="cv-label">Username:</span>
+            <span class="cv-value" id="review-username"></span>
+          </div>
+          <div class=" hidden cv-item">
+            <span class="cv-label">Password:</span>
+            <span class="cv-value" id="review-password"></span>
+          </div>
+        </div>
+        <div class="cv-section">
+          <h4>Contact Information</h4>
+          
+          <div class="cv-item">
+            <span class="cv-label">Email:</span>
+            <span class="cv-value" id="review-email"></span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-label">Phone:</span>
+            <span class="cv-value" id="review-phone"></span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-label">Date of Birth:</span>
+            <span class="cv-value" id="review-dob"></span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-label">Address:</span>
+            <span class="cv-value" id="review-address"></span>
+          </div>
+        </div>
+        <div class="cv-section">
+          <h4>Membership Details</h4>
+          <div class="cv-item">
+            <span class="cv-label">Membership Type:</span>
+            <span class="cv-value" id="review-membership-type"></span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-label">Membership Fee:</span>
+            <span class="cv-value" id="review-membership-fee"></span>
+          </div>
+        </div>
+        <div class="cv-section">
+          <h4>Payment Information</h4>
+          <div class="cv-item">
+            <span class="cv-label">Payment Method:</span>
+            <span class="cv-value" id="review-payment-method"></span>
+          </div>
+          <div id="review-payment-details" class="cv-item"></div>
+          <div id="review-bank-address-section" class="cv-item hidden">
+            <span class="cv-label">Bank Address:</span>
+            <pre class="cv-value whitespace-pre-wrap" id="review-bank-address"></pre>
+          </div>
+          <div id="review-crypto-payment-address-section" class="cv-item hidden">
+            <span class="cv-label">Our Wallet Address:</span>
+            <pre class="cv-value whitespace-pre-wrap" id="review-crypto-payment-address"></pre>
+          </div>
+        </div>
+
+      </div>
+      
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="terms-agreement"
+          class="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
+          required
+          aria-describedby="terms-error"
+        />
+        <label for="terms-agreement" class="ml-2 block text-gray-700">
+          I agree to the <a href="#" class="text-accent hover:underline">Terms & Conditions</a> and <a href="#" class="text-accent hover:underline">Privacy Policy</a>
+        </label>
+      </div>
+      <p class="error-message hidden" id="terms-error"></p>
+      <div class="flex justify-between pt-6">
+        <button
+          type="button"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step4-back-btn"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </button>
+        <button
+          type="submit"
+          class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300"
+          id="step4-submit-btn"
+        >
+          Submit Application
+        </button>
+      </div>
+    </form>
+    
+    <!-- Success Message (hidden by default) -->
+    <div class="registration-step text-center py-8 hidden" id="success-message">
+      <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+        <div class="flex justify-center items-center space-x-3">
+          <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+          <div>
+            <p class="text-lg font-bold text-green-800">Application Submitted Successfully!</p>
+            <p class="text-green-700">Thank you for applying to WealthCircle. We will review your application and contact you shortly.</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-600 mb-6">A copy of your application has been sent to your email address.</p>
+      <button
+        type="button"
+        class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300"
+        id="success-close-btn"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div id="receipt-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-primary">Application Receipt</h3>
+          <button id="close-receipt-modal" class="text-gray-500 hover:text-gray-700" aria-label="Close receipt modal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="receipt-content"></div>
+        <div class="mt-6 flex justify-end space-x-4">
+          <button id="hidden print-receipt-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-md">
+            <i class="fas fa-print mr-2"></i> Print
+          </button>
+          <button id="download-receipt-btn" class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-md">
+            <i class="fas fa-download mr-2"></i> Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Partners Section -->
+  <section class="py-16 bg-gray-100">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-12" data-aos="fade-up">
+     <h3 class="text-xl text-gray-600 mb-2">
+      Trusted By
+     </h3>
+     <h2 class="text-2xl md:text-3xl font-bold text-primary font-serif">
+      Our Partners
+     </h2>
+    </div>
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+     <img alt="Partner 1 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="100" height="60" src="https://storage.googleapis.com/a1aa/image/d8ffc6fa-1df3-44c0-0dcb-9f8507834bf8.jpg" width="150"/>
+     <img alt="Partner 2 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="200" height="60" src="https://storage.googleapis.com/a1aa/image/0c3b4788-2434-4f05-366c-0b1e4821c8fc.jpg" width="150"/>
+     <img alt="Partner 3 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="300" height="60" src="https://storage.googleapis.com/a1aa/image/5df0a8d2-7b98-4c43-c3d6-9457b787a1f7.jpg" width="150"/>
+     <img alt="Partner 4 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="400" height="60" src="https://storage.googleapis.com/a1aa/image/3c799bb5-4a89-46c2-428c-c51e0d4bbb4b.jpg" width="150"/>
+     <img alt="Partner 5 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="500" height="60" src="https://storage.googleapis.com/a1aa/image/66c15afd-b41e-4389-a114-cdb310ffaae5.jpg" width="150"/>
+    </div>
+   </div>
+  </section>
+  <!-- Member Portal Preview -->
+  <section class="py-20 bg-primary text-white">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row items-center">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif">
+       Member
+       <span class="text-accent">
+        Portal
+       </span>
+      </h2>
+      <p class="text-xl text-gray-300 mb-8">
+       Coming Soon: A secure platform for tracking investments, joining discussions, and voting on club decisions.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-chart-pie">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Dashboard
+        </h3>
+        <p class="text-gray-300">
+         Track your portfolio performance and club investments.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-comments">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Discussions
+        </h3>
+        <p class="text-gray-300">
+         Participate in investment discussions with members.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-vote-yea">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Voting
+        </h3>
+        <p class="text-gray-300">
+         Cast your vote on proposed investment decisions.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-book">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Resources
+        </h3>
+        <p class="text-gray-300">
+         Access our full library of educational materials.
+        </p>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <img alt="Member portal preview showing dashboard and charts on a computer screen" class="rounded-lg shadow-xl w-full h-auto" height="400" src="https://storage.googleapis.com/a1aa/image/f69d0fda-a5e8-4a40-e829-fa13588c761f.jpg" width="600"/>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Security Section -->
+  <section class="py-20 bg-white">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row items-center">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <img alt="Security concept with lock and digital shield icons on a blue background" class="rounded-lg shadow-xl w-full h-auto" height="400" src="https://storage.googleapis.com/a1aa/image/016fade3-bb61-4f28-b788-6c95b3ce5ff9.jpg" width="600"/>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       Security &amp;
+       <span class="text-accent">
+        Trust
+       </span>
+      </h2>
+      <p class="text-lg text-gray-700 mb-8">
+       We take the security of your data and investments seriously. Our platform implements industry-leading measures to protect your information.
+      </p>
+      <div class="space-y-6">
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-lock">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Bank-Level Encryption
+         </h3>
+         <p class="text-gray-700">
+          All data is encrypted in transit and at rest using 256-bit SSL encryption.
+         </p>
+        </div>
+       </div>
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-user-shield">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Member Vetting
+         </h3>
+         <p class="text-gray-700">
+          Every member undergoes a thorough application and interview process.
+         </p>
+        </div>
+       </div>
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-shield-alt">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Transparent Processes
+         </h3>
+         <p class="text-gray-700">
+          All investment decisions are documented and available to members.
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- CTA Section -->
+  <section class="py-20 bg-accent text-white">
+   <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif" data-aos="fade-up">
+     Build Your Wealth With People Who Care About Your Growth
+    </h2>
+    <p class="text-xl mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+     Join a community of investors committed to learning, sharing, and growing together.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-up" data-aos-delay="200">
+     <a class="bg-white hover:bg-gray-100 text-primary font-bold px-8 py-3 rounded-md transition duration-300" href="#join">
+      Join Now
+     </a>
+     <a class="bg-transparent hover:bg-white hover:bg-opacity-10 border-2 border-white font-bold px-8 py-3 rounded-md transition duration-300" href="#contact">
+      Contact Us
+     </a>
+    </div>
+   </div>
+  </section>
+  <!-- Contact Section -->
+  <section class="py-20 bg-gray-50" id="contact">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Get In
+      <span class="text-accent">
+       Touch
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Have questions? We're here to help.
+     </p>
+    </div>
+    <div class="flex flex-col lg:flex-row">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <div class="bg-white p-8 rounded-lg shadow-md">
+       <h3 class="text-2xl font-bold text-primary mb-6">
+        Contact Information
+       </h3>
+       <div class="space-y-6">
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-map-marker-alt">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Address
+          </h4>
+          <p class="text-gray-700">
+           123 Investment Street, Financial District, NY 10005
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-phone-alt">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Phone
+          </h4>
+          <p class="text-gray-700">
+           (212) 555-1234
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-envelope">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Email
+          </h4>
+          <p class="text-gray-700">
+           info@wealthcircle.com
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-clock">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Hours
+          </h4>
+          <p class="text-gray-700">
+           Monday - Friday: 9am - 5pm EST
+          </p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-8">
+        <h4 class="font-bold text-primary mb-4">
+         Follow Us
+        </h4>
+        <div class="flex space-x-4">
+         <a aria-label="LinkedIn" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-linkedin">
+          </i>
+         </a>
+         <a aria-label="Twitter" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-twitter">
+          </i>
+         </a>
+         <a aria-label="Facebook" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-facebook">
+          </i>
+         </a>
+         <a aria-label="Instagram" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-instagram">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <div class="bg-white p-8 rounded-lg shadow-md">
+       <h3 class="text-2xl font-bold text-primary mb-6">
+        Send Us a Message
+       </h3>
+       <form class="space-y-6" novalidate="">
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-name">
+          Name
+         </label>
+         <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-name" required="" type="text"/>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-email">
+          Email
+         </label>
+         <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-email" required="" type="email"/>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-subject">
+          Subject
+         </label>
+         <select class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-subject">
+          <option value="">
+           Select a subject
+          </option>
+          <option value="membership">
+           Membership Inquiry
+          </option>
+          <option value="partnership">
+           Partnership Opportunity
+          </option>
+          <option value="press">
+           Press Inquiry
+          </option>
+          <option value="other">
+           Other
+          </option>
+         </select>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-message">
+          Message
+         </label>
+         <textarea class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-message" required="" rows="5"></textarea>
+        </div>
+        <div>
+         <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md transition duration-300" type="submit">
+          Send Message
+         </button>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-12">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between">
+     <div class="mb-8 md:mb-0">
+      <a class="text-2xl font-bold text-white" href="#">
+       <span class="text-accent">
+        Wealth
+       </span>
+       Circle
+      </a>
+      <p class="mt-4 text-gray-300 max-w-xs">
+       Empowering investors through education, collaboration, and community.
+      </p>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Navigation
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Home
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#about">
+          About
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#benefits">
+          Benefits
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#insights">
+          Insights
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#join">
+          Join
+         </a>
+        </li>
+       </ul>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Legal
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Terms of Service
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Privacy Policy
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Risk Disclosure
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Compliance
+         </a>
+        </li>
+       </ul>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Connect
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#contact">
+          Contact Us
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          FAQ
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Blog
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Events
+         </a>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+     <p class="text-gray-400 mb-4 md:mb-0">
+      © 2025 WealthCircle. All rights reserved.
+     </p>
+     <div class="flex space-x-6">
+      <a aria-label="LinkedIn" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-linkedin text-xl">
+       </i>
+      </a>
+      <a aria-label="Twitter" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-twitter text-xl">
+       </i>
+      </a>
+      <a aria-label="Facebook" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-facebook text-xl">
+       </i>
+      </a>
+      <a aria-label="Instagram" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-instagram text-xl">
+       </i>
+      </a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <!-- Enhanced Chat Bot Section -->
+  <div class="fixed bottom-8 right-4 z-50">
+   <!-- Chat Bot Toggle Button -->
+   <button class="bg-accent hover:bg-opacity-90 text-white w-16 h-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110" id="chatbot-toggle">
+    <i class="fas fa-comment-dots text-2xl">
+    </i>
+    <span class="sr-only">
+     Open Chat
+    </span>
+    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden" id="notification-badge">
+     1
+    </span>
+   </button>
+   <!-- Chat Bot Container -->
+   <div class="hidden w-96 h-[600px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col absolute bottom-0 right-0 border border-gray-200" id="chatbot-container">
+    <!-- Chat Header -->
+    <div class="bg-primary text-white p-4 flex items-center justify-between">
+     <div class="flex items-center">
+      <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center mr-3">
+      <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+      </div>
+      <div>
+       <h3 class="font-bold">
+        WealthCircle Assistant
+       </h3>
+       <p class="text-xs text-white text-opacity-80">
+        AI-powered investment help
+       </p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-3">
+      <button class="text-white hover:text-accent transition" id="chatbot-minimize">
+       <i class="fas fa-minus">
+       </i>
+      </button>
+      <button class="text-white hover:text-accent transition" id="chatbot-close">
+       <i class="fas fa-times">
+       </i>
+      </button>
+     </div>
+    </div>
+    <!-- Chat Messages Area -->
+    <div class="flex-1 p-4 overflow-y-auto bg-gray-50" id="chatbot-messages">
+     <!-- Welcome Message -->
+     <div class="mb-4 flex">
+      <div class="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-3">
+      <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm max-w-[85%]">
+       <p class="text-sm font-medium text-primary mb-1">
+        Welcome to WealthCircle!
+       </p>
+       <p class="text-sm">
+        I'm your AI assistant here to help with:
+       </p>
+       <ul class="list-disc list-inside text-sm pl-2 mt-1 space-y-1">
+        <li>
+         Membership information
+        </li>
+        <li>
+         Investment strategies
+        </li>
+        <li>
+         Club policies
+        </li>
+        <li>
+         Event details
+        </li>
+       </ul>
+       <p class="text-sm mt-2">
+        What would you like to know?
+       </p>
+       <p class="text-xs text-gray-500 mt-2">
+        Just now
+       </p>
+      </div>
+     </div>
+     <!-- Suggested Questions -->
+     <div class="mb-6">
+      <p class="text-xs text-gray-500 mb-2">
+       SUGGESTED QUESTIONS:
+      </p>
+      <div class="flex flex-wrap gap-2">
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition" data-question="How do I join the investment club?">
+        How do I join the investment club?
+       </button>
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition" data-question="What's the minimum investment?">
+        What's the minimum investment?
+       </button>
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition" data-question="How are investment decisions made?">
+        How are investment decisions made?
+       </button>
+      </div>
+     </div>
+    </div>
+    <!-- Typing Indicator -->
+    <div class="hidden px-4 py-2 bg-white border-t border-gray-200" id="typing-indicator">
+     <div class="flex items-center">
+      <div class="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-2">
+      <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+       </i>
+      </div>
+      <div class="typing-dots">
+       <span>
+       </span>
+       <span>
+       </span>
+       <span>
+       </span>
+      </div>
+     </div>
+    </div>
+    <!-- Chat Input Area -->
+    <div class="p-3 border-t border-gray-200 bg-white">
+     <div class="relative">
+      <textarea class="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none" id="chatbot-input" placeholder="Type your question...." rows="1" style="min-height: 50px; max-height: 120px;"></textarea>
+      <button class="absolute right-3 bottom-3 text-accent hover:text-primary transition" id="chatbot-send">
+       <i class="fas fa-paper-plane text-lg">
+       </i>
+      </button>
+     </div>
+     <p class="text-xs text-gray-500 mt-2 text-center">
+      We respect your privacy. Conversations are secure.
+     </p>
+    </div>
+   </div>
+  </div>
+  <!-- Back to Top Button -->
+  <button aria-label="Back to top" class="fixed bottom-8 right-24 bg-accent text-white w-12 h-12 rounded-full shadow-lg hidden items-center justify-center transition duration-300 hover:bg-opacity-90" id="back-to-top">
+   <i class="fas fa-arrow-up">
+   </i>
+  </button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+   AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100,
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.remove('hidden');
+        backToTopButton.classList.add('flex');
+      } else {
+        backToTopButton.classList.add('hidden');
+        backToTopButton.classList.remove('flex');
+      }
+    });
+
+    backToTopButton.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+
+    function animateCounters() {
+      counters.forEach((counter) => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / speed;
+
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(animateCounters, 1);
+        } else {
+          counter.innerText = target;
+        }
+      });
+    }
+
+    const statsSection = document.querySelector('.bg-white.py-16');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(statsSection);
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 100,
+            behavior: 'smooth',
+          });
+
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        }
+      });
+    });
+
+    // Chatbot JS
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleBtn = document.getElementById('chatbot-toggle');
+      const minimizeBtn = document.getElementById('chatbot-minimize');
+      const closeBtn = document.getElementById('chatbot-close');
+      const chatContainer = document.getElementById('chatbot-container');
+      const chatInput = document.getElementById('chatbot-input');
+      const chatSend = document.getElementById('chatbot-send');
+      const chatMessages = document.getElementById('chatbot-messages');
+      const typingIndicator = document.getElementById('typing-indicator');
+      const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+      const notificationBadge = document.getElementById('notification-badge');
+
+      const knowledgeBase = {
+        'join': {
+          question: 'How do I join the investment club?',
+          answer:
+            "Joining WealthCircle involves a simple 4-step process:<br><br>1. <strong>Submit an application</strong> through our website<br>2. <strong>Attend an orientation</strong> session (virtual or in-person)<br>3. <strong>Complete onboarding</strong> including our education modules<br>4. <strong>Make your initial investment</strong> (minimum $1,000)<br><br>Our average processing time is 3-5 business days. Would you like me to send you the application link?",
+          followUp: ['Send application link', 'What are the benefits?'],
+        },
+        'minimum investment': {
+          question: "What's the minimum investment?",
+          answer:
+            "WealthCircle has a <strong>minimum initial investment of $1,000</strong> with additional contributions of at least $100/month.<br><br>This structure ensures:<br>• Serious commitment from members<br>• Meaningful portfolio growth<br>• Access to premium investment opportunities<br><br>We offer flexible payment options including bank transfers and scheduled contributions.",
+          followUp: ['Payment options', 'Can I start with less?'],
+        },
+        'decision making': {
+          question: 'How are investment decisions made?',
+          answer:
+            "Our investment process combines <strong>collective intelligence</strong> with <strong>professional analysis</strong>:<br><br>1. <strong>Research Phase</strong>: Our analyst team identifies opportunities<br>2. <strong>Discussion</strong>: Members debate pros/cons in forums<br>3. <strong>Voting</strong>: All members vote on each decision<br>4. <strong>Execution</strong>: Trades are made by our licensed brokers<br><br>This democratic approach has achieved 14.2% average annual returns since 2015.",
+          followUp: ['See performance history', 'How often do we meet?'],
+        },
+        'fees': {
+          question: 'What are the membership fees?',
+          answer:
+            "WealthCircle operates on a transparent fee structure:<br><br>• <strong>Annual Membership</strong>: $250 (covers operational costs)<br>• <strong>Management Fee</strong>: 1% of assets under management<br>• <strong>Performance Fee</strong>: 10% of profits above 8% annual return<br><br>All fees are clearly outlined in our membership agreement with no hidden charges.",
+          followUp: ['Fee examples', 'How do fees compare?'],
+        },
+        'meetings': {
+          question: 'How often does the club meet?',
+          answer:
+            "Our meeting schedule is designed for maximum engagement:<br><br>• <strong>Monthly Webinar</strong>: First Tuesday of each month (7pm EST)<br>• <strong>Quarterly Deep Dives</strong>: 2-hour strategy sessions<br>• <strong>Annual Retreat</strong>: 3-day in-person event (optional)<br><br>All meetings are recorded for members who can't attend live.",
+          followUp: ['Next meeting topic', 'View calendar'],
+        },
+      };
+
+      toggleBtn.addEventListener('click', function () {
+        chatContainer.classList.toggle('hidden');
+        notificationBadge.classList.add('hidden');
+        toggleBtn.classList.toggle('bg-accent');
+        toggleBtn.classList.toggle('bg-gray-500');
+      });
+
+      minimizeBtn.addEventListener('click', function () {
+        chatContainer.classList.add('hidden');
+        notificationBadge.classList.remove('hidden');
+        toggleBtn.classList.remove('bg-gray-500');
+        toggleBtn.classList.add('bg-accent');
+      });
+
+      closeBtn.addEventListener('click', function () {
+        chatContainer.classList.add('hidden');
+        notificationBadge.classList.add('hidden');
+        toggleBtn.classList.remove('bg-gray-500');
+        toggleBtn.classList.add('bg-accent');
+      });
+
+      chatInput.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+          addMessage(message, 'user');
+          chatInput.value = '';
+          chatInput.style.height = 'auto';
+
+          typingIndicator.classList.remove('hidden');
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          setTimeout(() => {
+            typingIndicator.classList.add('hidden');
+            const response = generateResponse(message);
+            addMessage(response.answer, 'bot', response.followUp);
+          }, 1500 + Math.random() * 2000);
+        }
+      }
+
+      function generateResponse(message) {
+        const lowerMessage = message.toLowerCase();
+
+        for (const [key, data] of Object.entries(knowledgeBase)) {
+          if (lowerMessage.includes(key)) {
+            return data;
+          }
+        }
+
+        const defaultResponses = [
+          {
+            answer:
+              "I'm still learning about WealthCircle's offerings. Could you please rephrase your question or try one of these topics:<br><br>• Membership requirements<br>• Investment strategies<br>• Club performance<br>• Fee structure",
+            followUp: ['Membership requirements', 'Investment strategies', 'Club performance'],
+          },
+          {
+            answer:
+              'For detailed questions about your specific situation, I recommend contacting our member support team at <strong>support@wealthcircle.com</strong> or calling <strong>(800) 555-9876</strong> during business hours.',
+            followUp: [],
+          },
+          {
+            answer:
+              "I'd be happy to help with that. To better assist you, could you provide more details about what you're looking for?",
+            followUp: [],
+          },
+        ];
+
+        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+      }
+
+      function addMessage(text, sender, followUp = []) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `mb-4 flex ${sender === 'user' ? 'justify-end' : ''} ${sender === 'bot' ? 'registration-step' : ''}`; // Added registration-step class for bot messages
+
+        if (sender === 'bot') {
+          messageDiv.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-3">
+      <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm whitespace-pre-line">${text}</div>
+              <p class="text-xs text-gray-500 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        } else {
+          messageDiv.innerHTML = `
+            <div class="bg-primary text-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm">${text}</div>
+              <p class="text-xs text-white text-opacity-70 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        }
+
+        chatMessages.appendChild(messageDiv);
+
+        if (followUp.length > 0 && sender === 'bot') {
+          const followUpDiv = document.createElement('div');
+          followUpDiv.className = 'mb-6 pl-14'; // Adjusted padding for better alignment
+          followUpDiv.innerHTML = `
+            <p class="text-xs text-gray-500 mb-2">FOLLOW-UP QUESTIONS:</p>
+            <div class="flex flex-wrap gap-2">
+              ${followUp
+                .map(
+                  (q) =>
+                    `<button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition" data-question="${q}">${q}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+          chatMessages.appendChild(followUpDiv);
+
+          document.querySelectorAll('.quick-reply-btn').forEach((btn) => {
+            btn.addEventListener('click', function () {
+              const question = this.getAttribute('data-question');
+              addMessage(question, 'user');
+              typingIndicator.classList.remove('hidden');
+              chatMessages.scrollTop = chatMessages.scrollHeight;
+
+              setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+                const response = generateResponse(question);
+                addMessage(response.answer, 'bot', response.followUp);
+              }, 1500 + Math.random() * 2000);
+            });
+          });
+        }
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function formatTime() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      chatSend.addEventListener('click', sendMessage);
+
+      chatInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      quickReplyBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const question = this.getAttribute('data-question');
+          addMessage(question, 'user');
+
+          typingIndicator.classList.remove('hidden');
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          setTimeout(() => {
+            typingIndicator.classList.add('hidden');
+            const response = generateResponse(question);
+            addMessage(response.answer, 'bot', response.followUp);
+          }, 1500);
+        });
+      });
+
+      setTimeout(() => {
+        if (chatContainer.classList.contains('hidden')) {
+          notificationBadge.classList.remove('hidden');
+        }
+      }, 30000);
+    });
+    
+    
+      // membership application-------------------------------------------------------------------
+    
+    
+    let currentStep = 1;
+    const totalSteps = 4;
+    let formData = {
+      personalInfo: {},
+      membership: {},
+      payment: {},
+      files: {},
+      username: '',
+      password: '',
+      invoiceNumber: null
+    };
+
+    // Demo bank and crypto addresses
+    const bankPaymentAddress = `WealthCircle Bank Ltd.
+123 Finance Street,
+Business District,
+New York, NY 10001,
+USA
+
+Account Number: 123456789
+Routing Number / SWIFT: ABCDUS33
+IBAN: US00ABCD1234567890`;
+
+    const cryptoPaymentAddresses = {
+      bitcoin: "1WealthCircleBitcoinWalletAddressExample1234567890",
+      ethereum: "0xWealthCircleEthereumWalletAddressExample1234567890",
+      usdt: "TWealthCircleTetherWalletAddressExample1234567890",
+      other: "Please contact support for wallet address."
+    };
+
+    // Generate unique invoice number
+    function generateInvoiceNumber() {
+      const timestamp = Date.now().toString();
+      const randomPart = Math.floor(1000 + Math.random() * 9000).toString();
+      return `WC-${timestamp.slice(-6)}${randomPart}`;
+    }
+
+    // File upload handling
+    document.getElementById('photo').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+      document.getElementById('photo-name').textContent = fileName;
+      formData.files.photo = e.target.files[0];
+      if (e.target.files[0] && e.target.files[0].type.match('image.*')) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          document.getElementById('review-photo-preview').src = event.target.result;
+          const previewContainer = document.getElementById('photo-preview-container');
+          const previewImg = document.getElementById('photo-preview');
+          previewImg.src = event.target.result;
+          previewContainer.classList.remove('hidden');
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        document.getElementById('photo-preview-container').classList.add('hidden');
+        document.getElementById('review-photo-preview').src = '';
+      }
+    });
+
+    // Membership selection
+    document.querySelectorAll('.select-membership-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const card = this.closest('.membership-card');
+        const radio = card.querySelector('input[type="radio"]');
+        radio.checked = true;
+        document.querySelectorAll('.membership-card').forEach(c => {
+          c.classList.remove('selected');
+          c.querySelector('.select-membership-btn').classList.remove('bg-accent', 'text-white');
+          c.querySelector('.select-membership-btn').classList.add('bg-gray-200', 'text-gray-700');
+        });
+        card.classList.add('selected');
+        this.classList.remove('bg-gray-200', 'text-gray-700');
+        this.classList.add('bg-accent', 'text-white');
+      });
+    });
+
+    // Payment method selection
+    document.querySelectorAll('.payment-method-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const radio = this.querySelector('input[type="radio"]');
+        radio.checked = true;
+        document.querySelectorAll('.payment-method-card').forEach(c => {
+          c.classList.remove('selected');
+        });
+        this.classList.add('selected');
+        const method = radio.value;
+        document.querySelectorAll('[id$="-fields"]').forEach(el => {
+          el.classList.add('hidden');
+        });
+        if (method === 'bank-transfer' || method === 'crypto') {
+          document.getElementById(`${method}-fields`).classList.remove('hidden');
+        } else {
+          document.getElementById(`${method}-fields`).classList.remove('hidden');
+        }
+      });
+    });
+
+    // Update crypto payment address textarea based on selected crypto type
+    function updateCryptoPaymentAddress() {
+      const cryptoType = document.getElementById('crypto-type').value;
+      const addressField = document.getElementById('crypto-payment-address');
+      if(addressField) {
+        addressField.value = cryptoPaymentAddresses[cryptoType] || '';
+      }
+    }
+
+    document.getElementById('crypto-type').addEventListener('change', updateCryptoPaymentAddress);
+
+    // Set max date for DOB to today - 18 years (minimum age 18)
+    function setMaxDOB() {
+      const dobInput = document.getElementById('dob');
+      const today = new Date();
+      const year = today.getFullYear() - 18;
+      const month = (today.getMonth() + 1).toString().padStart(2, '0');
+      const day = today.getDate().toString().padStart(2, '0');
+      dobInput.max = `${year}-${month}-${day}`;
+    }
+    setMaxDOB();
+
+    // Validation helpers
+    function showError(input, message) {
+      input.classList.add('input-error');
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+      }
+    }
+    function clearError(input) {
+      input.classList.remove('input-error');
+      const errorEl = document.getElementById(input.id + '-error');
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+      }
+    }
+
+    // AJAX-like validation simulation with Promise and timeout
+    function validateFieldAsync(input) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          let valid = true;
+          let message = '';
+          const val = input.value.trim();
+
+          switch(input.id) {
+            case 'username':
+              if (!val) {
+                valid = false;
+                message = 'Username is required.';
+              } else if (val.length < 4 || val.length > 20) {
+                valid = false;
+                message = 'Username must be between 4 and 20 characters.';
+              } else if (!/^[a-zA-Z0-9_]+$/.test(val)) {
+                valid = false;
+                message = 'Username can only contain letters, numbers, and underscores.';
+              }
+              break;
+            case 'password':
+              if (!val) {
+                valid = false;
+                message = 'Password is required.';
+              } else if (val.length < 6) {
+                valid = false;
+                message = 'Password must be at least 6 characters.';
+              }
+              break;
+            case 'first-name':
+              if (!val) {
+                valid = false;
+                message = 'First name is required.';
+              }
+              break;
+            case 'last-name':
+              if (!val) {
+                valid = false;
+                message = 'Last name is required.';
+              }
+              break;
+            case 'email':
+              if (!val) {
+                valid = false;
+                message = 'Email is required.';
+              } else if (!/^\S+@\S+\.\S+$/.test(val)) {
+                valid = false;
+                message = 'Please enter a valid email address.';
+              }
+              break;
+            case 'phone':
+              if (!val) {
+                valid = false;
+                message = 'Phone number is required.';
+              } else if (!/^\+?[0-9\s\-()]{7,20}$/.test(val)) {
+                valid = false;
+                message = 'Please enter a valid phone number.';
+              }
+              break;
+            case 'dob':
+              if (!val) {
+                valid = false;
+                message = 'Date of birth is required.';
+              } else {
+                const dobDate = new Date(val);
+                const today = new Date();
+                const minAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+                if (dobDate > minAgeDate) {
+                  valid = false;
+                  message = 'You must be at least 18 years old.';
+                }
+              }
+              break;
+            case 'address':
+              if (!val) {
+                valid = false;
+                message = 'Address is required.';
+              }
+              break;
+            case 'photo':
+              if (!input.files || input.files.length === 0) {
+                valid = false;
+                message = 'Please upload your photo.';
+              } else {
+                const file = input.files[0];
+                if (!file.type.startsWith('image/')) {
+                  valid = false;
+                  message = 'Uploaded file must be an image.';
+                }
+              }
+              break;
+            case 'card-number':
+              if (!val) {
+                valid = false;
+                message = 'Card number is required.';
+              } else if (!/^\d{13,19}$/.test(val.replace(/\s+/g, ''))) {
+                valid = false;
+                message = 'Please enter a valid card number.';
+              }
+              break;
+            case 'card-expiry':
+              if (!val) {
+                valid = false;
+                message = 'Expiry date is required.';
+              } else if (!/^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(val)) {
+                valid = false;
+                message = 'Expiry date must be in MM/YY format.';
+              } else {
+                // Check if expiry is in the future
+                const parts = val.split('/');
+                const month = parseInt(parts[0], 10);
+                const year = parseInt('20' + parts[1], 10);
+                const expiryDate = new Date(year, month);
+                const now = new Date();
+                if (expiryDate <= now) {
+                  valid = false;
+                  message = 'Card expiry date must be in the future.';
+                }
+              }
+              break;
+            case 'card-cvv':
+              if (!val) {
+                valid = false;
+                message = 'CVV is required.';
+              } else if (!/^\d{3,4}$/.test(val)) {
+                valid = false;
+                message = 'CVV must be 3 or 4 digits.';
+              }
+              break;
+            case 'card-name':
+              if (!val) {
+                valid = false;
+                message = 'Name on card is required.';
+              }
+              break;
+            case 'paypal-email':
+              if (!val) {
+                valid = false;
+                message = 'PayPal email is required.';
+              } else if (!/^\S+@\S+\.\S+$/.test(val)) {
+                valid = false;
+                message = 'Please enter a valid email address.';
+              }
+              break;
+            case 'crypto-address':
+              if (!val) {
+                valid = false;
+                message = 'Cryptocurrency wallet address is required.';
+              }
+              break;
+          }
+
+          if (valid) {
+            clearError(input);
+          } else {
+            showError(input, message);
+          }
+          resolve(valid);
+        }, 300);
+      });
+    }
+
+    // Validate all fields in step 1
+    async function validateStep1() {
+      const inputs = [
+        'username', 'password', 'first-name', 'last-name', 'email', 'phone', 'dob', 'address', 'photo'
+      ].map(id => document.getElementById(id));
+      const results = await Promise.all(inputs.map(input => validateFieldAsync(input)));
+      return results.every(r => r);
+    }
+
+    // Validate membership selection in step 2
+    function validateStep2() {
+      const selectedMembership = document.querySelector('input[name="membership"]:checked');
+      const errorEl = document.getElementById('membership-error');
+      if (!selectedMembership) {
+        errorEl.textContent = 'Please select a membership type.';
+        errorEl.classList.remove('hidden');
+        return false;
+      } else {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+        return true;
+      }
+    }
+
+    // Validate payment fields in step 3
+    async function validateStep3() {
+      const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
+      const errorEl = document.getElementById('payment-error');
+      if (!selectedPayment) {
+        errorEl.textContent = 'Please select a payment method.';
+        errorEl.classList.remove('hidden');
+        return false;
+      }
+      errorEl.textContent = '';
+      errorEl.classList.add('hidden');
+      const method = selectedPayment.value;
+      if (method === 'credit-card') {
+        const inputs = ['card-number', 'card-expiry', 'card-cvv', 'card-name'].map(id => document.getElementById(id));
+        const results = await Promise.all(inputs.map(input => validateFieldAsync(input)));
+        return results.every(r => r);
+      } else if (method === 'paypal') {
+        const input = document.getElementById('paypal-email');
+        return await validateFieldAsync(input);
+      } else if (method === 'crypto') {
+        const input = document.getElementById('crypto-address');
+        return await validateFieldAsync(input);
+      }
+      // bank-transfer has no inputs to validate
+      return true;
+    }
+
+    // Validate terms checkbox in step 4
+    function validateStep4() {
+      const termsCheckbox = document.getElementById('terms-agreement');
+      const errorEl = document.getElementById('terms-error');
+      if (!termsCheckbox.checked) {
+        errorEl.textContent = 'You must agree to the Terms & Conditions and Privacy Policy to proceed.';
+        errorEl.classList.remove('hidden');
+        return false;
+      } else {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+        return true;
+      }
+    }
+
+    // Step navigation with validation
+    document.getElementById('step1-next-btn').addEventListener('click', async function() {
+      if (await validateStep1()) {
+        const firstName = document.getElementById('first-name').value.trim();
+        const lastName = document.getElementById('last-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const dob = document.getElementById('dob').value;
+        const address = document.getElementById('address').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const photo = document.getElementById('photo').files[0];
+        formData.personalInfo = { firstName, lastName, email, phone, dob, address };
+        formData.username = username;
+        formData.password = password;
+        goToStep(2);
+      }
+    });
+
+    document.getElementById('step2-next-btn').addEventListener('click', function() {
+      if (validateStep2()) {
+        const selectedMembership = document.querySelector('input[name="membership"]:checked');
+        formData.membership = {
+          type: selectedMembership.value,
+          price: selectedMembership.value === 'basic' ? '$500/year' : '$1,000/year'
+        };
+        goToStep(3);
+      }
+    });
+
+    document.getElementById('step3-next-btn').addEventListener('click', async function() {
+      if (await validateStep3()) {
+        const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
+        const method = selectedPayment.value;
+        let paymentDetails = {};
+        if (method === 'credit-card') {
+          const cardNumber = document.getElementById('card-number').value.trim();
+          const cardExpiry = document.getElementById('card-expiry').value.trim();
+          const cardCVV = document.getElementById('card-cvv').value.trim();
+          const cardName = document.getElementById('card-name').value.trim();
+          paymentDetails = {
+            cardNumber: cardNumber.replace(/\d{4}(?=.)/g, '$& '),
+            cardExpiry,
+            cardName
+          };
+        } else if (method === 'paypal') {
+          const paypalEmail = document.getElementById('paypal-email').value.trim();
+          paymentDetails = { paypalEmail };
+        } else if (method === 'bank-transfer') {
+          paymentDetails = {
+            bankName: "WealthCircle Bank Ltd.",
+            bankAccountNumber: "123456789",
+            bankRoutingNumber: "ABCDUS33",
+            bankIBAN: "US00ABCD1234567890",
+            bankCountry: "USA",
+            bankAddress: `WealthCircle Bank Ltd.
+123 Finance Street,
+Business District,
+New York, NY 10001,
+USA`
+          };
+        } else if (method === 'crypto') {
+          const cryptoType = document.getElementById('crypto-type').value;
+          const cryptoAddress = document.getElementById('crypto-address').value.trim();
+          paymentDetails = {
+            cryptoType,
+            cryptoAddress,
+            cryptoPaymentAddress: cryptoType === 'bitcoin' ? "1WealthCircleBitcoinWalletAddressExample1234567890" :
+                                  cryptoType === 'ethereum' ? "0xWealthCircleEthereumWalletAddressExample1234567890" :
+                                  cryptoType === 'usdt' ? "TWealthCircleTetherWalletAddressExample1234567890" :
+                                  "Please contact support for wallet address."
+          };
+        }
+        formData.payment = { method, details: paymentDetails };
+        formData.invoiceNumber = generateInvoiceNumber();
+        updateReviewPage();
+        goToStep(4);
+      }
+    });
+
+    // Back buttons
+    document.getElementById('step2-back-btn').addEventListener('click', () => goToStep(1));
+    document.getElementById('step3-back-btn').addEventListener('click', () => goToStep(2));
+    document.getElementById('step4-back-btn').addEventListener('click', () => goToStep(3));
+
+    // Form submission with validation and auto PDF download
+    document.getElementById('step4-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!validateStep4()) {
+        return;
+      }
+      // Generate and auto-download PDF receipt without showing modal
+      await generateReceiptPDF();
+      resetFormAndUI();
+      alert('Application submitted successfully! A copy of your application has been sent to your email address.');
+    });
+
+    // Close success message
+    document.getElementById('success-close-btn').addEventListener('click', function() {
+      resetFormAndUI();
+    });
+
+    // Navigate steps
+    function goToStep(step) {
+      document.querySelectorAll('.registration-step').forEach(el => {
+        el.classList.remove('active');
+        el.classList.add('hidden');
+      });
+      document.getElementById(`step${step}-form`).classList.remove('hidden');
+      document.getElementById(`step${step}-form`).classList.add('active');
+      document.querySelectorAll('.step').forEach((el, index) => {
+        if (index + 1 < step) {
+          el.classList.remove('active');
+          el.classList.add('completed');
+        } else if (index + 1 === step) {
+          el.classList.add('active');
+          el.classList.remove('completed');
+        } else {
+          el.classList.remove('active', 'completed');
+        }
+      });
+      document.querySelectorAll('.step-line').forEach((el, index) => {
+        if (index + 1 < step - 1) {
+          el.classList.add('completed');
+        } else {
+          el.classList.remove('completed');
+        }
+      });
+      currentStep = step;
+      document.getElementById('membership-application-form').scrollTo(0, 0);
+    }
+
+    // Reset form and UI to initial state
+    function resetFormAndUI() {
+      document.getElementById('step1-form').reset();
+      document.getElementById('step3-form').reset();
+      document.getElementById('photo-name').textContent = 'No file chosen';
+      document.getElementById('photo-preview-container').classList.add('hidden');
+      document.getElementById('review-photo-preview').src = '';
+      document.getElementById('terms-agreement').checked = false; // Uncheck terms
+
+      // Clear all error messages and input error classes
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.textContent = '';
+        el.classList.add('hidden');
+      });
+      document.querySelectorAll('.input-error').forEach(el => {
+        el.classList.remove('input-error');
+      });
+
+      formData = { personalInfo: {}, membership: {}, payment: {}, files: {}, username: '', password: '', invoiceNumber: null };
+
+      // Reset step indicator to step 1 active
+      document.querySelectorAll('.step').forEach((step, idx) => {
+        step.classList.remove('completed', 'active');
+        if(idx === 0) step.classList.add('active');
+      });
+      document.querySelectorAll('.step-line').forEach(line => {
+        line.classList.remove('completed');
+      });
+
+      // Hide all form steps except the first one
+      document.querySelectorAll('.registration-step').forEach(step => {
+        step.classList.add('hidden');
+        step.classList.remove('active');
+      });
+      document.getElementById('step1-form').classList.remove('hidden');
+      document.getElementById('step1-form').classList.add('active');
+
+      // Hide success message and receipt modal if they are visible
+      document.getElementById('success-message').classList.add('hidden');
+      document.getElementById('receipt-modal').classList.add('hidden');
+      document.getElementById('membership-application-form').scrollTo(0, 0);
+    }
+
+    // Update review page
+    function updateReviewPage() {
+      document.getElementById('review-fullname').textContent = `${formData.personalInfo.firstName} ${formData.personalInfo.lastName}`;
+      document.getElementById('review-email').textContent = formData.personalInfo.email;
+      document.getElementById('review-phone').textContent = formData.personalInfo.phone;
+      document.getElementById('review-dob').textContent = new Date(formData.personalInfo.dob).toLocaleDateString();
+      document.getElementById('review-address').textContent = formData.personalInfo.address;
+      
+      document.getElementById('review-membership-type').textContent = formData.membership.type === 'basic' ? 'Basic Membership' : 'Premium Membership';
+      document.getElementById('review-membership-fee').textContent = formData.membership.price;
+      document.getElementById('review-payment-method').textContent =
+        formData.payment.method === 'credit-card' ? 'Credit/Debit Card' :
+        formData.payment.method === 'paypal' ? 'PayPal' :
+        formData.payment.method === 'bank-transfer' ? 'Bank Transfer' : 'Cryptocurrency';
+      let paymentDetailsHTML = '';
+      if (formData.payment.method === 'credit-card') {
+        paymentDetailsHTML = `
+          <div><span class="cv-label">Card Number:</span><span class="cv-value">**** **** **** ${formData.payment.details.cardNumber.slice(-4)}</span></div>
+          <div><span class="cv-label">Expiry Date:</span><span class="cv-value">${formData.payment.details.cardExpiry}</span></div>
+          <div><span class="cv-label">Name on Card:</span><span class="cv-value">${formData.payment.details.cardName}</span></div>
+        `;
+        document.getElementById('review-bank-address-section').classList.add('hidden');
+        document.getElementById('review-crypto-payment-address-section').classList.add('hidden');
+      } else if (formData.payment.method === 'paypal') {
+        paymentDetailsHTML = `
+          <div><span class="cv-label">PayPal Email:</span><span class="cv-value">${formData.payment.details.paypalEmail}</span></div>
+        `;
+        document.getElementById('review-bank-address-section').classList.add('hidden');
+        document.getElementById('review-crypto-payment-address-section').classList.add('hidden');
+      } else if (formData.payment.method === 'bank-transfer') {
+        paymentDetailsHTML = `
+          <div><span class="cv-label">Bank Name:</span><span class="cv-value">${formData.payment.details.bankName}</span></div>
+          <div><span class="cv-label">Account Number:</span><span class="cv-value">${formData.payment.details.bankAccountNumber}</span></div>
+          <div><span class="cv-label">Routing Number / SWIFT:</span><span class="cv-value">${formData.payment.details.bankRoutingNumber}</span></div>
+          <div><span class="cv-label">IBAN:</span><span class="cv-value">${formData.payment.details.bankIBAN}</span></div>
+          <div><span class="cv-label">Bank Country:</span><span class="cv-value">${formData.payment.details.bankCountry}</span></div>
+        `;
+        document.getElementById('review-bank-address').textContent = formData.payment.details.bankAddress;
+        document.getElementById('review-bank-address-section').classList.remove('hidden');
+        document.getElementById('review-crypto-payment-address-section').classList.add('hidden');
+      } else if (formData.payment.method === 'crypto') {
+        paymentDetailsHTML = `
+          <div><span class="cv-label">Cryptocurrency:</span><span class="cv-value">${
+            formData.payment.details.cryptoType === 'bitcoin' ? 'Bitcoin (BTC)' :
+            formData.payment.details.cryptoType === 'ethereum' ? 'Ethereum (ETH)' :
+            formData.payment.details.cryptoType === 'usdt' ? 'Tether (USDT)' : 'Other'
+          }</span></div>
+          <div><span class="cv-label">Your Wallet Address:</span><span class="cv-value">${formData.payment.details.cryptoAddress}</span></div>
+        `;
+        document.getElementById('review-crypto-payment-address').textContent = formData.payment.details.cryptoPaymentAddress;
+        document.getElementById('review-crypto-payment-address-section').classList.remove('hidden');
+        document.getElementById('review-bank-address-section').classList.add('hidden');
+      } else {
+        paymentDetailsHTML = `
+          <div><span class="cv-label">Instructions:</span><span class="cv-value">You will be redirected to complete payment</span></div>
+        `;
+        document.getElementById('review-bank-address-section').classList.add('hidden');
+        document.getElementById('review-crypto-payment-address-section').classList.add('hidden');
+      }
+      document.getElementById('review-payment-details').innerHTML = paymentDetailsHTML;
+
+      // Set invoice number in preview
+      document.getElementById('review-invoice-number').textContent = `Invoice #: ${formData.invoiceNumber}`;
+
+      // Set username and password in preview
+      document.getElementById('review-username').textContent = formData.username;
+      document.getElementById('review-password').textContent = formData.password.replace(/./g, '•');
+    }
+
+    // Generate receipt PDF and auto-download without showing modal
+    async function generateReceiptPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        unit: 'pt',
+        format: 'legal',
+        putOnlyUsedFonts:true,
+        floatPrecision: 16
+      });
+
+      // Use html2canvas to capture the review-cv element as an image
+      const reviewElement = document.getElementById('review-cv');
+
+      // Temporarily clone the element and adjust styles for better PDF rendering
+      const clone = reviewElement.cloneNode(true);
+      clone.style.width = '700px';
+      clone.style.padding = '20px';
+      clone.style.backgroundColor = 'white';
+      clone.style.position = 'absolute';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      document.body.appendChild(clone);
+
+      // Use html2canvas to render the cloned element
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+      });
+
+      document.body.removeChild(clone);
+
+      const imgData = canvas.toDataURL('image/png');
+
+      // Calculate image dimensions to fit legal width with margin
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 40;
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = pageWidth - margin * 2;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      let position = margin;
+
+      // If image height is larger than page height, split into pages
+      if (pdfHeight < pageHeight - margin * 2) {
+        doc.addImage(imgData, 'PNG', margin, position, pdfWidth, pdfHeight);
+      } else {
+        // Split canvas into multiple pages
+        let heightLeft = pdfHeight;
+        let canvasHeight = canvas.height;
+        let pageCanvasHeight = (canvas.height * pdfWidth) / canvas.width;
+        let pageHeightPt = pageHeight - margin * 2;
+
+        let y = 0;
+        while (heightLeft > 0) {
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = Math.min(canvasHeight - y, (pageHeightPt * canvas.width) / pdfWidth);
+
+          const ctx = pageCanvas.getContext('2d');
+          ctx.drawImage(canvas, 0, y, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height);
+
+          const pageImgData = pageCanvas.toDataURL('image/png');
+          if (y > 0) doc.addPage();
+          doc.addImage(pageImgData, 'PNG', margin, margin, pdfWidth, (pageCanvas.height * pdfWidth) / canvas.width);
+
+          heightLeft -= pageCanvas.height;
+          y += pageCanvas.height;
+        }
+      }
+
+      doc.save('WealthCircle_Application_Receipt.pdf');
+    }
+
+    // Update review page and generate receipt modal content (not shown now)
+    function generateReceipt() {
+      // This function is no longer used to show modal, replaced by generateReceiptPDF
+    }
+
+    // Close receipt modal
+    document.getElementById('close-receipt-modal').addEventListener('click', () => {
+      document.getElementById('receipt-modal').classList.add('hidden');
+      resetFormAndUI(); // Reset form after closing modal
+    });
+
+    // Print receipt
+    document.getElementById('print-receipt-btn').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Download receipt as PDF
+    document.getElementById('download-receipt-btn').addEventListener('click', () => {
+      // This button is hidden and not used now
+    });
+  </script>
+ </body>
+</html>
