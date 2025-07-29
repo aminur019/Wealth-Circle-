@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login | WealthCircle</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,88 +24,127 @@
             },
         };
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
 </head>
-<body class="font-sans bg-gray-50 flex items-center justify-center min-h-screen">
+<body class="bg-gradient-to-tr from-primary via-secondary to-accent min-h-screen flex items-center justify-center px-4">
 
-    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
-        <div class="text-center">
-            <a class="text-3xl font-bold text-primary" href="index.html">
+    <div class="relative w-full max-w-md bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 sm:p-12 overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-56 h-56 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute -bottom-20 -left-20 w-56 h-56 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+        <div class="relative z-10 text-center mb-10">
+            <a class="inline-flex items-center justify-center text-4xl font-serif font-extrabold text-primary tracking-wide" href="index.html" aria-label="WealthCircle Home">
                 <span class="text-accent">Wealth</span>Circle
+                <i class="fas fa-coins ml-3 text-accent"></i>
             </a>
-            <h2 class="mt-4 text-2xl font-bold text-gray-900">
-                Sign in to your account
-            </h2>
+            <h2 class="mt-6 text-3xl font-semibold text-gray-900 font-sans">Sign in to your account</h2>
+            <p class="mt-2 text-gray-600 font-medium">Welcome back! Please enter your details.</p>
         </div>
-        
-        <form id="login-form" class="mt-8 space-y-6">
-            <div class="rounded-md shadow-sm -space-y-px">
+
+        <form id="login-form" class="relative z-10 space-y-8" novalidate>
+            <div class="space-y-6">
                 <div>
-                    <label for="email-address" class="sr-only">Email address</label>
-                    <input id="email-address" name="email" type="email" autocomplete="email" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-sm"
-                           placeholder="Email address">
+                    <label for="email-address" class="block text-sm font-semibold text-gray-700 mb-2">Email address</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <input id="email-address" name="email" type="email" autocomplete="email" required
+                            class="block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent sm:text-sm transition"
+                            placeholder="you@example.com" />
+                        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-accent">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
                 </div>
+
                 <div>
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-sm"
-                           placeholder="Password">
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            class="block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent sm:text-sm transition"
+                            placeholder="••••••••" />
+                        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-accent">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="flex items-center justify-between">
                 <div class="text-sm">
-                    <a href="#" class="font-medium text-accent hover:text-primary">
-                        Forgot your password?
-                    </a>
+                    <a href="#" class="font-medium text-accent hover:text-primary transition">Forgot your password?</a>
                 </div>
             </div>
 
             <div>
                 <button type="submit"
-                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
+                    class="group relative w-full flex justify-center py-3 px-6 border border-transparent text-sm font-semibold rounded-full text-white bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary focus:outline-none focus:ring-4 focus:ring-accent focus:ring-offset-2 transition shadow-lg shadow-accent/50">
+                    <span class="absolute left-4 inset-y-0 flex items-center pl-3">
+                        <i class="fas fa-sign-in-alt text-white text-lg"></i>
+                    </span>
                     Sign in
                 </button>
             </div>
-             <p id="error-message" class="text-red-500 text-sm text-center mt-2"></p>
+            <p id="error-message" class="text-red-600 text-center text-sm mt-2 font-medium"></p>
         </form>
-        <p class="text-center text-sm text-gray-600">
+
+        <p class="relative z-10 mt-8 text-center text-gray-700 font-medium">
             Not a member yet?
-            <a href="index.html#join" class="font-medium text-accent hover:text-primary">
-                Apply to Join
-            </a>
+            <a href="index.html#join" class="text-accent font-semibold hover:text-primary transition">Apply to Join</a>
         </p>
     </div>
 
-<script>
-    // This is a FRONT-END simulation. A real login requires a back-end.
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('email-address').value;
-        const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error-message');
-        
-        // --> BACK-END INTEGRATION NEEDED <--
-        // In a real app, you would send `email` and `password` to your server API.
-        // The server would check them against the database and return a success token or an error.
-        
-        // For demonstration, we'll use hardcoded values:
-        if (email === 'admin@wealthcircle.com' && password === 'admin123') {
-            console.log('Admin login successful');
-            // Store a token or session info to prove the user is logged in
-            localStorage.setItem('userRole', 'admin');
-            localStorage.setItem('userName', 'Admin User');
-            window.location.href = 'dashboard.html'; // Redirect to dashboard
-        } else if (email === 'user@wealthcircle.com' && password === 'user123') {
-            console.log('User login successful');
-            localStorage.setItem('userRole', 'user');
-            localStorage.setItem('userName', 'Sarah Johnson');
-            window.location.href = 'dashboard.html'; // Redirect to dashboard
-        } else {
-            errorMessage.textContent = 'Invalid credentials. Please try again.';
+    <script>
+        // Blob animation keyframes
+        const style = document.createElement('style');
+        style.innerHTML = `
+        @keyframes blob {
+            0%, 100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
         }
-    });
-</script>
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <script>
+        // This is a FRONT-END simulation. A real login requires a back-end.
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-address').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = '';
+
+            if (!email || !password) {
+                errorMessage.textContent = 'Please fill in all fields.';
+                return;
+            }
+
+            // For demonstration, we'll use hardcoded values:
+            if (email === 'admin@wealthcircle.com' && password === 'admin123') {
+                localStorage.setItem('userRole', 'admin');
+                localStorage.setItem('userName', 'Admin User');
+                window.location.href = 'dashboard.html'; // Redirect to dashboard
+            } else if (email === 'user@wealthcircle.com' && password === 'user123') {
+                localStorage.setItem('userRole', 'user');
+                localStorage.setItem('userName', 'Sarah Johnson');
+                window.location.href = 'dashboard.html'; // Redirect to dashboard
+            } else {
+                errorMessage.textContent = 'Invalid credentials. Please try again.';
+            }
+        });
+    </script>
 
 </body>
 </html>
