@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | WealthCircle</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#14213D',
+                        secondary: '#2F5233',
+                        accent: '#FCA311',
+                        light: '#DFF6F0',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="font-sans bg-gray-50 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+        <div class="text-center">
+            <a class="text-3xl font-bold text-primary" href="index.html">
+                <span class="text-accent">Wealth</span>Circle
+            </a>
+            <h2 class="mt-4 text-2xl font-bold text-gray-900">
+                Sign in to your account
+            </h2>
+        </div>
+        
+        <form id="login-form" class="mt-8 space-y-6">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="email-address" class="sr-only">Email address</label>
+                    <input id="email-address" name="email" type="email" autocomplete="email" required
+                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-sm"
+                           placeholder="Email address">
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                           class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-accent focus:border-accent focus:z-10 sm:text-sm"
+                           placeholder="Password">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-accent hover:text-primary">
+                        Forgot your password?
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
+                    Sign in
+                </button>
+            </div>
+             <p id="error-message" class="text-red-500 text-sm text-center mt-2"></p>
+        </form>
+        <p class="text-center text-sm text-gray-600">
+            Not a member yet?
+            <a href="index.html#join" class="font-medium text-accent hover:text-primary">
+                Apply to Join
+            </a>
+        </p>
+    </div>
+
+<script>
+    // This is a FRONT-END simulation. A real login requires a back-end.
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email-address').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+        
+        // --> BACK-END INTEGRATION NEEDED <--
+        // In a real app, you would send `email` and `password` to your server API.
+        // The server would check them against the database and return a success token or an error.
+        
+        // For demonstration, we'll use hardcoded values:
+        if (email === 'admin@wealthcircle.com' && password === 'admin123') {
+            console.log('Admin login successful');
+            // Store a token or session info to prove the user is logged in
+            localStorage.setItem('userRole', 'admin');
+            localStorage.setItem('userName', 'Admin User');
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
+        } else if (email === 'user@wealthcircle.com' && password === 'user123') {
+            console.log('User login successful');
+            localStorage.setItem('userRole', 'user');
+            localStorage.setItem('userName', 'Sarah Johnson');
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
+        } else {
+            errorMessage.textContent = 'Invalid credentials. Please try again.';
+        }
+    });
+</script>
+
+</body>
+</html>
