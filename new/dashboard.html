@@ -1,634 +1,801 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard | WealthCircle</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#14213D',
-                        secondary: '#2F5233',
-                        accent: '#FCA311',
-                        light: '#DFF6F0',
-                        dark: '#333333',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                },
-            },
-        };
-    </script>
-    <style>
-        .sidebar-link.active {
-            background-color: #FCA311; /* accent color */
-            color: white;
-        }
-        /* Scrollbar for sidebar */
-        #sidebar-nav::-webkit-scrollbar {
-            width: 6px;
-        }
-        #sidebar-nav::-webkit-scrollbar-thumb {
-            background-color: rgba(252, 163, 17, 0.6);
-            border-radius: 3px;
-        }
-        #sidebar-nav::-webkit-scrollbar-track {
-            background: transparent;
-        }
-    </style>
-</head>
-<body class="font-sans bg-gradient-to-br from-primary via-secondary to-primary min-h-screen text-gray-900">
-
-    <div class="flex flex-col md:flex-row h-screen">
-        <!-- Left Sidebar -->
-        <aside id="sidebar" class="w-full md:w-72 bg-primary text-white flex-shrink-0 flex flex-col shadow-lg relative z-20">
-            <!-- Logo and User Info -->
-            <div class="h-20 flex items-center justify-center border-b border-gray-700 px-6">
-                <a class="text-3xl font-serif font-extrabold tracking-wide text-white flex items-center" href="index.html" aria-label="WealthCircle Home">
-                    <span class="text-accent">Wealth</span>Circle
-                    <i class="fas fa-coins ml-3 text-accent"></i>
-                </a>
-            </div>
-            <div id="user-profile" class="p-6 border-b border-gray-700 text-center space-y-1">
-                <!-- User Profile injected by JS -->
-            </div>
-            
-            <!-- Navigation Links -->
-            <nav id="sidebar-nav" class="flex-1 px-4 py-6 space-y-3 overflow-y-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
-                <!-- Links injected by JS -->
-            </nav>
-
-            <!-- Sign Out -->
-            <div class="px-6 py-4 border-t border-gray-700">
-                <a href="#" id="sign-out-btn" class="flex items-center w-full px-4 py-3 rounded-md text-gray-300 hover:bg-accent hover:text-white transition">
-                    <i class="fas fa-sign-out-alt w-6 text-lg"></i>
-                    <span class="ml-3 font-semibold">Sign Out</span>
-                </a>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main id="main-content" class="flex-1 p-6 md:p-10 overflow-y-auto bg-gray-50">
-            <h1 class="text-3xl font-bold text-primary">Loading...</h1>
-        </main>
-    </div>
-
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // ---ELEMENT SELECTORS---
-    const sidebarNav = document.getElementById('sidebar-nav');
-    const mainContent = document.getElementById('main-content');
-    const userProfile = document.getElementById('user-profile');
-    const signOutBtn = document.getElementById('sign-out-btn');
-
-    // --- MOCK USER DATA (to be replaced by API call) ---
-    const mockAdmin = {
-        role: 'admin',
-        name: 'Admin User',
-        email: 'admin@wealthcircle.com',
-        stats: {
-            totalUsers: 1245,
-            activeSubscriptions: 1023,
-            monthlyRevenue: 45230,
-            pendingApprovals: 7,
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard | WealthCircle</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#14213D",
+            secondary: "#2F5233",
+            accent: "#FCA311",
+            light: "#DFF6F0",
+            dark: "#333333",
+            graylight: "#f9fafb",
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            serif: ["Playfair Display", "serif"],
+          },
         },
-        recentUsers: [
-            {name: "John Doe", email: "john@example.com", joined: "2024-05-01", status: "Active"},
-            {name: "Jane Smith", email: "jane@example.com", joined: "2024-04-28", status: "Pending"},
-            {name: "Michael Lee", email: "michael@example.com", joined: "2024-04-25", status: "Active"},
-            {name: "Emily Davis", email: "emily@example.com", joined: "2024-04-20", status: "Suspended"},
-            {name: "David Kim", email: "david@example.com", joined: "2024-04-18", status: "Active"},
-        ],
+      },
     };
-
-    const mockUser = {
-        role: 'user',
-        name: 'Sarah Johnson',
-        email: 'user@wealthcircle.com',
-        phone: '(212) 555-1234',
-        address: '123 Investment Street, Financial District, NY 10005',
-        membershipStatus: 'Active',
-        nextPaymentDue: '2023-12-01',
-        portfolio: {
-            totalValue: 125000,
-            monthlyGrowth: 3.5,
-            assets: [
-                {name: "Stock A", value: 50000, growth: 2.1},
-                {name: "Bond B", value: 30000, growth: 1.2},
-                {name: "Real Estate Fund", value: 45000, growth: 5.0},
-            ],
-        },
-        recentTransactions: [
-            {date: "2024-05-10", type: "Buy", asset: "Stock A", amount: "$5,000"},
-            {date: "2024-04-28", type: "Dividend", asset: "Real Estate Fund", amount: "$350"},
-            {date: "2024-04-15", type: "Sell", asset: "Bond B", amount: "$3,000"},
-            {date: "2024-04-01", type: "Buy", asset: "Stock A", amount: "$10,000"},
-            {date: "2024-03-20", type: "Buy", asset: "Real Estate Fund", amount: "$15,000"},
-        ],
-    };
-    
-    // --- CORE LOGIC ---
-    function checkLoginState() {
-        const userRole = localStorage.getItem('userRole');
-        if (!userRole) {
-            window.location.href = 'login.html';
-            return;
-        }
-        if (userRole === 'admin') {
-            loadDashboard(mockAdmin);
-        } else {
-            loadDashboard(mockUser);
-        }
+  </script>
+  <style>
+    .sidebar-link.active {
+      background-color: #fca311;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 0 10px #fca311aa;
     }
+    .sidebar-link:hover:not(.active) {
+      background-color: #fca31133;
+      color: #fca311;
+    }
+    #sidebar-nav::-webkit-scrollbar {
+      width: 6px;
+    }
+    #sidebar-nav::-webkit-scrollbar-thumb {
+      background-color: #fca31188;
+      border-radius: 3px;
+    }
+    #sidebar-nav::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body class="font-sans bg-graylight min-h-screen flex flex-col">
 
-    function loadDashboard(userData) {
-        userProfile.innerHTML = `
-            <img src="https://placehold.co/80x80/14213D/FFFFFF/png?text=${encodeURIComponent(userData.name.split(' ').map(n=>n[0]).join(''))}" alt="Profile picture of ${userData.name}" class="mx-auto rounded-full w-20 h-20 object-cover border-4 border-accent shadow-md" />
-            <h3 class="font-bold text-lg mt-3">${userData.name}</h3>
-            <p class="text-sm text-gray-300 truncate">${userData.email}</p>
-            <span class="text-xs font-semibold uppercase bg-accent text-primary py-1 px-3 rounded-full mt-2 inline-block">${userData.role}</span>
-        `;
-        if (userData.role === 'admin') {
-            renderAdminDashboard();
+  <div class="flex flex-1 h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="w-72 bg-primary text-white flex flex-col flex-shrink-0 shadow-lg"
+    >
+      <div
+        class="h-20 flex items-center justify-center border-b border-primary/50 select-none"
+      >
+        <a
+          href="index.html"
+          class="text-3xl font-extrabold tracking-tight text-white"
+          ><span class="text-accent">Wealth</span>Circle</a
+        >
+      </div>
+      <div
+        id="user-profile"
+        class="p-6 border-b border-primary/50 text-center space-y-1"
+      >
+        <!-- Injected by JS -->
+      </div>
+      <nav
+        id="sidebar-nav"
+        class="flex-1 px-4 py-6 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent"
+      >
+        <!-- Injected by JS -->
+      </nav>
+      <div class="px-4 py-4 border-t border-primary/50">
+        <button
+          id="sign-out-btn"
+          class="flex items-center w-full px-4 py-3 rounded-md text-gray-300 hover:bg-accent hover:text-white transition"
+          aria-label="Sign Out"
+        >
+          <i class="fas fa-sign-out-alt w-6"></i>
+          <span class="ml-3 font-semibold">Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main
+      id="main-content"
+      class="flex-1 overflow-y-auto p-6 md:p-10 bg-white shadow-inner"
+      tabindex="0"
+    >
+      <h1 class="text-3xl font-bold text-primary">Loading...</h1>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebarNav = document.getElementById("sidebar-nav");
+      const mainContent = document.getElementById("main-content");
+      const userProfile = document.getElementById("user-profile");
+      const signOutBtn = document.getElementById("sign-out-btn");
+
+      // MOCK DATA
+      const mockAdmin = {
+        role: "admin",
+        name: "Admin User",
+        email: "admin@wealthcircle.com",
+      };
+
+      const pendingUsers = [
+        {
+          id: 1,
+          name: "Pending User One",
+          email: "pending1@example.com",
+          phone: "(555) 123-4567",
+          address: "101 Pending St, Cityville",
+          membershipStatus: "Pending",
+          paymentInfo: {
+            amount: 250,
+            method: "Stripe",
+            paymentDate: "2024-05-01",
+            transactionId: "TXN123456",
+          },
+          approved: false,
+        },
+        {
+          id: 2,
+          name: "Pending User Two",
+          email: "pending2@example.com",
+          phone: "(555) 987-6543",
+          address: "202 Pending Ave, Townsville",
+          membershipStatus: "Pending",
+          paymentInfo: {
+            amount: 250,
+            method: "PayPal",
+            paymentDate: "2024-05-03",
+            transactionId: "TXN654321",
+          },
+          approved: false,
+        },
+      ];
+
+      let mockUser = {
+        role: "user",
+        name: "Sarah Johnson",
+        email: "user@wealthcircle.com",
+        phone: "(212) 555-1234",
+        address: "123 Investment Street, Financial District, NY 10005",
+        membershipStatus: "Active",
+        membershipExpiry: "2023-12-01",
+        membershipSince: "2020-06-15",
+        nextPaymentDue: "2023-12-01",
+        settings: {
+          emailNotifications: true,
+          newsletterSubscribed: true,
+          darkMode: false,
+        },
+      };
+
+      // --- LOGIN CHECK ---
+      function checkLoginState() {
+        // Simulate API call to /api/me or similar
+        const userRole = localStorage.getItem("userRole");
+        if (!userRole) {
+          // Redirect to login if not logged in
+          window.location.href = "login.html";
+          return;
+        }
+        if (userRole === "admin") {
+          loadDashboard(mockAdmin);
+        } else if (userRole === "user") {
+          loadDashboard(mockUser);
         } else {
-            renderUserDashboard(userData);
+          // Unknown role, redirect to login
+          window.location.href = "login.html";
+        }
+      }
+
+      // --- LOAD DASHBOARD ---
+      function loadDashboard(userData) {
+        userProfile.innerHTML = `
+          <img src="https://placehold.co/80x80/png?text=Profile+Photo&font=roboto" alt="Profile photo of ${userData.name}" class="mx-auto rounded-full w-20 h-20 object-cover border-2 border-accent" />
+          <h3 class="mt-3 font-semibold text-lg">${userData.name}</h3>
+          <p class="text-sm text-gray-300 break-words">${userData.email}</p>
+          <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-accent text-white">${userData.role}</span>
+        `;
+
+        if (userData.role === "admin") {
+          renderAdminDashboard();
+        } else {
+          renderUserDashboard(userData);
         }
         addSidebarEventListeners();
-    }
-    
-    // --- ADMIN DASHBOARD ---
-    function renderAdminDashboard() {
-        sidebarNav.innerHTML = `
-            <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="admin-home"><i class="fas fa-tachometer-alt w-6"></i><span class="ml-3 font-semibold">Dashboard</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="user-management"><i class="fas fa-users-cog w-6"></i><span class="ml-3 font-semibold">User Management</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="financial-reports"><i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3 font-semibold">Financial Reports</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="content-management"><i class="fas fa-edit w-6"></i><span class="ml-3 font-semibold">Manage Content</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="settings"><i class="fas fa-cogs w-6"></i><span class="ml-3 font-semibold">Settings</span></a>
-        `;
-        renderAdminContent('admin-home');
-    }
+      }
 
-    // --- USER DASHBOARD ---
-    function renderUserDashboard(userData) {
+      // --- ADMIN DASHBOARD ---
+      function renderAdminDashboard() {
         sidebarNav.innerHTML = `
-            <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="user-home"><i class="fas fa-user-circle w-6"></i><span class="ml-3 font-semibold">My Profile</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="membership-billing"><i class="fas fa-credit-card w-6"></i><span class="ml-3 font-semibold">Membership & Billing</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="investment-portfolio"><i class="fas fa-chart-line w-6"></i><span class="ml-3 font-semibold">My Portfolio</span></a>
-            <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md hover:bg-accent hover:text-white transition" data-content="club-resources"><i class="fas fa-book w-6"></i><span class="ml-3 font-semibold">Club Resources</span></a>
+          <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md transition" data-content="admin-home" tabindex="0" aria-current="page">
+            <i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Dashboard</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="pending-users" tabindex="0">
+            <i class="fas fa-user-clock w-6"></i><span class="ml-3">Pending Users</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="user-management" tabindex="0">
+            <i class="fas fa-users-cog w-6"></i><span class="ml-3">User Management</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="financial-reports" tabindex="0">
+            <i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3">Financial Reports</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="content-management" tabindex="0">
+            <i class="fas fa-edit w-6"></i><span class="ml-3">Manage Content</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="settings" tabindex="0">
+            <i class="fas fa-cogs w-6"></i><span class="ml-3">Settings</span>
+          </a>
         `;
-        renderUserContent('user-home', userData);
-    }
-    
-    // --- CONTENT RENDERING ---
-    function renderAdminContent(contentId) {
-        let contentHtml = '';
+        renderAdminContent("admin-home");
+      }
+
+      // --- USER DASHBOARD ---
+      function renderUserDashboard(userData) {
+        sidebarNav.innerHTML = `
+          <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-md transition" data-content="user-home" tabindex="0" aria-current="page">
+            <i class="fas fa-user-circle w-6"></i><span class="ml-3">My Profile</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="membership-billing" tabindex="0">
+            <i class="fas fa-credit-card w-6"></i><span class="ml-3">Membership & Billing</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="membership-renew" tabindex="0">
+            <i class="fas fa-sync-alt w-6"></i><span class="ml-3">Renew Membership</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="settings" tabindex="0">
+            <i class="fas fa-cog w-6"></i><span class="ml-3">Settings</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="investment-portfolio" tabindex="0">
+            <i class="fas fa-chart-line w-6"></i><span class="ml-3">My Portfolio</span>
+          </a>
+          <a href="#" class="sidebar-link flex items-center px-4 py-3 rounded-md transition" data-content="club-resources" tabindex="0">
+            <i class="fas fa-book w-6"></i><span class="ml-3">Club Resources</span>
+          </a>
+        `;
+        renderUserContent("user-home", mockUser);
+      }
+
+      // --- ADMIN CONTENT ---
+      function renderAdminContent(contentId) {
+        let contentHtml = "";
         switch (contentId) {
-            case 'user-management':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">User Management</h1>
-                    <div class="bg-white rounded-lg shadow p-6 overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-primary text-white">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Name</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Email</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Joined</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Status</th>
-                                    <th class="px-6 py-3 text-center text-sm font-semibold uppercase">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                ${mockAdmin.recentUsers.map(user => `
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap font-medium">${user.name}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">${user.email}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">${new Date(user.joined).toLocaleDateString()}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                                                user.status === 'Active' ? 'bg-green-100 text-green-800' :
-                                                user.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                                user.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
-                                            }">${user.status}</span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800" title="Edit User"><i class="fas fa-edit"></i></button>
-                                            <button class="text-red-600 hover:text-red-800" title="Delete User"><i class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
+          case "pending-users":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Pending Users</h1>
+              <div class="bg-white p-6 rounded-lg shadow max-w-6xl mx-auto overflow-x-auto">
+                <p class="mb-4">Review and approve pending users after verifying payment info.</p>
+                <table class="min-w-full border border-gray-300 rounded-md">
+                  <thead class="bg-accent text-white">
+                    <tr>
+                      <th class="px-4 py-2 text-left">Name</th>
+                      <th class="px-4 py-2 text-left">Email</th>
+                      <th class="px-4 py-2 text-left">Phone</th>
+                      <th class="px-4 py-2 text-left">Address</th>
+                      <th class="px-4 py-2 text-left">Payment Info</th>
+                      <th class="px-4 py-2 text-left">Status</th>
+                      <th class="px-4 py-2 text-left">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${pendingUsers
+                      .map(
+                        (user) => `
+                      <tr class="border-t border-gray-200 hover:bg-gray-50 align-top">
+                        <td class="px-4 py-3">${user.name}</td>
+                        <td class="px-4 py-3 break-words">${user.email}</td>
+                        <td class="px-4 py-3">${user.phone}</td>
+                        <td class="px-4 py-3 max-w-xs break-words">${user.address}</td>
+                        <td class="px-4 py-3 max-w-xs break-words">
+                          <div><strong>Amount:</strong> $${user.paymentInfo.amount.toFixed(
+                            2
+                          )}</div>
+                          <div><strong>Method:</strong> ${user.paymentInfo.method}</div>
+                          <div><strong>Date:</strong> ${user.paymentInfo.paymentDate}</div>
+                          <div><strong>Transaction ID:</strong> ${user.paymentInfo.transactionId}</div>
+                        </td>
+                        <td class="px-4 py-3">
+                          <span class="inline-block px-3 py-1 text-xs font-semibold uppercase rounded-full bg-yellow-400 text-white">Pending</span>
+                        </td>
+                        <td class="px-4 py-3 space-x-2">
+                          <button data-id="${user.id}" class="approve-btn bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400" aria-label="Approve ${user.name}">Approve</button>
+                          <button data-id="${user.id}" class="reject-btn bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400" aria-label="Reject ${user.name}">Reject</button>
+                        </td>
+                      </tr>
+                    `
+                      )
+                      .join("")}
+                  </tbody>
+                </table>
+              </div>
+            `;
+            break;
+          case "user-management":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">User Management</h1>
+              <div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
+                <p class="mb-4">Manage all club members below.</p>
+                <table class="min-w-full border border-gray-300 rounded-md">
+                  <thead class="bg-accent text-white">
+                    <tr>
+                      <th class="px-4 py-2 text-left">Name</th>
+                      <th class="px-4 py-2 text-left">Email</th>
+                      <th class="px-4 py-2 text-left">Role</th>
+                      <th class="px-4 py-2 text-left">Status</th>
+                      <th class="px-4 py-2 text-left">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-gray-200 hover:bg-gray-50">
+                      <td class="px-4 py-2">Sarah Johnson</td>
+                      <td class="px-4 py-2">sarah.johnson@example.com</td>
+                      <td class="px-4 py-2">User</td>
+                      <td class="px-4 py-2">Active</td>
+                      <td class="px-4 py-2 space-x-2">
+                        <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </td>
+                    </tr>
+                    <tr class="border-t border-gray-200 hover:bg-gray-50">
+                      <td class="px-4 py-2">John Smith</td>
+                      <td class="px-4 py-2">john.smith@example.com</td>
+                      <td class="px-4 py-2">User</td>
+                      <td class="px-4 py-2">Inactive</td>
+                      <td class="px-4 py-2 space-x-2">
+                        <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </td>
+                    </tr>
+                    <tr class="border-t border-gray-200 hover:bg-gray-50">
+                      <td class="px-4 py-2">Emily Davis</td>
+                      <td class="px-4 py-2">emily.davis@example.com</td>
+                      <td class="px-4 py-2">Admin</td>
+                      <td class="px-4 py-2">Active</td>
+                      <td class="px-4 py-2 space-x-2">
+                        <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </td>
+                    </tr>
+                    <tr class="border-t border-gray-200 hover:bg-gray-50">
+                      <td class="px-4 py-2">Michael Brown</td>
+                      <td class="px-4 py-2">michael.brown@example.com</td>
+                      <td class="px-4 py-2">User</td>
+                      <td class="px-4 py-2">Active</td>
+                      <td class="px-4 py-2 space-x-2">
+                        <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </td>
+                    </tr>
+                    <tr class="border-t border-gray-200 hover:bg-gray-50">
+                      <td class="px-4 py-2">Olivia Wilson</td>
+                      <td class="px-4 py-2">olivia.wilson@example.com</td>
+                      <td class="px-4 py-2">User</td>
+                      <td class="px-4 py-2">Pending</td>
+                      <td class="px-4 py-2 space-x-2">
+                        <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+            break;
+          case "financial-reports":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Financial Reports</h1>
+              <div class="bg-white p-6 rounded-lg shadow space-y-6 max-w-5xl mx-auto">
+                <p>Summary of financial performance and reports.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div class="p-6 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Total Revenue</h2>
+                    <p class="text-3xl font-bold text-primary">$1,250,000</p>
+                  </div>
+                  <div class="p-6 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Expenses</h2>
+                    <p class="text-3xl font-bold text-primary">$450,000</p>
+                  </div>
+                  <div class="p-6 border rounded-lg bg-light shadow-sm">
+                    <h2 class="text-xl font-semibold text-secondary mb-2">Net Profit</h2>
+                    <p class="text-3xl font-bold text-primary">$800,000</p>
+                  </div>
+                </div>
+                <canvas id="financialChart" class="rounded-lg shadow" aria-label="Financial chart showing revenue, expenses, and profit trends over time" role="img"></canvas>
+              </div>
+            `;
+            break;
+          case "content-management":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Manage Content</h1>
+              <div class="bg-white p-6 rounded-lg shadow max-w-4xl mx-auto space-y-4">
+                <p>Manage articles, announcements, and other content for the club.</p>
+                <div class="divide-y divide-gray-200">
+                  <div class="py-4 flex justify-between items-center">
+                    <div>
+                      <h3 class="font-semibold text-lg">Monthly Newsletter - April 2024</h3>
+                      <p class="text-gray-600">Published on 2024-04-01</p>
                     </div>
-                `;
-                break;
-            case 'financial-reports':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Financial Reports</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-                            <i class="fas fa-users text-4xl text-accent mb-3"></i>
-                            <p class="text-gray-600">Total Users</p>
-                            <p class="text-3xl font-bold text-primary">${mockAdmin.stats.totalUsers.toLocaleString()}</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-                            <i class="fas fa-file-invoice-dollar text-4xl text-accent mb-3"></i>
-                            <p class="text-gray-600">Monthly Revenue</p>
-                            <p class="text-3xl font-bold text-primary">$${mockAdmin.stats.monthlyRevenue.toLocaleString()}</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-                            <i class="fas fa-user-check text-4xl text-accent mb-3"></i>
-                            <p class="text-gray-600">Active Subscriptions</p>
-                            <p class="text-3xl font-bold text-primary">${mockAdmin.stats.activeSubscriptions.toLocaleString()}</p>
-                        </div>
+                    <div class="space-x-3">
+                      <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                      <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h2 class="text-xl font-semibold text-primary mb-4">Pending Approvals</h2>
-                        <p class="text-gray-700">You have <span class="font-bold text-accent">${mockAdmin.stats.pendingApprovals}</span> pending user approvals to review.</p>
-                        <button class="mt-4 bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition">Review Now</button>
+                  </div>
+                  <div class="py-4 flex justify-between items-center">
+                    <div>
+                      <h3 class="font-semibold text-lg">Investment Tips Blog Post</h3>
+                      <p class="text-gray-600">Published on 2024-03-15</p>
                     </div>
-                `;
-                break;
-            case 'content-management':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Manage Content</h1>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <p class="text-gray-700 mb-4">Create, edit, and manage club content such as announcements, articles, and resources.</p>
-                        <button class="bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition mb-6">Add New Content</button>
-                        <ul class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
-                            <li class="py-3 flex justify-between items-center">
-                                <div>
-                                    <h3 class="font-semibold text-primary">Monthly Investment Tips - May 2024</h3>
-                                    <p class="text-sm text-gray-600">Published on 2024-05-01</p>
-                                </div>
-                                <div class="space-x-3">
-                                    <button class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fas fa-edit"></i></button>
-                                    <button class="text-red-600 hover:text-red-800" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </li>
-                            <li class="py-3 flex justify-between items-center">
-                                <div>
-                                    <h3 class="font-semibold text-primary">New Club Rules and Guidelines</h3>
-                                    <p class="text-sm text-gray-600">Published on 2024-04-15</p>
-                                </div>
-                                <div class="space-x-3">
-                                    <button class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fas fa-edit"></i></button>
-                                    <button class="text-red-600 hover:text-red-800" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="space-x-3">
+                      <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                      <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
-                `;
-                break;
-            case 'settings':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Settings</h1>
-                    <div class="bg-white rounded-lg shadow p-6 max-w-lg">
-                        <form id="settings-form" class="space-y-6">
-                            <div>
-                                <label for="site-title" class="block font-semibold text-gray-700 mb-2">Site Title</label>
-                                <input type="text" id="site-title" class="w-full border border-gray-300 rounded-md p-2" value="WealthCircle" />
-                            </div>
-                            <div>
-                                <label for="admin-email" class="block font-semibold text-gray-700 mb-2">Admin Email</label>
-                                <input type="email" id="admin-email" class="w-full border border-gray-300 rounded-md p-2" value="admin@wealthcircle.com" />
-                            </div>
-                            <div>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" id="email-notifications" class="form-checkbox text-accent" checked />
-                                    <span class="ml-2 text-gray-700 font-medium">Enable Email Notifications</span>
-                                </label>
-                            </div>
-                            <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-md shadow transition">Save Settings</button>
-                        </form>
+                  </div>
+                  <div class="py-4 flex justify-between items-center">
+                    <div>
+                      <h3 class="font-semibold text-lg">Upcoming Webinar Announcement</h3>
+                      <p class="text-gray-600">Published on 2024-04-10</p>
                     </div>
-                `;
-                break;
-            default: // admin-home
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Admin Dashboard</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
-                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Total Users</p>
-                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.totalUsers.toLocaleString()}</p>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
-                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Monthly Revenue</p>
-                                <p class="text-2xl font-bold text-primary">$${mockAdmin.stats.monthlyRevenue.toLocaleString()}</p>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
-                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Active Subscriptions</p>
-                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.activeSubscriptions.toLocaleString()}</p>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg shadow p-6 flex items-center space-x-4">
-                            <div class="p-4 bg-accent rounded-full text-white text-3xl">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Pending Approvals</p>
-                                <p class="text-2xl font-bold text-primary">${mockAdmin.stats.pendingApprovals}</p>
-                            </div>
-                        </div>
+                    <div class="space-x-3">
+                      <button class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-accent rounded"><i class="fas fa-edit"></i> Edit</button>
+                      <button class="text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"><i class="fas fa-trash-alt"></i> Delete</button>
                     </div>
-                    <section>
-                        <h2 class="text-2xl font-semibold text-primary mb-4">Recent Users</h2>
-                        <div class="bg-white rounded-lg shadow p-6 overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-primary text-white">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Name</th>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Email</th>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Joined</th>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    ${mockAdmin.recentUsers.map(user => `
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap font-medium">${user.name}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-gray-600">${user.email}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">${new Date(user.joined).toLocaleDateString()}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                                                    user.status === 'Active' ? 'bg-green-100 text-green-800' :
-                                                    user.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                                    user.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
-                                                }">${user.status}</span>
-                                            </td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-                `;
+                  </div>
+                </div>
+                <div class="mt-6 text-right">
+                  <button class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">Add New Content</button>
+                </div>
+              </div>
+            `;
+            break;
+          case "settings":
+            contentHtml = `
+              <h1 class="text-3xl font-bold text-primary mb-6">Settings</h1>
+              <div class="bg-white p-8 rounded-lg shadow max-w-md mx-auto">
+                <form id="settings-form" class="space-y-6" aria-label="User settings form">
+                  <div class="flex items-center justify-between">
+                    <label for="email-notifications" class="font-medium">Email Notifications</label>
+                    <input type="checkbox" id="email-notifications" class="form-checkbox h-5 w-5 text-accent" ${
+                      mockUser.settings.emailNotifications ? "checked" : ""
+                    } />
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <label for="newsletter-subscribe" class="font-medium">Subscribe to Newsletter</label>
+                    <input type="checkbox" id="newsletter-subscribe" class="form-checkbox h-5 w-5 text-accent" ${
+                      mockUser.settings.newsletterSubscribed ? "checked" : ""
+                    } />
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <label for="dark-mode" class="font-medium">Dark Mode</label>
+                    <input type="checkbox" id="dark-mode" class="form-checkbox h-5 w-5 text-accent" ${
+                      mockUser.settings.darkMode ? "checked" : ""
+                    } />
+                  </div>
+                  <div>
+                    <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md">Save Settings</button>
+                  </div>
+                </form>
+                <div id="settings-message" class="mt-4 text-green-600 font-semibold hidden"></div>
+              </div>
+            `;
+            break;
+          default:
+            contentHtml = `<h1 class="text-3xl font-bold text-primary">Content not found</h1>`;
         }
         mainContent.innerHTML = contentHtml;
-    }
 
-    function renderUserContent(contentId, userData) {
-        let contentHtml = '';
-        switch (contentId) {
-            case 'membership-billing':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Membership & Billing</h1>
-                    <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto">
-                        <h2 class="text-xl font-bold text-primary mb-4">Your Membership Status: <span class="text-secondary">${userData.membershipStatus}</span></h2>
-                        <p class="text-gray-600 mb-6">Next payment of <strong class="text-primary">$250.00</strong> is due on: <strong class="text-primary">${userData.nextPaymentDue}</strong></p>
-                        
-                        <h3 class="text-lg font-bold text-primary mt-8 mb-4">Make a Payment</h3>
-                        <div class="space-y-4">
-                           <div>
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="radio" name="payment-method" value="stripe" class="h-5 w-5 text-accent focus:ring-accent border-gray-300" checked>
-                                    <span class="ml-3 font-medium select-none">Pay with Credit Card (Stripe)</span>
-                                </label>
-                            </div>
-                            <div>
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="radio" name="payment-method" value="paypal" class="h-5 w-5 text-accent focus:ring-accent border-gray-300">
-                                    <span class="ml-3 font-medium select-none">Pay with PayPal</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Stripe Payment Form -->
-                        <div id="stripe-form" class="mt-6 p-6 border rounded-lg bg-gray-50 shadow-inner">
-                            <h4 class="font-bold text-primary mb-4">Credit Card Information</h4>
-                            <form id="stripe-payment-form" class="space-y-4">
-                                <div>
-                                    <label for="card-name" class="block font-medium mb-1">Name on Card</label>
-                                    <input type="text" id="card-name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="Sarah Johnson" required />
-                                </div>
-                                <div>
-                                    <label for="card-number" class="block font-medium mb-1">Card Number</label>
-                                    <input type="text" id="card-number" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="1234 5678 9012 3456" required />
-                                </div>
-                                <div class="flex space-x-4">
-                                    <div class="flex-1">
-                                        <label for="card-expiry" class="block font-medium mb-1">Expiry (MM/YY)</label>
-                                        <input type="text" id="card-expiry" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="12/25" required />
-                                    </div>
-                                    <div class="flex-1">
-                                        <label for="card-cvc" class="block font-medium mb-1">CVC</label>
-                                        <input type="text" id="card-cvc" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" placeholder="123" required />
-                                    </div>
-                                </div>
-                                <button type="submit" class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 rounded-md shadow transition">Pay $250.00</button>
-                            </form>
-                        </div>
-
-                        <!-- PayPal Button -->
-                        <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 shadow-inner text-center">
-                            <h4 class="font-bold text-primary mb-4">Complete your payment with PayPal</h4>
-                            <p class="text-gray-600 mb-4">You will be redirected to the PayPal website to complete your payment securely.</p>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md shadow transition">Pay with PayPal</button>
-                        </div>
-                    </div>
-                `;
-                break;
-            case 'investment-portfolio':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">My Portfolio</h1>
-                    <div class="bg-white rounded-lg shadow p-8 max-w-4xl mx-auto">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
-                            <div>
-                                <p class="text-gray-600">Total Portfolio Value</p>
-                                <p class="text-4xl font-extrabold text-secondary">$${userData.portfolio.totalValue.toLocaleString()}</p>
-                            </div>
-                            <div class="mt-4 md:mt-0 flex items-center space-x-2 text-green-600 font-semibold">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>${userData.portfolio.monthlyGrowth}% this month</span>
-                            </div>
-                        </div>
-                        <h2 class="text-xl font-semibold text-primary mb-4">Assets Breakdown</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            ${userData.portfolio.assets.map(asset => `
-                                <div class="bg-gray-50 rounded-lg p-6 shadow flex flex-col items-center">
-                                    <i class="fas fa-chart-pie text-4xl text-accent mb-3"></i>
-                                    <h3 class="font-semibold text-primary mb-1">${asset.name}</h3>
-                                    <p class="text-gray-700 text-lg font-bold">$${asset.value.toLocaleString()}</p>
-                                    <p class="mt-1 text-green-600 font-semibold">${asset.growth}% growth</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <h2 class="text-xl font-semibold text-primary mb-4">Recent Transactions</h2>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-primary text-white">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Date</th>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Type</th>
-                                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Asset</th>
-                                        <th class="px-6 py-3 text-right text-sm font-semibold uppercase">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    ${userData.recentTransactions.map(tx => `
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">${new Date(tx.date).toLocaleDateString()}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap font-semibold">${tx.type}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">${tx.asset}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right font-bold">${tx.amount}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-                break;
-            case 'club-resources':
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">Club Resources</h1>
-                    <div class="bg-white rounded-lg shadow p-6 max-w-4xl mx-auto space-y-6">
-                        <div class="flex items-center space-x-4">
-                            <img src="https://placehold.co/80x80/png?text=Investment+Guide" alt="Cover image of Investment Guide booklet with financial charts and graphs" class="w-20 h-20 rounded-md object-cover shadow" />
-                            <div>
-                                <h2 class="text-xl font-semibold text-primary">Investment Guide 2024</h2>
-                                <p class="text-gray-700">A comprehensive guide to smart investing strategies for 2024.</p>
-                                <a href="#" class="text-accent font-semibold hover:underline">Download PDF</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <img src="https://placehold.co/80x80/png?text=Webinar" alt="Webinar promotional image showing a presenter and financial charts on screen" class="w-20 h-20 rounded-md object-cover shadow" />
-                            <div>
-                                <h2 class="text-xl font-semibold text-primary">Monthly Webinar Recordings</h2>
-                                <p class="text-gray-700">Access recordings of our expert-led webinars on market trends and investment tips.</p>
-                                <a href="#" class="text-accent font-semibold hover:underline">Watch Now</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <img src="https://placehold.co/80x80/png?text=Newsletter" alt="Newsletter cover image with financial charts and newsletter title" class="w-20 h-20 rounded-md object-cover shadow" />
-                            <div>
-                                <h2 class="text-xl font-semibold text-primary">Monthly Newsletter</h2>
-                                <p class="text-gray-700">Stay updated with the latest news, tips, and club announcements.</p>
-                                <a href="#" class="text-accent font-semibold hover:underline">Read Latest</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                break;
-            default: // user-home
-                contentHtml = `
-                    <h1 class="text-3xl font-bold text-primary mb-6">My Profile</h1>
-                    <div class="bg-white p-8 rounded-lg shadow max-w-3xl mx-auto">
-                        <h2 class="text-xl font-bold text-primary mb-6">Personal Information</h2>
-                        <form id="profile-form" class="space-y-6">
-                             <div>
-                                <label for="name" class="block font-semibold text-gray-700 mb-2">Full Name</label>
-                                <input type="text" id="name" value="${userData.name}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
-                             </div>
-                             <div>
-                                <label for="email" class="block font-semibold text-gray-700 mb-2">Email Address</label>
-                                <input type="email" id="email" value="${userData.email}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
-                             </div>
-                             <div>
-                                <label for="phone" class="block font-semibold text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" id="phone" value="${userData.phone}" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none" />
-                             </div>
-                             <div>
-                                <label for="address" class="block font-semibold text-gray-700 mb-2">Mailing Address</label>
-                                <textarea id="address" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-accent focus:outline-none">${userData.address}</textarea>
-                             </div>
-                             <div class="pt-4">
-                                <button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-8 rounded-md shadow transition">Save Changes</button>
-                             </div>
-                        </form>
-                    </div>
-                `;
+        if (contentId === "pending-users") {
+          addPendingUserListeners();
         }
-        mainContent.innerHTML = contentHtml;
-        addPaymentGatewayListeners();
-        addProfileFormListener();
-    }
-    
-    // --- EVENT LISTENERS ---
-    function addSidebarEventListeners() {
-        const links = document.querySelectorAll('.sidebar-link');
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                const contentId = link.getAttribute('data-content');
-                const userRole = localStorage.getItem('userRole');
-                if (userRole === 'admin') {
-                    renderAdminContent(contentId);
-                } else {
-                    renderUserContent(contentId, mockUser);
-                }
-            });
-        });
-    }
-
-    function addPaymentGatewayListeners() {
-        const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
-        const stripeForm = document.getElementById('stripe-form');
-        const paypalForm = document.getElementById('paypal-form');
-        if (!paymentRadios.length) return;
-
-        paymentRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                if (radio.value === 'stripe' && radio.checked) {
-                    stripeForm.classList.remove('hidden');
-                    paypalForm.classList.add('hidden');
-                } else if (radio.value === 'paypal' && radio.checked) {
-                    stripeForm.classList.add('hidden');
-                    paypalForm.classList.remove('hidden');
-                }
-            });
-        });
-
-        // Stripe payment form submit simulation
-        const stripePaymentForm = document.getElementById('stripe-payment-form');
-        if (stripePaymentForm) {
-            stripePaymentForm.addEventListener('submit', e => {
-                e.preventDefault();
-                alert('Payment processed successfully (simulation).');
-            });
+        if (contentId === "financial-reports") {
+          renderFinancialChart();
         }
-    }
+        if (contentId === "admin-home") {
+          renderAdminOverviewChart();
+        }
+        if (contentId === "membership-renew") {
+          addRenewListeners();
+        }
+        if (contentId === "settings") {
+          addSettingsListeners();
+        }
+        if (contentId === "user-home") {
+          addProfileFormListener();
+        }
+        if (contentId === "investment-portfolio") {
+          renderPortfolioChart();
+        }
+      }
 
-    function addProfileFormListener() {
-        const profileForm = document.getElementById('profile-form');
-        if (!profileForm) return;
-        profileForm.addEventListener('submit', e => {
+      // --- EVENT LISTENERS ---
+      function addSidebarEventListeners() {
+        const links = document.querySelectorAll(".sidebar-link");
+        links.forEach((link) => {
+          link.addEventListener("click", (e) => {
             e.preventDefault();
-            alert('Profile changes saved (simulation).');
+            links.forEach((l) => l.classList.remove("active"));
+            link.classList.add("active");
+            const contentId = link.getAttribute("data-content");
+            if (localStorage.getItem("userRole") === "admin") {
+              renderAdminContent(contentId);
+            } else {
+              renderUserContent(contentId, mockUser);
+            }
+          });
+          link.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              link.click();
+            }
+          });
         });
-    }
+      }
 
-    signOutBtn.addEventListener('click', (e) => {
+      function addPendingUserListeners() {
+        const approveButtons = document.querySelectorAll(".approve-btn");
+        const rejectButtons = document.querySelectorAll(".reject-btn");
+
+        approveButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const userId = parseInt(btn.getAttribute("data-id"));
+            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
+            if (userIndex !== -1) {
+              const approvedUser = pendingUsers.splice(userIndex, 1)[0];
+              approvedUser.approved = true;
+              approvedUser.membershipStatus = "Active";
+              alert(`User "${approvedUser.name}" approved and can now login.`);
+              renderAdminContent("pending-users");
+            }
+          });
+        });
+
+        rejectButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const userId = parseInt(btn.getAttribute("data-id"));
+            const userIndex = pendingUsers.findIndex((u) => u.id === userId);
+            if (userIndex !== -1) {
+              const rejectedUser = pendingUsers.splice(userIndex, 1)[0];
+              alert(`User "${rejectedUser.name}" rejected and removed from pending list.`);
+              renderAdminContent("pending-users");
+            }
+          });
+        });
+      }
+
+      function addPaymentGatewayListeners() {
+        const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
+        const stripeForm = document.getElementById("stripe-form");
+        const paypalForm = document.getElementById("paypal-form");
+        if (!paymentRadios.length) return;
+        paymentRadios.forEach((radio) => {
+          radio.addEventListener("change", () => {
+            if (radio.value === "stripe" && radio.checked) {
+              stripeForm.classList.remove("hidden");
+              paypalForm.classList.add("hidden");
+            } else if (radio.value === "paypal" && radio.checked) {
+              stripeForm.classList.add("hidden");
+              paypalForm.classList.remove("hidden");
+            }
+          });
+        });
+      }
+
+      function addRenewListeners() {
+        const renewForm = document.getElementById("renew-form");
+        const renewMessage = document.getElementById("renew-message");
+        const paypalPayBtn = document.getElementById("paypal-pay-btn");
+
+        renewForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const periodSelect = document.getElementById("renewal-period");
+          const paymentMethod = renewForm.querySelector('input[name="payment-method"]:checked');
+          if (!periodSelect.value) {
+            alert("Please select a renewal period.");
+            return;
+          }
+          if (!paymentMethod) {
+            alert("Please select a payment method.");
+            return;
+          }
+
+          let years = parseInt(periodSelect.value);
+          let currentExpiry = new Date(mockUser.membershipExpiry);
+          let today = new Date();
+          if (currentExpiry < today) currentExpiry = today;
+          currentExpiry.setFullYear(currentExpiry.getFullYear() + years);
+          const newExpiryStr = currentExpiry.toISOString().split("T")[0];
+
+          mockUser.membershipExpiry = newExpiryStr;
+          mockUser.membershipStatus = "Active";
+          mockUser.nextPaymentDue = newExpiryStr;
+
+          renewMessage.textContent = `Membership successfully renewed! New expiry date: ${newExpiryStr}`;
+          renewMessage.classList.remove("hidden");
+
+          if (document.querySelector('.sidebar-link.active').getAttribute('data-content') === 'membership-renew') {
+            setTimeout(() => {
+              renderUserContent("membership-renew", mockUser);
+              const links = document.querySelectorAll(".sidebar-link");
+              links.forEach(l => l.classList.remove("active"));
+              document.querySelector('.sidebar-link[data-content="membership-renew"]').classList.add("active");
+            }, 3000);
+          }
+        });
+
+        if (paypalPayBtn) {
+          paypalPayBtn.addEventListener("click", () => {
+            alert("Redirecting to PayPal for payment...");
+          });
+        }
+      }
+
+      function addSettingsListeners() {
+        const settingsForm = document.getElementById("settings-form");
+        const settingsMessage = document.getElementById("settings-message");
+
+        settingsForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const emailNotifications = document.getElementById("email-notifications").checked;
+          const newsletterSubscribed = document.getElementById("newsletter-subscribe").checked;
+          const darkMode = document.getElementById("dark-mode").checked;
+
+          mockUser.settings.emailNotifications = emailNotifications;
+          mockUser.settings.newsletterSubscribed = newsletterSubscribed;
+          mockUser.settings.darkMode = darkMode;
+
+          settingsMessage.textContent = "Settings saved successfully!";
+          settingsMessage.classList.remove("hidden");
+
+          if (darkMode) {
+            document.body.classList.add("dark");
+          } else {
+            document.body.classList.remove("dark");
+          }
+        });
+      }
+
+      function addProfileFormListener() {
+        const profileForm = document.getElementById("profile-form");
+        if (!profileForm) return;
+        profileForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          mockUser.name = document.getElementById("name").value.trim();
+          mockUser.email = document.getElementById("email").value.trim();
+          mockUser.phone = document.getElementById("phone").value.trim();
+          mockUser.address = document.getElementById("address").value.trim();
+          alert("Profile updated successfully!");
+          loadDashboard(mockUser);
+        });
+      }
+
+      function renderFinancialChart() {
+        const ctx = document.getElementById("financialChart")?.getContext("2d");
+        if (!ctx) return;
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+            datasets: [
+              {
+                label: "Revenue",
+                data: [120000, 130000, 125000, 140000, 150000, 160000, 170000, 180000],
+                backgroundColor: "#FCA311",
+              },
+              {
+                label: "Expenses",
+                data: [50000, 55000, 52000, 60000, 65000, 70000, 72000, 75000],
+                backgroundColor: "#2F5233",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Monthly Financial Overview" },
+            },
+            scales: {
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
+
+      function renderAdminOverviewChart() {
+        const ctx = document.getElementById("adminOverviewChart")?.getContext("2d");
+        if (!ctx) return;
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+            datasets: [
+              {
+                label: "New Users",
+                data: [50, 75, 60, 80, 90, 100, 110, 120],
+                borderColor: "#FCA311",
+                backgroundColor: "#FCA311aa",
+                fill: true,
+                tension: 0.3,
+              },
+              {
+                label: "Active Members",
+                data: [900, 920, 940, 960, 980, 1000, 1020, 1050],
+                borderColor: "#2F5233",
+                backgroundColor: "#2F5233aa",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "User Growth & Activity" },
+            },
+            scales: {
+              y: { beginAtZero: false },
+            },
+          },
+        });
+      }
+
+      function renderPortfolioChart() {
+        const ctx = document.getElementById("portfolioChart")?.getContext("2d");
+        if (!ctx) return;
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ],
+            datasets: [
+              {
+                label: "Portfolio Value",
+                data: [
+                  60000, 62000, 64000, 66000, 68000, 70000, 72000, 74000, 76000,
+                  78000, 80000, 82500,
+                ],
+                borderColor: "#FCA311",
+                backgroundColor: "#FCA311aa",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Portfolio Growth Over Time" },
+            },
+            scales: {
+              y: { beginAtZero: false },
+            },
+          },
+        });
+      }
+
+      signOutBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        localStorage.removeItem('userRole');
-        localStorage.removeItem('userName');
-        window.location.href = 'login.html';
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("userName");
+        window.location.href = "login.html";
+      });
+
+      checkLoginState();
     });
-
-    // --- INITIALIZE THE DASHBOARD ---
-    checkLoginState();
-});
-    </script>
-
+  </script>
 </body>
 </html>
