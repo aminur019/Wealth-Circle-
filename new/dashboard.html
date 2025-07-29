@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | WealthCircle</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#14213D',
+                        secondary: '#2F5233',
+                        accent: '#FCA311',
+                        light: '#DFF6F0',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .sidebar-link.active {
+            background-color: #FCA311; /* accent color */
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+
+    <div class="flex h-screen bg-gray-100">
+        <!-- Left Sidebar -->
+        <aside id="sidebar" class="w-64 bg-primary text-white flex-shrink-0 flex flex-col">
+            <!-- Logo and User Info -->
+            <div class="h-20 flex items-center justify-center border-b border-gray-700">
+                 <a class="text-2xl font-bold text-white" href="index.html">
+                    <span class="text-accent">Wealth</span>Circle
+                </a>
+            </div>
+            <div id="user-profile" class="p-4 border-b border-gray-700 text-center">
+                <!-- User Profile will be injected here by JS -->
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav id="sidebar-nav" class="flex-1 px-2 py-4 space-y-2">
+                <!-- Links will be injected here by JS -->
+            </nav>
+
+            <!-- Sign Out -->
+            <div class="px-2 py-4 border-t border-gray-700">
+                <a href="#" id="sign-out-btn" class="flex items-center w-full px-4 py-2 rounded-md text-gray-300 hover:bg-accent hover:text-white">
+                    <i class="fas fa-sign-out-alt w-6"></i>
+                    <span class="ml-3">Sign Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 p-6 md:p-10 overflow-y-auto">
+            <!-- Content will be injected here by JS -->
+            <h1 class="text-3xl font-bold text-primary">Loading...</h1>
+        </main>
+    </div>
+
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // ---ELEMENT SELECTORS---
+    const sidebarNav = document.getElementById('sidebar-nav');
+    const mainContent = document.getElementById('main-content');
+    const userProfile = document.getElementById('user-profile');
+    const signOutBtn = document.getElementById('sign-out-btn');
+
+    // --- MOCK USER DATA (to be replaced by API call) ---
+    const mockAdmin = {
+        role: 'admin',
+        name: 'Admin User',
+        email: 'admin@wealthcircle.com',
+        // other admin data...
+    };
+
+    const mockUser = {
+        role: 'user',
+        name: 'Sarah Johnson',
+        email: 'user@wealthcircle.com',
+        phone: '(212) 555-1234',
+        address: '123 Investment Street, Financial District, NY 10005',
+        membershipStatus: 'Active',
+        nextPaymentDue: '2023-12-01',
+        // other user data...
+    };
+    
+    // --- CORE LOGIC ---
+    function checkLoginState() {
+        // --> BACK-END INTEGRATION NEEDED <--
+        // In a real app, you would make an API call to a `/api/me` endpoint
+        // to get the current logged-in user's data.
+        const userRole = localStorage.getItem('userRole');
+        
+        if (!userRole) {
+            // If not logged in, redirect to login page
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // Based on the role, load the correct dashboard
+        if (userRole === 'admin') {
+            loadDashboard(mockAdmin);
+        } else {
+            loadDashboard(mockUser);
+        }
+    }
+
+    function loadDashboard(userData) {
+        // Render user profile in sidebar
+        userProfile.innerHTML = `
+            <h3 class="font-bold">${userData.name}</h3>
+            <p class="text-sm text-gray-400">${userData.email}</p>
+            <span class="text-xs font-semibold uppercase bg-accent text-white py-1 px-2 rounded-full mt-2 inline-block">${userData.role}</span>
+        `;
+        
+        // Render navigation and content based on role
+        if (userData.role === 'admin') {
+            renderAdminDashboard();
+        } else {
+            renderUserDashboard(userData);
+        }
+
+        // Add event listeners to sidebar links
+        addSidebarEventListeners();
+    }
+    
+    // --- ADMIN DASHBOARD ---
+    function renderAdminDashboard() {
+        sidebarNav.innerHTML = `
+            <a href="#" class="sidebar-link active" data-content="admin-home"><i class="fas fa-tachometer-alt w-6"></i><span class="ml-3">Dashboard</span></a>
+            <a href="#" class="sidebar-link" data-content="user-management"><i class="fas fa-users-cog w-6"></i><span class="ml-3">User Management</span></a>
+            <a href="#" class="sidebar-link" data-content="financial-reports"><i class="fas fa-file-invoice-dollar w-6"></i><span class="ml-3">Financial Reports</span></a>
+            <a href="#" class="sidebar-link" data-content="content-management"><i class="fas fa-edit w-6"></i><span class="ml-3">Manage Content</span></a>
+            <a href="#" class="sidebar-link" data-content="settings"><i class="fas fa-cogs w-6"></i><span class="ml-3">Settings</span></a>
+        `;
+        renderAdminContent('admin-home');
+    }
+
+    // --- USER DASHBOARD ---
+    function renderUserDashboard(userData) {
+         sidebarNav.innerHTML = `
+            <a href="#" class="sidebar-link active" data-content="user-home"><i class="fas fa-user-circle w-6"></i><span class="ml-3">My Profile</span></a>
+            <a href="#" class="sidebar-link" data-content="membership-billing"><i class="fas fa-credit-card w-6"></i><span class="ml-3">Membership & Billing</span></a>
+            <a href="#" class="sidebar-link" data-content="investment-portfolio"><i class="fas fa-chart-line w-6"></i><span class="ml-3">My Portfolio</span></a>
+            <a href="#" class="sidebar-link" data-content="club-resources"><i class="fas fa-book w-6"></i><span class="ml-3">Club Resources</span></a>
+        `;
+        renderUserContent('user-home', userData);
+    }
+    
+    // --- CONTENT RENDERING ---
+    function renderAdminContent(contentId) {
+        let contentHtml = '';
+        switch (contentId) {
+            case 'user-management':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">User Management</h1>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <p>Here you can view, edit, and manage all club members. This table would be populated with data from your database.</p>
+                        <!-- Table of users would go here -->
+                    </div>`;
+                break;
+            // Add cases for other admin sections...
+            default: // admin-home
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Admin Dashboard</h1>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <p>Welcome, Admin! This is the central control panel. You have access to all administrative functions.</p>
+                    </div>`;
+        }
+        mainContent.innerHTML = contentHtml;
+    }
+
+    function renderUserContent(contentId, userData) {
+        let contentHtml = '';
+        switch (contentId) {
+            case 'membership-billing':
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">Membership & Billing</h1>
+                    <div class="bg-white p-8 rounded-lg shadow">
+                        <h2 class="text-xl font-bold text-primary mb-4">Your Membership Status: <span class="text-secondary">${userData.membershipStatus}</span></h2>
+                        <p class="text-gray-600 mb-6">Next payment of $250.00 is due on: <strong class="text-primary">${userData.nextPaymentDue}</strong></p>
+                        
+                        <h3 class="text-lg font-bold text-primary mt-8 mb-4">Make a Payment</h3>
+                        <div class="space-y-4">
+                           <div>
+                                <label class="flex items-center">
+                                    <input type="radio" name="payment-method" value="stripe" class="h-4 w-4 text-accent focus:ring-accent border-gray-300">
+                                    <span class="ml-3 font-medium">Pay with Credit Card (Stripe)</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="radio" name="payment-method" value="paypal" class="h-4 w-4 text-accent focus:ring-accent border-gray-300">
+                                    <span class="ml-3 font-medium">Pay with PayPal</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Stripe Payment Form (hidden by default) -->
+                        <div id="stripe-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50">
+                            <h4 class="font-bold text-primary mb-4">Credit Card Information</h4>
+                            <div class="space-y-4">
+                                <div><label for="card-name">Name on Card</label><input type="text" id="card-name" class="w-full mt-1 p-2 border rounded-md"></div>
+                                <div><label for="card-number">Card Number</label><input type="text" id="card-number" class="w-full mt-1 p-2 border rounded-md"></div>
+                                <div class="flex space-x-4">
+                                    <div class="w-1/2"><label for="card-expiry">Expiry (MM/YY)</label><input type="text" id="card-expiry" class="w-full mt-1 p-2 border rounded-md"></div>
+                                    <div class="w-1/2"><label for="card-cvc">CVC</label><input type="text" id="card-cvc" class="w-full mt-1 p-2 border rounded-md"></div>
+                                </div>
+                                <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md mt-4">Pay $250.00</button>
+                            </div>
+                        </div>
+
+                        <!-- PayPal Button (hidden by default) -->
+                        <div id="paypal-form" class="hidden mt-6 p-6 border rounded-lg bg-gray-50 text-center">
+                            <h4 class="font-bold text-primary mb-4">Complete your payment with PayPal</h4>
+                            <p class="text-gray-600 mb-4">You will be redirected to the PayPal website to complete your payment securely.</p>
+                             <!-- PayPal button would be rendered here by their script -->
+                             <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md">Pay with PayPal</button>
+                        </div>
+                    </div>`;
+                break;
+            // Add cases for other user sections...
+            default: // user-home
+                contentHtml = `
+                    <h1 class="text-3xl font-bold text-primary mb-6">My Profile</h1>
+                    <div class="bg-white p-8 rounded-lg shadow">
+                        <h2 class="text-xl font-bold text-primary mb-6">Personal Information</h2>
+                        <form id="profile-form" class="space-y-4">
+                             <div><label for="name" class="font-medium">Full Name</label><input type="text" id="name" value="${userData.name}" class="w-full mt-1 p-2 border rounded-md"></div>
+                             <div><label for="email" class="font-medium">Email Address</label><input type="email" id="email" value="${userData.email}" class="w-full mt-1 p-2 border rounded-md"></div>
+                             <div><label for="phone" class="font-medium">Phone Number</label><input type="tel" id="phone" value="${userData.phone}" class="w-full mt-1 p-2 border rounded-md"></div>
+                             <div><label for="address" class="font-medium">Mailing Address</label><textarea id="address" rows="3" class="w-full mt-1 p-2 border rounded-md">${userData.address}</textarea></div>
+                             <div class="pt-4"><button type="submit" class="bg-accent hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded-md">Save Changes</button></div>
+                        </form>
+                    </div>`;
+        }
+        mainContent.innerHTML = contentHtml;
+        addPaymentGatewayListeners(); // Re-add listeners for payment section if it exists
+    }
+    
+    // --- EVENT LISTENERS ---
+    function addSidebarEventListeners() {
+        const links = document.querySelectorAll('.sidebar-link');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active state
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Render content
+                const contentId = link.getAttribute('data-content');
+                const userRole = localStorage.getItem('userRole');
+                if (userRole === 'admin') {
+                    renderAdminContent(contentId);
+                } else {
+                    renderUserContent(contentId, mockUser);
+                }
+            });
+        });
+    }
+
+    function addPaymentGatewayListeners() {
+        const paymentRadios = document.querySelectorAll('input[name="payment-method"]');
+        const stripeForm = document.getElementById('stripe-form');
+        const paypalForm = document.getElementById('paypal-form');
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'stripe' && radio.checked) {
+                    stripeForm.classList.remove('hidden');
+                    paypalForm.classList.add('hidden');
+                } else if (radio.value === 'paypal' && radio.checked) {
+                    stripeForm.classList.add('hidden');
+                    paypalForm.classList.remove('hidden');
+                }
+            });
+        });
+    }
+
+    signOutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // --> BACK-END INTEGRATION NEEDED <--
+        // A real app would also call an API endpoint like `/api/logout` to invalidate the session on the server.
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userName');
+        window.location.href = 'login.html';
+    });
+
+    // --- INITIALIZE THE DASHBOARD ---
+    checkLoginState();
+});
+
+
+</script>
+</body>
+</html>
