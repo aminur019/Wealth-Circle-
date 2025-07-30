@@ -1,0 +1,2041 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   WealthCircle | Invest Smarter Together
+  </title>
+  <meta content="Join our investment club to learn, collaborate, and grow your wealth with like-minded individuals." name="description"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+  </script>
+  <style>
+   .hero-gradient {
+      background: linear-gradient(135deg, rgba(20, 33, 61, 0.9) 0%, rgba(47, 82, 51, 0.9) 100%);
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #fca311;
+      transition: width 0.3s;
+    }
+    /* Typing animation */
+    .typing-dots {
+      display: flex;
+      align-items: center;
+      height: 17px;
+    }
+    .typing-dots span {
+      width: 7px;
+      height: 7px;
+      margin: 0 2px;
+      background-color: #6b7280;
+      border-radius: 50%;
+      display: inline-block;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes typing {
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-5px);
+      }
+    }
+    /* Custom scrollbar for chat */
+    #chatbot-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    #chatbot-messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    #chatbot-messages::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+    #chatbot-messages::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+    /* Blob animation keyframes */
+    @keyframes blob {
+      0%,
+      100% {
+        transform: translate(0px, 0px) scale(1);
+      }
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+    }
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+
+
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+        .hoveff {
+      text-decoration: none;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: #eb232a;
+      color: white;
+      border: none;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .hoveff:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+       .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+      }
+    }
+    
+    /* Payment Form Styles */
+    .payment-option-btn {
+      border: 2px solid #e5e7eb;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .payment-option-btn:hover {
+      border-color: #FCA311;
+      color: #14213D;
+    }
+    .payment-option-btn.active {
+      border-color: #FCA311;
+      background-color: #fffbeb; 
+      color: #14213D;
+      box-shadow: 0 0 0 2px #FCA311;
+    }
+  </style>
+  <script>
+   tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#14213D',
+            secondary: '#2F5233',
+            accent: '#FCA311',
+            light: '#DFF6F0',
+            dark: '#333333',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+   <script>
+    // Disable right-click
+    document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    }, false);
+
+    // Disable keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl+S
+      if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        alert('Save is disabled on this page.');
+      }
+      // Ctrl+U
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        alert('View source is disabled on this page.');
+      }
+      // F12 (Dev Tools)
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        alert('Developer tools are disabled.');
+      }
+    });
+  </script>
+ </head>
+ <body class="font-sans text-dark bg-gray-50 overflow-x-hidden">
+  <!-- Navigation -->
+  <header class="fixed w-full bg-white shadow-sm z-50">
+   <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+     <!-- Logo -->
+     <div class="flex items-center space-x-4">
+      <a class="text-2xl font-bold text-primary" href="#">
+       <span class="text-accent">
+        Wealth
+       </span>
+       Circle
+      </a>
+     </div>
+     <!-- Desktop Navigation -->
+     <nav class="hidden md:flex space-x-8 items-center">
+      <a class="nav-link text-primary font-medium" href="#">
+       Home
+      </a>
+      <a class="nav-link text-primary font-medium" href="#about">
+       About
+      </a>
+      <a class="nav-link text-primary font-medium" href="#benefits">
+       Benefits
+      </a>
+      <a class="nav-link text-primary font-medium" href="#insights">
+       Insights
+      </a>
+      <a class="hidden nav-link text-primary font-medium" href="#join">
+       Join
+      </a>
+      <a class="nav-link text-primary font-medium" href="#contact">
+       Contact
+      </a>
+     </nav>
+     <!-- Right side buttons -->
+     <div class="hidden md:flex items-center space-x-4">
+       <a class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300" href="#join">
+         Join Now
+       </a>
+       <button aria-label="hidden Open login form" id="open-login-btn" class="hidden text-primary hover:text-accent focus:outline-none">
+         <i class="fas fa-sign-in-alt text-2xl"></i>
+       </button>
+     </div>
+     <!-- Mobile Menu Button -->
+     <div class="md:hidden flex items-center space-x-4">
+       <button aria-label="Toggle menu" class="text-primary focus:outline-none" id="menu-toggle">
+         <i class="fas fa-bars text-2xl"></i>
+       </button>
+     </div>
+   </div>
+   <!-- Mobile Menu -->
+   <nav class="hidden md:hidden bg-white shadow-lg border-t border-gray-200" id="mobile-menu">
+     <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+       <a class="text-primary font-medium text-lg" href="#">
+         Home
+       </a>
+       <a class="text-primary font-medium text-lg" href="#about">
+         About
+       </a>
+       <a class="text-primary font-medium text-lg" href="#benefits">
+         Benefits
+       </a>
+       <a class="text-primary font-medium text-lg" href="#insights">
+         Insights
+       </a>
+       <a class="hidden text-primary font-medium text-lg" href="#join">
+         Join
+       </a>
+       <a class="text-primary font-medium text-lg" href="#contact">
+         Contact
+       </a>
+       <a class="bg-accent text-white font-medium px-6 py-3 rounded-md text-center" href="#join">
+         Join Now
+       </a>
+     </div>
+   </nav>
+  </header>
+  <!-- Hero Section -->
+    <section class="hero-gradient text-white relative h-full min-h-screen">
+   <img alt="Investment club members discussing around a table in a modern office with laptops and charts" class="absolute inset-0 w-full h-full object-cover object-center" height="1080" src="heorimage.png" width="1920"/>
+   <div class="absolute inset-0 w-full h-full bg-[#111111cf]">
+   </div>
+   <div class="container mx-auto px-6 py-48 relative flex justify-center items-center h-full min-h-screen">
+    <div class="flex flex-col md:flex-row text-center md:text-center items-center justify-center w-full max-w-7xl">
+     <div class="mb-12 md:mb-0 max-w-2xl" data-aos="fade-right">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-serif">
+       Invest Smarter.
+       <br/>
+       <span class="text-accent">
+        Together.
+       </span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-200 mb-8">
+       Join our community of investors to learn, collaborate, and grow your wealth with collective intelligence.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+       <a class="btn primary" href="#join">
+        Join the Club
+       </a>
+       <a class="btn secondary" href="#benefits">
+        Explore Benefits
+       </a>
+      </div>
+     </div>
+     <div class="md:w-1/2 h-[700px] hidden object-center" data-aos="fade-left">
+      <img alt="Investment club members discussing around a table in a modern office with laptops and charts" class="hidden rounded-lg w-full mt-16 md:pt-48" height="400" src="" width="600"/>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Stats Section -->
+  <section class="py-16 bg-white">
+   <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+     <div class="p-6" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="12">
+        0
+       </span>
+       +
+      </div>
+      <div class="text-gray-600">
+       Years Operating
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-4xl font-bold text-primary mb-2">
+       $
+       <span class="counter" data-target="25">
+        0
+       </span>
+       M+
+      </div>
+      <div class="text-gray-600">
+       Capital Invested
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="14">
+        0
+       </span>
+       %
+      </div>
+      <div class="text-gray-600">
+       Avg. Annual Return
+      </div>
+     </div>
+     <div class="p-6" data-aos="fade-up" data-aos-delay="400">
+      <div class="text-4xl font-bold text-primary mb-2">
+       <span class="counter" data-target="500">
+        0
+       </span>
+       +
+      </div>
+      <div class="text-gray-600">
+       Active Members
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- About Section -->
+  <section class="py-20 bg-gray-50" id="about">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center">
+     <div class="md:w-1/2 mb-12 md:mb-0" data-aos="fade-right">
+      <img alt="Investment club members collaborating in a bright office space with charts and laptops" class="rounded-lg  w-full h-auto" height="400" src="about.png" width="600"/>
+     </div>
+     <div class="md:w-1/2 md:pl-12" data-aos="fade-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       About
+       <span class="text-accent">
+        WealthCircle
+       </span>
+      </h2>
+      <p class="text-lg text-gray-700 mb-6">
+       Founded in 2011, WealthCircle is a member-driven investment club that combines collective intelligence with disciplined investing strategies to generate superior returns.
+      </p>
+      <p class="text-lg text-gray-700 mb-8">
+       We believe that by bringing together diverse perspectives and sharing knowledge, our members can make better investment decisions than they could alone.
+      </p>
+      <a class="inline-flex items-center text-accent font-bold hover:text-primary transition duration-300" href="#">
+       Read Our Full Story
+       <i class="fas fa-arrow-right ml-2">
+       </i>
+      </a>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Benefits Section -->
+  <section class="py-20 bg-white" id="benefits">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Membership
+      <span class="text-accent">
+       Benefits
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Join a community that empowers you to take control of your financial future
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-graduation-cap">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Financial Education
+      </h3>
+      <p class="text-gray-700">
+       Access our library of courses, workshops, and resources to build your investing knowledge.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-chart-line">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Market Research
+      </h3>
+      <p class="text-gray-700">
+       Get access to our team's proprietary research and analysis on investment opportunities.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-users">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Group Decision-Making
+      </h3>
+      <p class="text-gray-700">
+       Participate in our collaborative investment process and learn from experienced members.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-hand-holding-usd">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Real-World Experience
+      </h3>
+      <p class="text-gray-700">
+       Gain practical investing experience without risking your own capital first.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-shield-alt">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Accountability
+      </h3>
+      <p class="text-gray-700">
+       Stay on track with your financial goals through our supportive community.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-8 rounded-lg transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-accent text-4xl mb-6">
+       <i class="fas fa-network-wired">
+       </i>
+      </div>
+      <h3 class="text-xl font-bold text-primary mb-4">
+       Valuable Connections
+      </h3>
+      <p class="text-gray-700">
+       Network with like-minded investors and finance professionals.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-primary text-white">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">
+      What Our
+      <span class="text-accent">
+       Members Say
+      </span>
+     </h2>
+     <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+      Don't just take our word for it - hear from our community
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Sarah Johnson, a smiling woman with dark hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/edec56ab-fd2a-476c-fe42-131671ea2fea.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Sarah Johnson
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2018
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "Joining WealthCircle transformed my approach to investing. The collective knowledge and support helped me grow my portfolio by 35% in my first year."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="200">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Michael Chen, a man with short black hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/8c233a23-a67d-4936-497f-9ed50c2586cd.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Michael Chen
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2015
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "The educational resources alone are worth the membership. I went from knowing nothing about investing to confidently managing my own portfolio."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+      </div>
+     </div>
+     <div class="bg-white bg-opacity-10 p-8 rounded-lg" data-aos="fade-up" data-aos-delay="300">
+      <div class="flex items-center mb-6">
+       <div class="flex-shrink-0 mr-4">
+        <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-12 h-12 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48"/>
+       </div>
+       <div>
+        <h4 class="font-bold">
+         Priya Patel
+        </h4>
+        <p class="text-gray-300 text-sm">
+         Member since 2020
+        </p>
+       </div>
+      </div>
+      <p class="text-gray-200 mb-4">
+       "The collaborative investment process has helped me see opportunities I would have missed on my own. My returns have consistently beaten the market."
+      </p>
+      <div class="text-accent">
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star">
+       </i>
+       <i class="fas fa-star-half-alt">
+       </i>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Insights Section -->
+  <section class="py-20 bg-gray-50" id="insights">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Latest
+      <span class="text-accent">
+       Insights
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Stay informed with our research and market analysis
+     </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
+      <img alt="Market trends graph with upward arrows and charts" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/5126bb73-be9e-427e-fc3c-6472fd6c5ec9.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Market Trends
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         5 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        Emerging Markets Outlook for Q3 2023
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Analyzing the opportunities and risks in developing economies as global conditions shift.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
+      <img alt="Tech stocks displayed on a digital screen with charts" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/883b5ace-586f-4ebc-cb50-fa3ee88333a4.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Sector Analysis
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         8 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        The Future of Tech Stocks in a Higher Rate Environment
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Evaluating which technology companies are best positioned to weather economic headwinds.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+     <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
+      <img alt="Investment strategy planning with charts and notes on a desk" class="w-full h-48 object-cover" height="192" src="https://storage.googleapis.com/a1aa/image/c2977db1-6344-4337-974c-d83faeca949d.jpg" width="600"/>
+      <div class="p-6">
+       <div class="flex items-center mb-3">
+        <span class="bg-light text-secondary text-xs font-medium px-3 py-1 rounded-full">
+         Strategy
+        </span>
+        <span class="text-gray-500 text-sm ml-auto">
+         <i class="far fa-clock mr-1">
+         </i>
+         10 min read
+        </span>
+       </div>
+       <h3 class="text-xl font-bold text-primary mb-3">
+        Building a Resilient Portfolio for Volatile Markets
+       </h3>
+       <p class="text-gray-700 mb-4">
+        Time-tested strategies to protect your investments during periods of market turbulence.
+       </p>
+       <a class="text-accent font-medium hover:text-primary transition duration-300" href="#">
+        Read More
+        <i class="fas fa-arrow-right ml-1">
+        </i>
+       </a>
+      </div>
+     </article>
+    </div>
+    <div class="text-center mt-12" data-aos="fade-up">
+     <a class=" btn inline-block bg-accent hover:bg-opacity-90 text-white font-bold px-8 py-3 rounded-md transition duration-300" href="#">
+      View All Insights
+     </a>
+    </div>
+   </div>
+  </section>
+  <!-- Join Section -->
+  <section class="py-20 bg-white" id="join">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       Ready to Join
+       <span class="text-accent">
+        WealthCircle
+       </span>
+       ?
+      </h2>
+      <p class="text-lg text-gray-700 mb-8">
+       Take the first step toward smarter investing with a community that supports your financial growth.
+      </p>
+      <div class="bg-gray-50 p-6 rounded-lg mb-8">
+       <h3 class="text-xl font-bold text-primary mb-4">
+        How It Works
+       </h3>
+       <div class="space-y-4">
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          1
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Submit Your Application
+          </h4>
+          <p class="text-gray-700">
+           Complete our simple online form (takes 5 minutes)
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          2
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Meet a Member
+          </h4>
+          <p class="text-gray-700">
+           Schedule a 30-minute video call to learn more
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          3
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Attend Orientation
+          </h4>
+          <p class="text-gray-700">
+           Join our next onboarding session
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 bg-accent text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-semibold">
+          4
+         </div>
+         <div>
+          <h4 class="font-bold text-primary">
+           Start Participating
+          </h4>
+          <p class="text-gray-700">
+           Access all member benefits and join discussions
+          </p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <div class="bg-gray-50 p-8 rounded-lg shadow-md">
+       <h3 class="text-2xl font-bold text-primary mb-6 text-center" id="form-title">
+        Membership Application
+       </h3>
+       <form class="space-y-6" id="join-form" novalidate="">
+        <!-- Step 1: Personal Details -->
+        <div id="form-step-1">
+         <div class="space-y-6">
+          <div>
+           <label class="block text-gray-700 font-medium mb-2" for="name">
+            Full Name
+           </label>
+           <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="name" required="" type="text"/>
+          </div>
+          <div>
+           <label class="block text-gray-700 font-medium mb-2" for="email">
+            Email Address
+           </label>
+           <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="email" required="" type="email"/>
+          </div>
+          <div>
+           <label class="block text-gray-700 font-medium mb-2" for="phone">
+            Phone Number
+           </label>
+           <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="phone" type="tel"/>
+          </div>
+          <div>
+           <label class="block text-gray-700 font-medium mb-2" for="experience">
+            Investment Experience
+           </label>
+           <select class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="experience">
+            <option value="">
+             Select your experience level
+            </option>
+            <option value="beginner">
+             Beginner (0-2 years)
+            </option>
+            <option value="intermediate">
+             Intermediate (2-5 years)
+            </option>
+            <option value="advanced">
+             Advanced (5+ years)
+            </option>
+           </select>
+          </div>
+          <div>
+           <label class="block text-gray-700 font-medium mb-2" for="goals">
+            What are your primary investment goals?
+           </label>
+           <textarea class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="goals" rows="3"></textarea>
+          </div>
+          <div class="flex items-center">
+           <input class="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded" id="agree" type="checkbox"/>
+           <label class="ml-2 block text-gray-700" for="agree">
+            I agree to the
+            <a class="text-accent hover:underline" href="#">
+             Terms &amp; Conditions
+            </a>
+           </label>
+          </div>
+          <div>
+           <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md transition duration-300" id="next-btn" type="button">
+            Next: Payment
+           </button>
+          </div>
+         </div>
+        </div>
+        <!-- Step 2: Payment -->
+        <div class="hidden" id="form-step-2">
+         <h3 class="text-xl font-bold text-primary mb-4">
+          Membership Fee
+         </h3>
+         <p class="text-gray-600 mb-6">
+          To complete your application, please pay the one-time membership fee of $250.
+         </p>
+         <!-- Payment Method Buttons -->
+         <div class="grid grid-cols-2 gap-4 mb-6" id="payment-options">
+          <button class="payment-option-btn" data-payment="mastercard" type="button">
+           <i class="fab fa-cc-mastercard">
+           </i>
+           Card
+          </button>
+          <button class="payment-option-btn" data-payment="paypal" type="button">
+           <i class="fab fa-paypal">
+           </i>
+           PayPal
+          </button>
+          <button class="payment-option-btn" data-payment="bank" type="button">
+           <i class="fas fa-university">
+           </i>
+           Bank
+          </button>
+          <button class="payment-option-btn" data-payment="crypto" type="button">
+           <i class="fab fa-bitcoin">
+           </i>
+           Crypto
+          </button>
+         </div>
+         <!-- Payment Details Containers -->
+         <div id="payment-details-container">
+          <!-- Mastercard Form -->
+          <div class="payment-details hidden" id="mastercard-payment">
+           <div class="space-y-4">
+            <div>
+             <label class="block text-gray-700 font-medium mb-2" for="card-name">
+              Name on Card
+             </label>
+             <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="card-name" placeholder="John M. Doe" type="text"/>
+            </div>
+            <div>
+             <label class="block text-gray-700 font-medium mb-2" for="card-number">
+              Card Number
+             </label>
+             <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="card-number" placeholder="xxxx xxxx xxxx xxxx" type="text"/>
+            </div>
+            <div class="flex gap-4">
+             <div class="w-1/2">
+              <label class="block text-gray-700 font-medium mb-2" for="card-expiry">
+               Expiry
+              </label>
+              <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="card-expiry" placeholder="MM / YY" type="text"/>
+             </div>
+             <div class="w-1/2">
+              <label class="block text-gray-700 font-medium mb-2" for="card-cvc">
+               CVC
+              </label>
+              <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="card-cvc" placeholder="123" type="text"/>
+             </div>
+            </div>
+           </div>
+          </div>
+          <!-- PayPal Form -->
+          <div class="payment-details hidden" id="paypal-payment">
+           <div class="space-y-4">
+            <p class="text-sm text-gray-600">
+             You will be redirected to PayPal to complete your payment securely.
+            </p>
+            <div>
+             <label class="block text-gray-700 font-medium mb-2" for="paypal-email">
+              PayPal Email Address
+             </label>
+             <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="paypal-email" placeholder="you@example.com" type="email"/>
+            </div>
+           </div>
+          </div>
+          <!-- Bank Info -->
+          <div class="payment-details hidden" id="bank-payment">
+           <div class="space-y-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+            <h4 class="font-bold text-lg text-primary">
+             Bank Transfer Instructions
+            </h4>
+            <p class="text-sm text-gray-600">
+             Please use the details below to make the transfer. Use your full name as the payment reference.
+            </p>
+            <ul class="text-gray-800 space-y-2 text-sm">
+             <li>
+              <strong>
+               Bank Name:
+              </strong>
+              Global Finance Bank
+             </li>
+             <li>
+              <strong>
+               Account Holder:
+              </strong>
+              WealthCircle LLC
+             </li>
+             <li>
+              <strong>
+               IBAN:
+              </strong>
+              US12 GFBK 1234 5678 9012 34
+             </li>
+             <li>
+              <strong>
+               SWIFT/BIC:
+              </strong>
+              GFBKUS33
+             </li>
+             <li>
+              <strong>
+               Amount:
+              </strong>
+              $250.00 USD
+             </li>
+            </ul>
+            <p class="text-xs text-gray-500 mt-2">
+             It may take 2-3 business days for the transfer to be confirmed. We will notify you by email.
+            </p>
+           </div>
+          </div>
+          <!-- Crypto Info -->
+          <div class="payment-details hidden" id="crypto-payment">
+           <div class="space-y-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+            <h4 class="font-bold text-lg text-primary">
+             Cryptocurrency Payment
+            </h4>
+            <p class="text-sm text-gray-600">
+             Send exactly
+             <strong>
+              0.008 ETH
+             </strong>
+             to the address below (Network: Ethereum).
+            </p>
+            <div class="bg-white p-3 rounded break-all font-mono text-xs text-gray-800 border">
+             0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+             After sending, please provide your wallet address and the transaction ID below for verification.
+            </p>
+            <div>
+             <label class="block text-gray-700 font-medium mb-2" for="crypto-wallet">
+              Your Sending Wallet Address
+             </label>
+             <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="crypto-wallet" type="text"/>
+            </div>
+            <div>
+             <label class="block text-gray-700 font-medium mb-2" for="crypto-txid">
+              Transaction ID (TxID)
+             </label>
+             <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent" id="crypto-txid" type="text"/>
+            </div>
+           </div>
+          </div>
+         </div>
+         <!-- Navigation buttons -->
+         <div class="flex items-center justify-between mt-8">
+          <button class="text-primary font-bold hover:text-accent transition" id="back-btn" type="button">
+           <i class="fas fa-arrow-left mr-2">
+           </i>
+           Back
+          </button>
+          <button class="bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300 hidden" id="submit-btn" type="submit">
+           Submit Application
+          </button>
+         </div>
+        </div>
+       </form>
+
+
+<!-- PASTE THE NEW CODE HERE -->
+       <div class="hidden text-center py-8" id="thank-you-message">
+        <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+         <i class="fas fa-check text-3xl">
+         </i>
+        </div>
+        <h3 class="text-2xl font-bold text-primary mb-4">
+         Thank You!
+        </h3>
+        <p class="text-gray-700 mb-6 max-w-sm mx-auto">
+         Your application has been received. We will review your information and get back to you within 3-5 business days. Please check your email for a confirmation message.
+        </p>
+  <a class="inline-block bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-md transition duration-300" href="#" onclick="window.location.reload()">
+ Back to Home
+</a>
+       </div>
+       <!-- END OF NEW CODE -->
+
+
+
+
+
+
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Partners Section -->
+  <section class="hidden py-16 bg-gray-100">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-12" data-aos="fade-up">
+     <h3 class="text-xl text-gray-600 mb-2">
+      Trusted By
+     </h3>
+     <h2 class="text-2xl md:text-3xl font-bold text-primary font-serif">
+      Our Partners
+     </h2>
+    </div>
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+     <img alt="Partner 1 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="100" height="60" src="https://storage.googleapis.com/a1aa/image/d8ffc6fa-1df3-44c0-0dcb-9f8507834bf8.jpg" width="150"/>
+     <img alt="Partner 2 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="200" height="60" src="https://storage.googleapis.com/a1aa/image/0c3b4788-2434-4f05-366c-0b1e4821c8fc.jpg" width="150"/>
+     <img alt="Partner 3 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="300" height="60" src="https://storage.googleapis.com/a1aa/image/5df0a8d2-7b98-4c43-c3d6-9457b787a1f7.jpg" width="150"/>
+     <img alt="Partner 4 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="400" height="60" src="https://storage.googleapis.com/a1aa/image/3c799bb5-4a89-46c2-428c-c51e0d4bbb4b.jpg" width="150"/>
+     <img alt="Partner 5 logo with stylized text and icon" class="h-10 opacity-70 hover:opacity-100 transition duration-300" data-aos="fade-up" data-aos-delay="500" height="60" src="https://storage.googleapis.com/a1aa/image/66c15afd-b41e-4389-a114-cdb310ffaae5.jpg" width="150"/>
+    </div>
+   </div>
+  </section>
+  <!-- Member Portal Preview -->
+  <section class="py-20 bg-primary text-white">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row items-center">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif">
+       Member
+       <span class="text-accent">
+        Portal
+       </span>
+      </h2>
+      <p class="text-xl text-gray-300 mb-8">
+       Coming Soon: A secure platform for tracking investments, joining discussions, and voting on club decisions.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-chart-pie">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Dashboard
+        </h3>
+        <p class="text-gray-300">
+         Track your portfolio performance and club investments.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-comments">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Discussions
+        </h3>
+        <p class="text-gray-300">
+         Participate in investment discussions with members.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-vote-yea">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Voting
+        </h3>
+        <p class="text-gray-300">
+         Cast your vote on proposed investment decisions.
+        </p>
+       </div>
+       <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div class="text-accent text-3xl mb-4">
+         <i class="fas fa-book">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         Resources
+        </h3>
+        <p class="text-gray-300">
+         Access our full library of educational materials.
+        </p>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2 pt-10" data-aos="fade-left">
+      <img alt="Member portal preview showing dashboard and charts on a computer screen" class="rounded-lg hoveff tans w-full h-auto" height="400" src="member-portal.png" width="600"/>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Security Section -->
+  <section class="py-20 bg-white">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row items-center">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12 justify-items-center" data-aos="fade-right">
+      <img alt="Security concept with lock and digital shield icons on a blue background" class="max-h-96 hoveff rounded-lg shadow-xl w-96" height="400" src="https://storage.googleapis.com/a1aa/image/016fade3-bb61-4f28-b788-6c95b3ce5ff9.jpg" width="600"/>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">
+       Security &amp;
+       <span class="text-accent">
+        Trust
+       </span>
+      </h2>
+      <p class="text-lg text-gray-700 mb-8">
+       We take the security of your data and investments seriously. Our platform implements industry-leading measures to protect your information.
+      </p>
+      <div class="space-y-6">
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-lock">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Bank-Level Encryption
+         </h3>
+         <p class="text-gray-700">
+          All data is encrypted in transit and at rest using 256-bit SSL encryption.
+         </p>
+        </div>
+       </div>
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-user-shield">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Member Vetting
+         </h3>
+         <p class="text-gray-700">
+          Every member undergoes a thorough application and interview process.
+         </p>
+        </div>
+       </div>
+       <div class="flex">
+        <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+         <i class="fas fa-shield-alt">
+         </i>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-primary mb-2">
+          Transparent Processes
+         </h3>
+         <p class="text-gray-700">
+          All investment decisions are documented and available to members.
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- CTA Section -->
+  <section class="py-20 bg-accent text-white">
+   <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif" data-aos="fade-up">
+     Build Your Wealth With People Who Care About Your Growth
+    </h2>
+    <p class="text-xl mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+     Join a community of investors committed to learning, sharing, and growing together.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-up" data-aos-delay="200">
+     <a class="bg-white hover:bg-gray-100 text-primary font-bold px-8 py-3 rounded-md transition duration-300" href="#join">
+      Join Now
+     </a>
+     <a class="bg-transparent hover:bg-white hover:bg-opacity-10 border-2 border-white font-bold px-8 py-3 rounded-md transition duration-300" href="#contact">
+      Contact Us
+     </a>
+    </div>
+   </div>
+  </section>
+  <!-- Contact Section -->
+  <section class="py-20 bg-gray-50" id="contact">
+   <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+     <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+      Get In
+      <span class="text-accent">
+       Touch
+      </span>
+     </h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Have questions? We're here to help.
+     </p>
+    </div>
+    <div class="flex flex-col lg:flex-row">
+     <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+      <div class="bg-white p-8 rounded-lg shadow-md">
+       <h3 class="text-2xl font-bold text-primary mb-6">
+        Contact Information
+       </h3>
+       <div class="space-y-6">
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-map-marker-alt">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Address
+          </h4>
+          <p class="text-gray-700">
+           123 Investment Street, Financial District, NY 10005
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-phone-alt">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Phone
+          </h4>
+          <p class="text-gray-700">
+           (212) 555-1234
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-envelope">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Email
+          </h4>
+          <p class="text-gray-700">
+           info@wealthcircle.com
+          </p>
+         </div>
+        </div>
+        <div class="flex items-start">
+         <div class="flex-shrink-0 text-accent text-xl mt-1 mr-4">
+          <i class="fas fa-clock">
+          </i>
+         </div>
+         <div>
+          <h4 class="font-bold text-primary mb-1">
+           Hours
+          </h4>
+          <p class="text-gray-700">
+           Monday - Friday: 9am - 5pm EST
+          </p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-8">
+        <h4 class="font-bold text-primary mb-4">
+         Follow Us
+        </h4>
+        <div class="flex space-x-4">
+         <a aria-label="LinkedIn" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-linkedin">
+          </i>
+         </a>
+         <a aria-label="Twitter" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-twitter">
+          </i>
+         </a>
+         <a aria-label="Facebook" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-facebook">
+          </i>
+         </a>
+         <a aria-label="Instagram" class="text-primary hover:text-accent text-2xl transition duration-300" href="#">
+          <i class="fab fa-instagram">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="lg:w-1/2" data-aos="fade-left">
+      <div class="bg-white p-8 rounded-lg shadow-md">
+       <h3 class="text-2xl font-bold text-primary mb-6">
+        Send Us a Message
+       </h3>
+       <form class="space-y-6" novalidate="">
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-name">
+          Name
+         </label>
+         <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-name" required="" type="text"/>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-email">
+          Email
+         </label>
+         <input class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-email" required="" type="email"/>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-subject">
+          Subject
+         </label>
+         <select class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-subject">
+          <option value="">
+           Select a subject
+          </option>
+          <option value="membership">
+           Membership Inquiry
+          </option>
+          <option value="partnership">
+           Partnership Opportunity
+          </option>
+          <option value="press">
+           Press Inquiry
+          </option>
+          <option value="other">
+           Other
+          </option>
+         </select>
+        </div>
+        <div>
+         <label class="block text-gray-700 font-medium mb-2" for="contact-message">
+          Message
+         </label>
+         <textarea class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" id="contact-message" required="" rows="5"></textarea>
+        </div>
+        <div>
+         <button class="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-md transition duration-300" type="submit">
+          Send Message
+         </button>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-12">
+   <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between">
+     <div class="mb-8 md:mb-0">
+      <a class="text-2xl font-bold text-white" href="#">
+       <span class="text-accent">
+        Wealth
+       </span>
+       Circle
+      </a>
+      <p class="mt-4 text-gray-300 max-w-xs">
+       Empowering investors through education, collaboration, and community.
+      </p>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Navigation
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Home
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#about">
+          About
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#benefits">
+          Benefits
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#insights">
+          Insights
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#join">
+          Join
+         </a>
+        </li>
+       </ul>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Legal
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Terms of Service
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Privacy Policy
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Risk Disclosure
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Compliance
+         </a>
+        </li>
+       </ul>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">
+        Connect
+       </h3>
+       <ul class="space-y-2">
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#contact">
+          Contact Us
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          FAQ
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Blog
+         </a>
+        </li>
+        <li>
+         <a class="text-gray-300 hover:text-accent transition duration-300" href="#">
+          Events
+         </a>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+     <p class="text-gray-400 mb-4 md:mb-0">
+      © 2023 WealthCircle. All rights reserved.
+     </p>
+     <div class="flex space-x-6">
+      <a aria-label="LinkedIn" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-linkedin text-xl">
+       </i>
+      </a>
+      <a aria-label="Twitter" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-twitter text-xl">
+       </i>
+      </a>
+      <a aria-label="Facebook" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-facebook text-xl">
+       </i>
+      </a>
+      <a aria-label="Instagram" class="text-gray-400 hover:text-accent transition duration-300" href="#">
+       <i class="fab fa-instagram text-xl">
+       </i>
+      </a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <!-- Enhanced Chat Bot Section -->
+  <div class="fixed bottom-8 right-4 z-50">
+   <!-- Chat Bot Toggle Button -->
+   <button class="bg-accent hover:bg-opacity-90 text-white w-16 h-16 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110" id="chatbot-toggle">
+    <i class="fas fa-comment-dots text-2xl">
+    </i>
+    <span class="sr-only">
+     Open Chat
+    </span>
+    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden" id="notification-badge">
+     1
+    </span>
+   </button>
+   <!-- Chat Bot Container -->
+   <div class="hidden w-96 h-[600px] bg-white rounded-lg shadow-xl overflow-hidden flex flex-col absolute right-0 border border-gray-200 bottom-0 md:bottom-0" id="chatbot-container">
+    <!-- Chat Header -->
+    <div class="bg-primary text-white p-4 flex items-center justify-between">
+     <div class="flex items-center">
+      <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center mr-3">
+        <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+      </div>
+      <div>
+       <h3 class="font-bold">
+        WealthCircle Assistant
+       </h3>
+       <p class="text-xs text-white text-opacity-80">
+        AI-powered investment help
+       </p>
+      </div>
+     </div>
+     <div class="flex items-center space-x-3">
+      <button class="text-white hover:text-accent transition" id="chatbot-minimize">
+       <i class="fas fa-minus">
+       </i>
+      </button>
+      <button class="text-white hover:text-accent transition" id="chatbot-close">
+       <i class="fas fa-times">
+       </i>
+      </button>
+     </div>
+    </div>
+    <!-- Chat Messages Area -->
+    <div class="flex-1 p-4 overflow-y-auto bg-gray-50" id="chatbot-messages">
+     <!-- Welcome Message -->
+     <div class="mb-4 flex">
+      <div class="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-3">
+        <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm max-w-[85%]">
+       <p class="text-sm font-medium text-primary mb-1">
+        Welcome to WealthCircle!
+       </p>
+       <p class="text-sm">
+        I'm your AI assistant here to help with:
+       </p>
+       <ul class="list-disc list-inside text-sm pl-2 mt-1 space-y-1">
+        <li>
+         Membership information
+        </li>
+        <li>
+         Investment strategies
+        </li>
+        <li>
+         Club policies
+        </li>
+        <li>
+         Event details
+        </li>
+       </ul>
+       <p class="text-sm mt-2">
+        What would you like to know?
+       </p>
+       <p class="text-xs text-gray-500 mt-2">
+        Just now
+       </p>
+      </div>
+     </div>
+     <!-- Suggested Questions -->
+     <div class="mb-6">
+      <p class="text-xs text-gray-500 mb-2">
+       SUGGESTED QUESTIONS:
+      </p>
+      <div class="flex flex-wrap gap-2">
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition">
+        How do I join the investment club?
+       </button>
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition">
+        What's the minimum investment?
+       </button>
+       <button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition">
+        How are investment decisions made?
+       </button>
+      </div>
+     </div>
+    </div>
+    <!-- Typing Indicator -->
+    <div class="hidden px-4 py-2 bg-white border-t border-gray-200" id="typing-indicator">
+     <div class="flex items-center">
+      <div class="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-2">
+        <img alt="Portrait photo of Priya Patel, a woman with long black hair" class="w-10 h-10 rounded-full" height="48" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg" width="48">
+      </div>
+      <div class="typing-dots">
+       <span>
+       </span>
+       <span>
+       </span>
+       <span>
+       </span>
+      </div>
+     </div>
+    </div>
+    <!-- Chat Input Area -->
+    <div class="p-3 border-t border-gray-200 bg-white">
+     <div class="relative">
+      <textarea class="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none" id="chatbot-input" placeholder="Type your question...." rows="1" style="min-height: 50px; max-height: 120px;"></textarea>
+      <button class="absolute right-3 bottom-3 text-accent hover:text-primary transition" id="chatbot-send">
+       <i class="fas fa-paper-plane text-lg">
+       </i>
+      </button>
+     </div>
+     <p class="text-xs text-gray-500 mt-2 text-center">
+      We respect your privacy. Conversations are secure.
+     </p>
+    </div>
+   </div>
+  </div>
+  <!-- Back to Top Button -->
+  <button aria-label="Back to top" class="fixed bottom-8 right-24 bg-accent text-white w-12 h-12 rounded-full shadow-lg hidden items-center justify-center transition duration-300 hover:bg-opacity-90" id="back-to-top">
+   <i class="fas fa-arrow-up">
+   </i>
+  </button>
+  <script>
+   AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100,
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.remove('hidden');
+        backToTopButton.classList.add('flex');
+      } else {
+        backToTopButton.classList.add('hidden');
+        backToTopButton.classList.remove('flex');
+      }
+    });
+
+    backToTopButton.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+
+    // Animated Stats Counter
+    const counters = document.querySelectorAll('.counter');
+    function animateCounters() {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            let count = 0;
+            const duration = 2000; // Animation duration in ms
+            const increment = target / (duration / 10);
+
+            const updateCount = () => {
+                count += increment;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    }
+
+    const statsSection = document.querySelector('.py-16.bg-white');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (statsSection) {
+        observer.observe(statsSection);
+    }
+
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 100,
+            behavior: 'smooth',
+          });
+
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        }
+      });
+    });
+
+    // Wait for the DOM to be fully loaded before running interactive scripts
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      // --- CHATBOT LOGIC ---
+      const toggleBtn = document.getElementById('chatbot-toggle');
+      const minimizeBtn = document.getElementById('chatbot-minimize');
+      const closeBtn = document.getElementById('chatbot-close');
+      const chatContainer = document.getElementById('chatbot-container');
+      const chatInput = document.getElementById('chatbot-input');
+      const chatSend = document.getElementById('chatbot-send');
+      const chatMessages = document.getElementById('chatbot-messages');
+      const typingIndicator = document.getElementById('typing-indicator');
+      const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+      const notificationBadge = document.getElementById('notification-badge');
+
+      const knowledgeBase = {
+        join: {
+          question: 'How do I join the investment club?',
+          answer:
+            "Joining WealthCircle involves a simple 4-step process:<br><br>1. <strong>Submit an application</strong> through our website<br>2. <strong>Attend an orientation</strong> session (virtual or in-person)<br>3. <strong>Complete onboarding</strong> including our education modules<br>4. <strong>Make your initial investment</strong> (minimum $1,000)<br><br>Our average processing time is 3-5 business days. Would you like me to send you the application link?",
+          followUp: ['Send application link', 'What are the benefits?'],
+        },
+        'minimum investment': {
+          question: "What's the minimum investment?",
+          answer:
+            "WealthCircle has a <strong>minimum initial investment of $1,000</strong> with additional contributions of at least $100/month.<br><br>This structure ensures:<br>• Serious commitment from members<br>• Meaningful portfolio growth<br>• Access to premium investment opportunities<br><br>We offer flexible payment options including bank transfers and scheduled contributions.",
+          followUp: ['Payment options', 'Can I start with less?'],
+        },
+        'decision making': {
+          question: 'How are investment decisions made?',
+          answer:
+            "Our investment process combines <strong>collective intelligence</strong> with <strong>professional analysis</strong>:<br><br>1. <strong>Research Phase</strong>: Our analyst team identifies opportunities<br>2. <strong>Discussion</strong>: Members debate pros/cons in forums<br>3. <strong>Voting</strong>: All members vote on each decision<br>4. <strong>Execution</strong>: Trades are made by our licensed brokers<br><br>This democratic approach has achieved 14.2% average annual returns since 2015.",
+          followUp: ['See performance history', 'How often do we meet?'],
+        },
+        fees: {
+          question: 'What are the membership fees?',
+          answer:
+            "WealthCircle operates on a transparent fee structure:<br><br>• <strong>Annual Membership</strong>: $250 (covers operational costs)<br>• <strong>Management Fee</strong>: 1% of assets under management<br>• <strong>Performance Fee</strong>: 10% of profits above 8% annual return<br><br>All fees are clearly outlined in our membership agreement with no hidden charges.",
+          followUp: ['Fee examples', 'How do fees compare?'],
+        },
+        meetings: {
+          question: 'How often does the club meet?',
+          answer:
+            "Our meeting schedule is designed for maximum engagement:<br><br>• <strong>Monthly Webinar</strong>: First Tuesday of each month (7pm EST)<br>• <strong>Quarterly Deep Dives</strong>: 2-hour strategy sessions<br>• <strong>Annual Retreat</strong>: 3-day in-person event (optional)<br><br>All meetings are recorded for members who can't attend live.",
+          followUp: ['Next meeting topic', 'View calendar'],
+        },
+      };
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            chatContainer.classList.toggle('hidden');
+            notificationBadge.classList.add('hidden');
+            toggleBtn.classList.toggle('bg-accent');
+            toggleBtn.classList.toggle('bg-gray-500');
+        });
+      }
+
+      if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', function () {
+            chatContainer.classList.add('hidden');
+            notificationBadge.classList.remove('hidden');
+            toggleBtn.classList.remove('bg-gray-500');
+            toggleBtn.classList.add('bg-accent');
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            chatContainer.classList.add('hidden');
+            notificationBadge.classList.add('hidden');
+            toggleBtn.classList.remove('bg-gray-500');
+            toggleBtn.classList.add('bg-accent');
+        });
+      }
+      
+      if (chatInput) {
+        chatInput.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+      }
+
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+          addMessage(message, 'user');
+          chatInput.value = '';
+          chatInput.style.height = 'auto';
+          typingIndicator.classList.remove('hidden');
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          setTimeout(() => {
+            typingIndicator.classList.add('hidden');
+            const response = generateResponse(message);
+            addMessage(response.answer, 'bot', response.followUp);
+          }, 1500 + Math.random() * 2000);
+        }
+      }
+
+      function generateResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        for (const [key, data] of Object.entries(knowledgeBase)) {
+          if (lowerMessage.includes(key)) {
+            return data;
+          }
+        }
+        const defaultResponses = [
+          {
+            answer:
+              "I'm still learning about WealthCircle's offerings. Could you please rephrase your question or try one of these topics:<br><br>• Membership requirements<br>• Investment strategies<br>• Club performance<br>• Fee structure",
+            followUp: ['Membership requirements', 'Investment strategies', 'Club performance'],
+          },
+          {
+            answer:
+              'For detailed questions about your specific situation, I recommend contacting our member support team at <strong>support@wealthcircle.com</strong> or calling <strong>(800) 555-9876</strong> during business hours.',
+            followUp: [],
+          },
+        ];
+        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+      }
+
+      function addMessage(text, sender, followUp = []) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `mb-4 flex ${sender === 'user' ? 'justify-end' : ''}`;
+        if (sender === 'bot') {
+          messageDiv.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-3">
+              <img alt="WealthCircle AI Assistant" class="w-10 h-10 rounded-full" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg">
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm whitespace-pre-line">${text}</div>
+              <p class="text-xs text-gray-500 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        } else {
+          messageDiv.innerHTML = `
+            <div class="bg-primary text-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm">${text}</div>
+              <p class="text-xs text-white text-opacity-70 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        }
+        chatMessages.appendChild(messageDiv);
+        if (followUp.length > 0 && sender === 'bot') {
+          const followUpDiv = document.createElement('div');
+          followUpDiv.className = 'mb-6 pl-14';
+          followUpDiv.innerHTML = `
+            <p class="text-xs text-gray-500 mb-2">FOLLOW-UP QUESTIONS:</p>
+            <div class="flex flex-wrap gap-2">
+              ${followUp
+                .map(
+                  (q) =>
+                    `<button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition">${q}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+          chatMessages.appendChild(followUpDiv);
+          document.querySelectorAll('.quick-reply-btn').forEach((btn) => {
+            btn.addEventListener('click', function () {
+              addMessage(this.textContent, 'user');
+              setTimeout(() => {
+                const response = generateResponse(this.textContent);
+                addMessage(response.answer, 'bot', response.followUp);
+              }, 1000);
+            });
+          });
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function formatTime() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      if (chatSend) {
+        chatSend.addEventListener('click', sendMessage);
+      }
+      if (chatInput) {
+        chatInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+            }
+        });
+      }
+      
+      quickReplyBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const question = this.textContent;
+          addMessage(question, 'user');
+          typingIndicator.classList.remove('hidden');
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          setTimeout(() => {
+            typingIndicator.classList.add('hidden');
+            const response = generateResponse(question);
+            addMessage(response.answer, 'bot', response.followUp);
+          }, 1500);
+        });
+      });
+
+      if (notificationBadge) {
+        setTimeout(() => {
+            if (chatContainer && chatContainer.classList.contains('hidden')) {
+              notificationBadge.classList.remove('hidden');
+            }
+        }, 30000);
+      }
+      
+      // --- MULTI-STEP FORM LOGIC ---
+      const joinForm = document.getElementById('join-form');
+      if (joinForm) {
+        const formTitle = document.getElementById('form-title');
+        const thankYouMessage = document.getElementById('thank-you-message');
+        const step1 = document.getElementById('form-step-1');
+        const step2 = document.getElementById('form-step-2');
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const paymentOptions = document.getElementById('payment-options');
+        const paymentDetails = document.querySelectorAll('.payment-details');
+
+        nextBtn.addEventListener('click', () => {
+          const name = document.getElementById('name');
+          const email = document.getElementById('email');
+          let isValid = true;
+          if (name.value.trim() === '') {
+            name.classList.add('border-red-500');
+            isValid = false;
+          } else {
+            name.classList.remove('border-red-500');
+          }
+          if (email.value.trim() === '' || !email.validity.valid) {
+             email.classList.add('border-red-500');
+            isValid = false;
+          } else {
+            email.classList.remove('border-red-500');
+          }
+          if (isValid) {
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+          }
+        });
+
+        backBtn.addEventListener('click', () => {
+          step2.classList.add('hidden');
+          step1.classList.remove('hidden');
+        });
+
+        paymentOptions.addEventListener('click', (e) => {
+            const button = e.target.closest('.payment-option-btn');
+            if (!button) return;
+            document.querySelectorAll('.payment-option-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            const paymentMethod = button.dataset.payment;
+            paymentDetails.forEach(detail => {
+                if (detail.id === `${paymentMethod}-payment`) {
+                    detail.classList.remove('hidden');
+                } else {
+                    detail.classList.add('hidden');
+                }
+            });
+            submitBtn.classList.remove('hidden');
+        });
+
+        joinForm.addEventListener('submit', (e) => {
+          e.preventDefault(); 
+          if(formTitle) {
+            formTitle.classList.add('hidden');
+          }
+          joinForm.classList.add('hidden');
+          thankYouMessage.classList.remove('hidden');
+          const formContainer = thankYouMessage.closest('.bg-gray-50');
+          if (formContainer) {
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      }
+    });
+  </script>
+ </body>
+</html>
