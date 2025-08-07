@@ -194,7 +194,10 @@
 .nameDiv {
     margin-left: -16px;
 }
-
+​::placeholder {
+  opacity: 1; /* Firefox */
+  font-size:1rem;
+}
 
 
 
@@ -1011,11 +1014,11 @@ Join the club>>
       <button
         class="w-full bg-accent hover:bg-yellow-900 active:bg-yellow-800 text-white font-extrabold text-lg py-4 rounded-2xl flex items-center justify-center space-x-4 shadow-lg transition duration-300 ease-in-out"
         type="submit"
-        aria-label="Submit Application for $197 per month"
+        aria-label="Submit Application"
       >
         <i class="fas fa-credit-card text-white text-2xl drop-shadow-md"></i>
         <span class="tracking-wide">
-          Submit Application - $197/month
+          Submit Application
         </span>
       </button>
     </form>
