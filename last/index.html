@@ -315,9 +315,9 @@ input#orderAmount {
      </nav>
      <!-- Right side buttons -->
      <div class="hidden md:flex items-center space-x-4">
-       <a class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300" href="#join">
-        Easy Pay
-       </a>
+    <button id="easyPayBtn" class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
+     Easy Pay
+    </button>
        <button aria-label="hidden Open login form" id="open-login-btn" class="hidden text-primary hover:text-accent focus:outline-none">
          <i class="fas fa-sign-in-alt text-2xl"></i>
        </button>
@@ -350,9 +350,9 @@ input#orderAmount {
        <a class="text-primary font-medium text-lg" href="#contact">
          Contact
        </a>
-       <a class="bg-accent text-white font-medium px-6 py-3 rounded-md text-center" href="#join">
-         Easy Pay
-       </a>
+      <button id="easyPayBtn" class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
+       Easy Pay
+      </button>
      </div>
    </nav>
   </header>
@@ -1294,6 +1294,9 @@ Prospect Application>>
         return;
       }
 
+
+
+      
       paymentPopup.classList.remove("hidden");
       // Focus first input in popup
       paymentDetailsForm.querySelector("input, textarea, select").focus();
@@ -1308,6 +1311,26 @@ Prospect Application>>
       updateSubmitText();
     });
 
+ document.addEventListener('DOMContentLoaded', function() {
+    const easyPayBtn = document.getElementById('easyPayBtn');
+    const paymentPopup = document.getElementById('paymentPopup');
+
+    if (easyPayBtn && paymentPopup) {
+      easyPayBtn.addEventListener('click', function() {
+        paymentPopup.classList.remove('hidden');
+      });
+    }
+
+    const closePaymentPopupBtn = document.getElementById('closePaymentPopup');
+    if (closePaymentPopupBtn) {
+      closePaymentPopupBtn.addEventListener('click', function() {
+        paymentPopup.classList.add('hidden');
+      });
+    }
+  });
+
+
+    
     // Close payment popup
     closePaymentPopup.addEventListener("click", () => {
       paymentPopup.classList.add("hidden");
