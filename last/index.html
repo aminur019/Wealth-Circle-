@@ -1281,14 +1281,14 @@ Prospect Application>>
       const email = mainForm.querySelector("#email");
       const phone = mainForm.querySelector("#phone");
       const investExperience = mainForm.querySelector("#investExperience");
-      const investGoals = mainForm.querySelector("#investGoals");
+      const investGoal = mainForm.querySelector("#investGoal");
 
       if (
         !fullName.checkValidity() ||
         !email.checkValidity() ||
         !phone.checkValidity() ||
         !investExperience.checkValidity() ||
-        !investGoals.checkValidity()
+        !investGoal.checkValidity()
       ) {
         mainForm.reportValidity();
         return;
