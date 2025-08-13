@@ -1258,224 +1258,220 @@ Prospect Application>>
     </div>
   </div>
 
-  <script>
-    const nextBtn = document.getElementById("nextBtn");
-    const paymentPopup = document.getElementById("paymentPopup");
-    const closePaymentPopup = document.getElementById("closePaymentPopup");
-    const paymentDetailsForm = document.getElementById("paymentDetailsForm");
-    const confirmationPopup = document.getElementById("confirmationPopup");
-    const closeConfirmationPopup = document.getElementById("closeConfirmationPopup");
-    const mainForm = document.getElementById("paymentForm");
+ <script>
+  const nextBtn = document.getElementById("nextBtn");
+  const paymentPopup = document.getElementById("paymentPopup");
+  const closePaymentPopup = document.getElementById("closePaymentPopup");
+  const paymentDetailsForm = document.getElementById("paymentDetailsForm");
+  const confirmationPopup = document.getElementById("confirmationPopup");
+  const closeConfirmationPopup = document.getElementById("closeConfirmationPopup");
+  const mainForm = document.getElementById("paymentForm");
 
-    const creditCardRadio = document.getElementById("creditCardPopup");
-    const applePayRadio = document.getElementById("applePayPopup");
-    const cardFields = document.getElementById("cardFields");
-    const applePayFields = document.getElementById("applePayFields");
-    const submitButtonText = document.getElementById("submitButtonText");
-    const orderAmountInput = document.getElementById("orderAmount");
+  const creditCardRadio = document.getElementById("creditCardPopup");
+  const applePayRadio = document.getElementById("applePayPopup");
+  const cardFields = document.getElementById("cardFields");
+  const applePayFields = document.getElementById("applePayFields");
+  const submitButtonText = document.getElementById("submitButtonText");
+  const orderAmountInput = document.getElementById("orderAmount");
 
-    // Show payment popup on Next button click after validating personal info
-    nextBtn.addEventListener("click", () => {
-      // Validate personal info fields before showing popup
-      const fullName = mainForm.querySelector("#fullName");
-      const email = mainForm.querySelector("#email");
-      const phone = mainForm.querySelector("#phone");
-      const investExperience = mainForm.querySelector("#investExperience");
-      const investGoal = mainForm.querySelector("#investGoal");
+  // Track whether popup was opened via nextBtn or easyPay button
+  let isEasyPay = false;
 
-      if (
-        !fullName.checkValidity() ||
-        !email.checkValidity() ||
-        !phone.checkValidity() ||
-        !investExperience.checkValidity() ||
-        !investGoal.checkValidity()
-      ) {
-        mainForm.reportValidity();
-        return;
-      }
+  // Show payment popup on Next button click after validating personal info
+  nextBtn.addEventListener("click", () => {
+    isEasyPay = false;
+    
+    // Validate personal info fields before showing popup
+    const fullName = mainForm.querySelector("#fullName");
+    const email = mainForm.querySelector("#email");
+    const phone = mainForm.querySelector("#phone");
+    const investExperience = mainForm.querySelector("#investExperience");
+    const investGoal = mainForm.querySelector("#investGoal");
 
-
-
-      
-      paymentPopup.classList.remove("hidden");
-      // Focus first input in popup
-      paymentDetailsForm.querySelector("input, textarea, select").focus();
-
-      // Default to no payment method selected and hide all payment fields
-      creditCardRadio.checked = false;
-      applePayRadio.checked = false;
-      cardFields.classList.add("hidden");
-      applePayFields.classList.add("hidden");
-      setRequired(cardFields, false);
-      setRequired(applePayFields, false);
-      updateSubmitText();
-    });
-
-// Easy Pay Button
-  document.addEventListener('DOMContentLoaded', function() {
-        const easyPayBtns = document.querySelectorAll('.open-payment-popup-btn');
-    const paymentPopup = document.getElementById('paymentPopup');
-
-    if (easyPayBtns.length > 0 && paymentPopup) {
-      easyPayBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();           paymentPopup.classList.remove('hidden');
-        });
-      });
+    if (
+      !fullName.checkValidity() ||
+      !email.checkValidity() ||
+      !phone.checkValidity() ||
+      !investExperience.checkValidity() ||
+      !investGoal.checkValidity()
+    ) {
+      mainForm.reportValidity();
+      return;
     }
 
-    const closePaymentPopupBtn = document.getElementById('closePaymentPopup');
-    if (closePaymentPopupBtn) {
-      closePaymentPopupBtn.addEventListener('click', function() {
-        paymentPopup.classList.add('hidden');
+    showPaymentPopup();
+  });
+
+  // Easy Pay Button
+  document.addEventListener('DOMContentLoaded', function() {
+    const easyPayBtns = document.querySelectorAll('.open-payment-popup-btn');
+    
+    if (easyPayBtns.length > 0) {
+      easyPayBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          isEasyPay = true;
+          showPaymentPopup();
+        });
       });
     }
   });
 
+  function showPaymentPopup() {
+    paymentPopup.classList.remove("hidden");
+    // Focus first input in popup
+    paymentDetailsForm.querySelector("input, textarea, select").focus();
 
-
+    // Default to no payment method selected and hide all payment fields
+    creditCardRadio.checked = false;
+    applePayRadio.checked = false;
+    cardFields.classList.add("hidden");
+    applePayFields.classList.add("hidden");
+    setRequired(cardFields, false);
+    setRequired(applePayFields, false);
+    updateSubmitText();
+  }
     
+  // Close payment popup
+  closePaymentPopup.addEventListener("click", () => {
+    paymentPopup.classList.add("hidden");
+  });
 
-
-    
-    // Close payment popup
-    closePaymentPopup.addEventListener("click", () => {
+  paymentPopup.addEventListener("click", (e) => {
+    if (e.target === paymentPopup) {
       paymentPopup.classList.add("hidden");
-    });
+    }
+  });
 
-    paymentPopup.addEventListener("click", (e) => {
-      if (e.target === paymentPopup) {
-        paymentPopup.classList.add("hidden");
-      }
-    });
+  // Toggle fields based on payment method selection
+  function togglePaymentFields() {
+    if (creditCardRadio.checked) {
+      cardFields.classList.remove("hidden");
+      applePayFields.classList.add("hidden");
+      setRequired(cardFields, true);
+      setRequired(applePayFields, false);
+    } else if (applePayRadio.checked) {
+      cardFields.classList.add("hidden");
+      applePayFields.classList.remove("hidden");
+      setRequired(cardFields, false);
+      setRequired(applePayFields, true);
+    } else {
+      cardFields.classList.add("hidden");
+      applePayFields.classList.add("hidden");
+      setRequired(cardFields, false);
+      setRequired(applePayFields, false);
+    }
+    updateSubmitText();
+  }
 
-    // Toggle fields based on payment method selection
-    function togglePaymentFields() {
-      if (creditCardRadio.checked) {
-        cardFields.classList.remove("hidden");
-        applePayFields.classList.add("hidden");
-        setRequired(cardFields, true);
-        setRequired(applePayFields, false);
-      } else if (applePayRadio.checked) {
-        cardFields.classList.add("hidden");
-        applePayFields.classList.remove("hidden");
-        setRequired(cardFields, false);
-        setRequired(applePayFields, true);
+  function setRequired(container, required) {
+    const inputs = container.querySelectorAll("input");
+    inputs.forEach((input) => {
+      if (required) {
+        input.setAttribute("required", "true");
+        input.setAttribute("aria-required", "true");
       } else {
-        cardFields.classList.add("hidden");
-        applePayFields.classList.add("hidden");
-        setRequired(cardFields, false);
-        setRequired(applePayFields, false);
+        input.removeAttribute("required");
+        input.removeAttribute("aria-required");
       }
-      updateSubmitText();
-    }
-
-    function setRequired(container, required) {
-      const inputs = container.querySelectorAll("input");
-      inputs.forEach((input) => {
-        if (required) {
-          input.setAttribute("required", "true");
-          input.setAttribute("aria-required", "true");
-        } else {
-          input.removeAttribute("required");
-          input.removeAttribute("aria-required");
-        }
-      });
-    }
-
-    creditCardRadio.addEventListener("change", togglePaymentFields);
-    applePayRadio.addEventListener("change", togglePaymentFields);
-
-    // Update submit button text based on payment method and order amount
-   // function updateSubmitText() {
-     // const amount = orderAmountInput.value || "$300.00";
-      //submitButtonText.textContent = `Submit Application - ${amount}/month`;
-   // }
-
-    // Sync order amount input and submit button text
-    orderAmountInput.addEventListener("input", () => {
-      // Ensure value starts with $ and is valid format
-      let val = orderAmountInput.value.trim();
-      if (!val.startsWith("$")) {
-        val = "$" + val.replace(/[^0-9.]/g, "");
-      }
-      orderAmountInput.value = val;
-      updateSubmitText();
     });
+  }
 
-    // Submit payment details form inside popup
-    paymentDetailsForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+  creditCardRadio.addEventListener("change", togglePaymentFields);
+  applePayRadio.addEventListener("change", togglePaymentFields);
 
-      // Validate personal info form again (optional)
-      if (!mainForm.checkValidity()) {
-        mainForm.reportValidity();
-        paymentPopup.classList.add("hidden");
-        return;
-      }
+  // Update submit button text based on payment method and order amount
+  function updateSubmitText() {
+    const amount = orderAmountInput.value || "$300.00";
+    submitButtonText.textContent = `Pay Now - ${amount}`;
+  }
 
-      // Validate payment details form fields only if payment method selected
-      if (creditCardRadio.checked) {
-        if (
-          !paymentDetailsForm.querySelector("#cardNumberPopup").value.trim() ||
-          !paymentDetailsForm.querySelector("#expiryPopup").value.trim() ||
-          !paymentDetailsForm.querySelector("#cvcPopup").value.trim() ||
-          !paymentDetailsForm.querySelector("#cardNamePopup").value.trim()
-        ) {
-          paymentDetailsForm.reportValidity();
-          return;
-        }
-      } else if (applePayRadio.checked) {
-        if (
-          !paymentDetailsForm.querySelector("#applePayName").value.trim() ||
-          !paymentDetailsForm.querySelector("#applePayEmail").value.trim()
-        ) {
-          paymentDetailsForm.reportValidity();
-          return;
-        }
-      }
+  // Sync order amount input and submit button text
+  orderAmountInput.addEventListener("input", () => {
+    // Ensure value starts with $ and is valid format
+    let val = orderAmountInput.value.trim();
+    if (!val.startsWith("$")) {
+      val = "$" + val.replace(/[^0-9.]/g, "");
+    }
+    orderAmountInput.value = val;
+    updateSubmitText();
+  });
 
-      // Validate country and zip always
+  // Submit payment details form inside popup
+  paymentDetailsForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Validate personal info form only if not easyPay
+    if (!isEasyPay && !mainForm.checkValidity()) {
+      mainForm.reportValidity();
+      paymentPopup.classList.add("hidden");
+      return;
+    }
+
+    // Validate payment details form fields only if payment method selected
+    if (creditCardRadio.checked) {
       if (
-        !paymentDetailsForm.querySelector("#countryPopup").value ||
-        !paymentDetailsForm.querySelector("#zipPopup").value.trim()
+        !paymentDetailsForm.querySelector("#cardNumberPopup").value.trim() ||
+        !paymentDetailsForm.querySelector("#expiryPopup").value.trim() ||
+        !paymentDetailsForm.querySelector("#cvcPopup").value.trim() ||
+        !paymentDetailsForm.querySelector("#cardNamePopup").value.trim()
       ) {
         paymentDetailsForm.reportValidity();
         return;
       }
-
-      // Validate agree checkbox
-      if (!paymentDetailsForm.querySelector("#agreePopup").checked) {
+    } else if (applePayRadio.checked) {
+      if (
+        !paymentDetailsForm.querySelector("#applePayName").value.trim() ||
+        !paymentDetailsForm.querySelector("#applePayEmail").value.trim()
+      ) {
         paymentDetailsForm.reportValidity();
         return;
       }
+    }
 
-      // Close payment popup
-      paymentPopup.classList.add("hidden");
+    // Validate country and zip always
+    if (
+      !paymentDetailsForm.querySelector("#countryPopup").value ||
+      !paymentDetailsForm.querySelector("#zipPopup").value.trim()
+    ) {
+      paymentDetailsForm.reportValidity();
+      return;
+    }
 
-      // Show confirmation popup
-      confirmationPopup.classList.remove("hidden");
+    // Validate agree checkbox
+    if (!paymentDetailsForm.querySelector("#agreePopup").checked) {
+      paymentDetailsForm.reportValidity();
+      return;
+    }
 
-      // Reset both forms
+    // Close payment popup
+    paymentPopup.classList.add("hidden");
+
+    // Show confirmation popup
+    confirmationPopup.classList.remove("hidden");
+
+    // Reset forms based on how popup was opened
+    if (!isEasyPay) {
       mainForm.reset();
-      paymentDetailsForm.reset();
+    }
+    paymentDetailsForm.reset();
 
-      // Reset order amount to default
-      orderAmountInput.value = "$300.00";
-      updateSubmitText();
-    });
+    // Reset order amount to default
+    orderAmountInput.value = "$300.00";
+    updateSubmitText();
+  });
 
-    // Close confirmation popup
-    closeConfirmationPopup.addEventListener("click", () => {
+  // Close confirmation popup
+  closeConfirmationPopup.addEventListener("click", () => {
+    confirmationPopup.classList.add("hidden");
+  });
+
+  confirmationPopup.addEventListener("click", (e) => {
+    if (e.target === confirmationPopup) {
       confirmationPopup.classList.add("hidden");
-    });
-
-    confirmationPopup.addEventListener("click", (e) => {
-      if (e.target === confirmationPopup) {
-        confirmationPopup.classList.add("hidden");
-      }
-    });
-  </script>
+    }
+  });
+</script>
 
 
 
