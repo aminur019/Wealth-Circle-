@@ -1357,10 +1357,10 @@ Prospect Application>>
     applePayRadio.addEventListener("change", togglePaymentFields);
 
     // Update submit button text based on payment method and order amount
-    function updateSubmitText() {
-      const amount = orderAmountInput.value || "$300.00";
-      submitButtonText.textContent = `Submit Application - ${amount}/month`;
-    }
+   // function updateSubmitText() {
+     // const amount = orderAmountInput.value || "$300.00";
+      //submitButtonText.textContent = `Submit Application - ${amount}/month`;
+   // }
 
     // Sync order amount input and submit button text
     orderAmountInput.addEventListener("input", () => {
