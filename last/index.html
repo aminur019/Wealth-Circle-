@@ -979,7 +979,7 @@ Prospect Application>>
   <!-- Payment Popup Modal -->
   <div
     id="paymentPopup"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4 overflow-auto"
+    class="fixed top-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-auto -ml-6"
     role="dialog"
     aria-modal="true"
     aria-labelledby="paymentPopupTitle"
@@ -1381,10 +1381,10 @@ Prospect Application>>
   applePayRadio.addEventListener("change", togglePaymentFields);
 
   // Update submit button text based on payment method and order amount
-  function updateSubmitText() {
-    const amount = orderAmountInput.value || "$300.00";
-    submitButtonText.textContent = `Pay Now - ${amount}`;
-  }
+  //function updateSubmitText() {
+   // const amount = orderAmountInput.value || "$300.00";
+   // submitButtonText.textContent = `Pay Now - ${amount}`;
+  //}
 
   // Sync order amount input and submit button text
   orderAmountInput.addEventListener("input", () => {
