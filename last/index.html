@@ -315,9 +315,9 @@ input#orderAmount {
      </nav>
      <!-- Right side buttons -->
      <div class="hidden md:flex items-center space-x-4">
-    <button id="easyPayBtn" class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
-     Easy Pay
-    </button>
+<button class="open-payment-popup-btn btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
+ Easy Pay
+</button>
        <button aria-label="hidden Open login form" id="open-login-btn" class="hidden text-primary hover:text-accent focus:outline-none">
          <i class="fas fa-sign-in-alt text-2xl"></i>
        </button>
@@ -350,9 +350,9 @@ input#orderAmount {
        <a class="text-primary font-medium text-lg" href="#contact">
          Contact
        </a>
-    <button id="easyPayBtn" class="btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
-     Easy Pay
-    </button>
+<button class="open-payment-popup-btn btn bg-accent hover:bg-opacity-90 text-white font-medium px-6 py-2 rounded-md transition duration-300">
+ Easy Pay
+</button>
      </div>
    </nav>
   </header>
@@ -1311,13 +1311,16 @@ Prospect Application>>
       updateSubmitText();
     });
 
- document.addEventListener('DOMContentLoaded', function() {
-    const easyPayBtn = document.getElementById('easyPayBtn');
+// Easy Pay Button
+  document.addEventListener('DOMContentLoaded', function() {
+        const easyPayBtns = document.querySelectorAll('.open-payment-popup-btn');
     const paymentPopup = document.getElementById('paymentPopup');
 
-    if (easyPayBtn && paymentPopup) {
-      easyPayBtn.addEventListener('click', function() {
-        paymentPopup.classList.remove('hidden');
+    if (easyPayBtns.length > 0 && paymentPopup) {
+      easyPayBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();           paymentPopup.classList.remove('hidden');
+        });
       });
     }
 
@@ -1328,6 +1331,10 @@ Prospect Application>>
       });
     }
   });
+
+
+
+    
 
 
     
