@@ -2044,7 +2044,7 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
         let count = 0;
-        const duration = 100; // Animation duration in ms
+        const duration = 1000; // Animation duration in ms
         const increment = target / (duration / 10);
 
         const updateCount = () => {
