@@ -1684,7 +1684,7 @@ Prioritizing trade-offs and playing defense when volatility starts to creep high
    <i class="fas fa-arrow-up">
    </i>
   </button>
-  <script>
+    <script>
    AOS.init({
     duration: 800,
     easing: 'ease-in-out',
@@ -1725,7 +1725,7 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
         let count = 0;
-        const duration = 1000; // Animation duration in ms
+        const duration = 500; // Animation duration in ms
         const increment = target / (duration / 10);
 
         const updateCount = () => {
@@ -1780,6 +1780,198 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     });
 });
 
+// Wait for the DOM to be fully loaded before running interactive scripts
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- CHATBOT LOGIC ---
+    const toggleBtn = document.getElementById('chatbot-toggle');
+    const chatContainer = document.getElementById('chatbot-container'); // Added
+    const chatMessages = document.getElementById('chatbot-messages'); // Corrected
+    const chatInput = document.getElementById('chatbot-input'); // Added
+    const chatSend = document.getElementById('chatbot-send'); // Added
+    const minimizeBtn = document.getElementById('chatbot-minimize'); // Added
+    const closeBtn = document.getElementById('chatbot-close'); // Added
+    const typingIndicator = document.getElementById('typing-indicator');
+    const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+    const notificationBadge = document.getElementById('notification-badge');
+
+    const knowledgeBase = {
+        join: {
+            question: 'How do I join the investment club?',
+            answer:
+                "Joining WealthCircle involves a simple 4-step process:<br><br>1. <strong>Submit an application</strong> through our website<br>2. <strong>Attend an orientation</strong> session (virtual or in-person)<br>3. <strong>Complete onboarding</strong> including our education modules<br>4. <strong>Make your initial investment</strong> (minimum $1,000)<br><br>Our average processing time is 3-5 business days. Would you like me to send you the application link?",
+            followUp: ['Send application link', 'What are the benefits?'],
+        },
+        'minimum investment': {
+            question: "What's the minimum investment?",
+            answer:
+                "WealthCircle has a <strong>minimum initial investment of $1,000</strong> with additional contributions of at least $100/month.<br><br>This structure ensures:<br>• Serious commitment from members<br>• Meaningful portfolio growth<br>• Access to premium investment opportunities<br><br>We offer flexible payment options including bank transfers and scheduled contributions.",
+            followUp: ['Payment options', 'Can I start with less?'],
+        },
+        'decision making': {
+            question: 'How are investment decisions made?',
+            answer:
+                "Our investment process combines <strong>collective intelligence</strong> with <strong>professional analysis</strong>:<br><br>1. <strong>Research Phase</strong>: Our analyst team identifies opportunities<br>2. <strong>Discussion</strong>: Members debate pros/cons in forums<br>3. <strong>Voting</strong>: All members vote on each decision<br>4. <strong>Execution</strong>: Trades are made by our licensed brokers<br><br>This democratic approach has achieved 14.2% average annual returns since 2015.",
+            followUp: ['See performance history', 'How often do we meet?'],
+        },
+        fees: {
+            question: 'What are the membership fees?',
+            answer:
+                "WealthCircle operates on a transparent fee structure:<br><br>• <strong>Annual Membership</strong>: $250 (covers operational costs)<br>• <strong>Management Fee</strong>: 1% of assets under management<br>• <strong>Performance Fee</strong>: 10% of profits above 8% annual return<br><br>All fees are clearly outlined in our membership agreement with no hidden charges.",
+            followUp: ['Fee examples', 'How do fees compare?'],
+        },
+        meetings: {
+            question: 'How often does the club meet?',
+            answer:
+                "Our meeting schedule is designed for maximum engagement:<br><br>• <strong>Monthly Webinar</strong>: First Tuesday of each month (7pm EST)<br>• <strong>Quarterly Deep Dives</strong>: 2-hour strategy sessions<br>• <strong>Annual Retreat</strong>: 3-day in-person event (optional)<br><br>All meetings are recorded for members who can't attend live.",
+            followUp: ['Next meeting topic', 'View calendar'],
+        },
+            meetings: {
+            question: 'Payment options',
+            answer:
+                "We have 4 payment option<br>1. Cridt Card. <br>2. Master Card. <br>3. Amirican Express Card. <br>4. Apple Pay",
+            followUp: ['Next meeting topic', 'View calendar'],
+        },
+    };
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            chatContainer.classList.toggle('hidden');
+            notificationBadge.classList.add('hidden');
+            toggleBtn.classList.toggle('bg-accent');
+            toggleBtn.classList.toggle('bg-gray-500');
+        });
+    }
+
+    if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', function () {
+            chatContainer.classList.add('hidden');
+            notificationBadge.classList.remove('hidden');
+            toggleBtn.classList.remove('bg-gray-500');
+            toggleBtn.classList.add('bg-accent');
+        });
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            chatContainer.classList.add('hidden');
+            notificationBadge.classList.add('hidden');
+            toggleBtn.classList.remove('bg-gray-500');
+            toggleBtn.classList.add('bg-accent');
+        });
+    }
+
+    if (chatInput) {
+        chatInput.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    }
+
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+            addMessage(message, 'user');
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            typingIndicator.classList.remove('hidden');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+                const response = generateResponse(message);
+                addMessage(response.answer, 'bot', response.followUp);
+            }, 1500 + Math.random() * 2000);
+        }
+    }
+
+    function generateResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        for (const [key, data] of Object.entries(knowledgeBase)) {
+            if (lowerMessage.includes(key)) {
+                return data;
+            }
+        }
+        const defaultResponses = [
+            {
+                answer:
+                    "I'm still learning about WealthCircle's offerings. Could you please rephrase your question or try one of these topics:<br><br>• Membership requirements<br>• Investment strategies<br>• Club performance<br>• Fee structure",
+                followUp: ['Membership requirements', 'Investment strategies', 'Club performance'],
+            },
+            {
+                answer:
+                    'For detailed questions about your specific situation, I recommend contacting our member support team at <strong>support@wealthcircle.com</strong> or calling <strong>(800) 555-9876</strong> during business hours.',
+                followUp: [],
+            },
+        ];
+        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+    }
+
+    function addMessage(text, sender, followUp = []) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `mb-4 flex ${sender === 'user' ? 'justify-end' : ''}`;
+        if (sender === 'bot') {
+            messageDiv.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 flex items-center justify-center mr-3">
+              <img alt="WealthCircle AI Assistant" class="w-10 h-10 rounded-full" src="https://storage.googleapis.com/a1aa/image/cfbf62ea-3247-4d4f-dedc-19c0fec40f54.jpg">
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm whitespace-pre-line">${text}</div>
+              <p class="text-xs text-gray-500 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        } else {
+            messageDiv.innerHTML = `
+            <div class="bg-primary text-white p-4 rounded-lg shadow-sm max-w-[85%]">
+              <div class="text-sm">${text}</div>
+              <p class="text-xs text-white text-opacity-70 mt-2">${formatTime()}</p>
+            </div>
+          `;
+        }
+        chatMessages.appendChild(messageDiv);
+        if (followUp.length > 0 && sender === 'bot') {
+            const followUpDiv = document.createElement('div');
+            followUpDiv.className = 'mb-6 pl-14';
+            followUpDiv.innerHTML = `
+            <p class="text-xs text-gray-500 mb-2">FOLLOW-UP QUESTIONS:</p>
+            <div class="flex flex-wrap gap-2">
+              ${followUp
+                    .map(
+                        (q) =>
+                            `<button class="quick-reply-btn bg-gray-100 hover:bg-gray-200 text-primary text-xs px-3 py-2 rounded-md transition">${q}</button>`
+                    )
+                    .join('')}
+            </div>
+          `;
+            chatMessages.appendChild(followUpDiv);
+            document.querySelectorAll('.quick-reply-btn').forEach((btn) => {
+                btn.addEventListener('click', function () {
+                    addMessage(this.textContent, 'user');
+                    setTimeout(() => {
+                        const response = generateResponse(this.textContent);
+                        addMessage(response.answer, 'bot', response.followUp);
+                    }, 1000);
+                });
+            });
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function formatTime() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    if (chatSend) {
+        chatSend.addEventListener('click', sendMessage);
+    }
+    if (chatInput) {
+        chatInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
 
     quickReplyBtns.forEach((btn) => {
         btn.addEventListener('click', function () {
@@ -1795,13 +1987,17 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         });
     });
 
+    if (notificationBadge) {
+        setTimeout(() => {
+            if (chatContainer && chatContainer.classList.contains('hidden')) {
+                notificationBadge.classList.remove('hidden');
+            }
+        }, 30000);
+    }
+
  
- 
 
 
-
+});
 
   </script>
- 
-
-</body></html>
