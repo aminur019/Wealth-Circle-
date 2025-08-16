@@ -43,7 +43,7 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
         .card-logo {
-      height: 24px;
+      height: 30px;
       width: auto;
       object-fit: contain;
     }
@@ -170,141 +170,75 @@
           class="border border-gray-300 rounded-md divide-y divide-gray-300 mb-6"
           id="paymentMethodsPopup"
         >
+          <!-- Stripe -->
           <label
             class="flex items-center justify-between p-4 cursor-pointer sm:p-6"
-            for="creditCardPopup"
+            for="stripePopup"
           >
             <div class="flex items-center gap-4">
               <input
                 class="w-5 h-5 text-accent bg-gray-50 border-gray-300"
                 name="paymentPopup"
                 type="radio"
-                value="Credit card"
-                id="creditCardPopup"
+                value="Stripe"
+                id="stripePopup"
                 aria-required="false"
               />
-              <span class="text-gray-900 text-base sm:text-lg">Debit/Credit Card</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <img
-                alt="Visa credit card logo, blue and gold Visa text on white background"
-                class="card-logo"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Visa_2021.svg/1200px-Visa_2021.svg.png"
-              />
-              <img
-                alt="Mastercard credit card logo, two overlapping red and yellow circles with Mastercard text on white background"
-                class="card-logo"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png"
-              />
-              <img
-                alt="American Express credit card logo, blue rectangle with white American Express text"
-                class="card-logo"
-                src="https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png"
-              />
-            </div>
-          </label>
-          <label
-            class="flex items-center justify-between p-4 cursor-pointer sm:p-6"
-            for="applePayPopup"
-          >
-            <div class="flex items-center gap-4">
-              <input
-                class="w-5 h-5 text-accent bg-gray-50 border-gray-300"
-                name="paymentPopup"
-                type="radio"
-                value="Apple Pay"
-                id="applePayPopup"
-                aria-required="false"
-              />
-              <span class="text-gray-900 text-base sm:text-lg">Apple Pay</span>
+              <span class="text-gray-900 text-base sm:text-lg">Pay with Stripe</span>
             </div>
             <img
-              alt="Apple Pay logo black text on white background"
+              alt="Stripe logo, stylized text"
               class="card-logo"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/2560px-Apple_Pay_logo.svg.png"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png"
+            />
+          </label>
+           <!-- Square -->
+          <label
+            class="flex items-center justify-between p-4 cursor-pointer sm:p-6"
+            for="squarePopup"
+          >
+            <div class="flex items-center gap-4">
+              <input
+                class="w-5 h-5 text-accent bg-gray-50 border-gray-300"
+                name="paymentPopup"
+                type="radio"
+                value="Square"
+                id="squarePopup"
+                aria-required="false"
+              />
+              <span class="text-gray-900 text-base sm:text-lg">Pay with Square</span>
+            </div>
+            <img
+              alt="Square logo, black square shape"
+              class="card-logo w-10"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtEScCOZ2dB15U-GBbBVzHQe_EPtP6rEq4ChPYK2ocs8_nxF5D8V8BOorWxYGaXEOV3Q&usqp=CAU"
+            />
+          </label>
+           <!-- Shopify Pay -->
+          <label
+            class="flex items-center justify-between p-4 cursor-pointer sm:p-6"
+            for="shopifyPopup"
+          >
+            <div class="flex items-center gap-4">
+              <input
+                class="w-5 h-5 text-accent bg-gray-50 border-gray-300"
+                name="paymentPopup"
+                type="radio"
+                value="Shopify Pay"
+                id="shopifyPopup"
+                aria-required="false"
+              />
+              <span class="text-gray-900 text-base sm:text-lg">Shopify Pay</span>
+            </div>
+            <img
+              alt="Shopify Pay logo"
+              class="card-logo"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shopify_logo_2018.svg/2560px-Shopify_logo_2018.svg.png"
             />
           </label>
         </fieldset>
-
-        <div id="cardFields" class="space-y-4 hidden">
-          <div class="mb-2">
-            <label class="sr-only" for="cardNumberPopup">Credit Card Number</label>
-            <input
-              autocomplete="cc-number"
-              class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-              id="cardNumberPopup"
-              inputmode="numeric"
-              type="text"
-              name="cardNumberPopup"
-              placeholder="Debit or Credit Card Number"
-            />
-          </div>
-
-          <div class="flex flex-col md:flex-row gap-6 mb-2">
-            <div class="flex-1">
-              <label class="sr-only" for="expiryPopup">Expiration Date</label>
-              <input
-                autocomplete="cc-exp"
-                class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-                id="expiryPopup"
-                inputmode="numeric"
-                type="text"
-                name="expiryPopup"
-                placeholder="Expiration Date"
-              />
-            </div>
-            <div class="flex-1">
-              <label class="sr-only" for="cvcPopup">Security Code</label>
-              <input
-                autocomplete="cc-csc"
-                class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-                id="cvcPopup"
-                inputmode="numeric"
-                type="text"
-                name="cvcPopup"
-                placeholder="Security Code"
-              />
-            </div>
-          </div>
-
-          <div class="mb-2">
-            <label class="sr-only" for="cardNamePopup">Name On Card</label>
-            <input
-              autocomplete="cc-name"
-              class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-              id="cardNamePopup"
-              type="text"
-              name="cardNamePopup"
-              placeholder="Name On Card"
-            />
-          </div>
-        </div>
-
-        <div id="applePayFields" class="hidden space-y-4">
-          <div class="mb-2">
-            <label class="sr-only" for="applePayName">Name on Apple Pay Account</label>
-            <input
-              autocomplete="name"
-              class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-              id="applePayName"
-              type="text"
-              name="applePayName"
-              placeholder="Name on Apple Pay Account"
-            />
-          </div>
-          <div class="mb-2">
-            <label class="sr-only" for="applePayEmail">Apple Pay Email</label>
-            <input
-              autocomplete="email"
-              class="w-full border border-gray-300 rounded-xl p-3 text-base focus:outline-none focus:ring-2 focus:ring-accent transition-shadow shadow-sm sm:text-lg"
-              id="applePayEmail"
-              type="email"
-              name="applePayEmail"
-              placeholder="Apple Pay Email"
-            />
-          </div>
-        </div>
-
+        
+        <!-- Billing Address Fields -->
         <div class="flex flex-col md:flex-row gap-6 mb-2">
           <div class="flex-1">
             <label class="sr-only" for="countryPopup">Country</label>
@@ -544,75 +478,18 @@
     const paymentDetailsForm = document.getElementById("paymentDetailsForm");
     const confirmationPopup = document.getElementById("confirmationPopup");
     const closeConfirmationPopup = document.getElementById("closeConfirmationPopup");
-    const creditCardRadio = document.getElementById("creditCardPopup");
-    const applePayRadio = document.getElementById("applePayPopup");
-    const cardFields = document.getElementById("cardFields");
-    const applePayFields = document.getElementById("applePayFields");
+    const stripeRadio = document.getElementById("stripePopup");
+    const squareRadio = document.getElementById("squarePopup");
+    const shopifyRadio = document.getElementById("shopifyPopup");
     const orderAmountInput = document.getElementById("orderAmount");
-
-    function togglePaymentFields() {
-        if (creditCardRadio.checked) {
-            cardFields.classList.remove("hidden");
-            applePayFields.classList.add("hidden");
-            setRequired(cardFields, true);
-            setRequired(applePayFields, false);
-        } else if (applePayRadio.checked) {
-            cardFields.classList.add("hidden");
-            applePayFields.classList.remove("hidden");
-            setRequired(cardFields, false);
-            setRequired(applePayFields, true);
-        } else {
-            cardFields.classList.add("hidden");
-            applePayFields.classList.add("hidden");
-            setRequired(cardFields, false);
-            setRequired(applePayFields, false);
-        }
-    }
-
-    function setRequired(container, required) {
-        const inputs = container.querySelectorAll("input");
-        inputs.forEach((input) => {
-            if (required) {
-                input.setAttribute("required", "true");
-                input.setAttribute("aria-required", "true");
-            } else {
-                input.removeAttribute("required");
-                input.removeAttribute("aria-required");
-            }
-        });
-    }
-
-    creditCardRadio.addEventListener("change", togglePaymentFields);
-    applePayRadio.addEventListener("change", togglePaymentFields);
 
     paymentDetailsForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // Validate payment details form fields only if a payment method is selected
-        if (!creditCardRadio.checked && !applePayRadio.checked) {
-            // Optional: alert the user to select a payment method
+        // Validate if a payment method is selected
+        if (!stripeRadio.checked && !squareRadio.checked && !shopifyRadio.checked) {
             alert("Please select a payment method.");
             return;
-        }
-        
-        if (creditCardRadio.checked) {
-            if (
-                !paymentDetailsForm.querySelector("#cardNumberPopup").value.trim() ||
-                !paymentDetailsForm.querySelector("#expiryPopup").value.trim() ||
-                !paymentDetailsForm.querySelector("#cvcPopup").value.trim() ||
-                !paymentDetailsForm.querySelector("#cardNamePopup").value.trim()
-            ) {
-                paymentDetailsForm.reportValidity();
-                return;
-            }
-        } else if (applePayRadio.checked) {
-            if (
-                !paymentDetailsForm.querySelector("#applePayName").value.trim() ||
-                !paymentDetailsForm.querySelector("#applePayEmail").value.trim()
-            ) {
-                paymentDetailsForm.reportValidity();
-                return;
-            }
         }
 
         // Validate country and zip always
@@ -633,12 +510,6 @@
         // Show confirmation popup
         confirmationPopup.classList.remove("hidden");
         paymentDetailsForm.reset();
-        
-        // Reset fields and radio buttons
-        cardFields.classList.add("hidden");
-        applePayFields.classList.add("hidden");
-        creditCardRadio.checked = false;
-        applePayRadio.checked = false;
         
         orderAmountInput.value = "$300.00";
     });
